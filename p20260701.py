@@ -62,4 +62,6 @@ if True:
 if False:
     print("저 잘 작동되요2")
 
+print(0<=1)
+
 
