@@ -43,6 +43,19 @@ if b<a:
     print("b는 a보다 작다")
 
 
+"""
+점수 숫자를 입력받고,
+60점 이상이면 합격, 60 미만이면 불합격 출력하기
+"""
 print("점수를 입력 하세요(숫자만):")
-score=input()
+score=int(input())
+print(f"score 의 type: {type(score)}")
 print(f"입력한 점수는:{score}")
+
+if score>=60:
+    print("합격입니다")
+else :
+    print("불합격")
+
+
+

@@ -4,6 +4,7 @@
     1,2,3... 정수(Integer)
     1.1,1.23.. 소수(decimal)
     true,false boolean
+    string
 }
 인공지능할때는 뭐가 됬건간에
 테이블형태 무조건 숫자로 바꿔줘야 한다
