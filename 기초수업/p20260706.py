@@ -27,7 +27,20 @@ for a in range(1,5):
 
 for a in range(2,10):
     for b in range(1,10):
-        print(f"{a}*{b}={a*b}")
+        #print(f"{a}*{b}={a*b}")
         pass
 
 
+"""
+for, if문을 섞으면 인공지능을 만들수 있습니다
+정렬 인공지능 만듭시다
+"""
+a=[6,99,0,7,56,88,197,1]
+
+for k in range(0,len(a)):
+    if a[k]>a[k+1]:
+        t=a[k]
+        a[k]=a[k+1]
+        a[k+1]=t
+    print(a)
+    pass
