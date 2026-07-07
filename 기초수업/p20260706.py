@@ -49,7 +49,7 @@ print(f"len: {len(a)}")
 0~7 까지 반복하고
 k에 0,1,2,3,4,5,6,7 이 담긴다
 """
-for j in range(0,1000):
+for j in range(0,len(a)):
     for k in range(0,len(a)):
         try:
             if a[k]>a[k+1]:
@@ -70,4 +70,10 @@ print(a)
 
 그래서 이거 어떻게 하는건데?
 소가 뒷걸질 치다 되는거에요
+"""
+
+
+
+"""
+최적화, 경량화 - Big O 표기법
 """
