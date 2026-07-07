@@ -35,6 +35,12 @@ for a in range(2,10):
 for, if문을 섞으면 인공지능을 만들수 있습니다
 정렬 인공지능 만듭시다
 """
+"""
+try except (자바에선 try catch)
+예외처리
+try 안에서 예상하지 못한 에러가 나면,
+except 부분으로
+"""
 a=[6,99,0,7,56,88,197,1]
 
 print(f"len: {len(a)}")
@@ -43,15 +49,25 @@ print(f"len: {len(a)}")
 0~7 까지 반복하고
 k에 0,1,2,3,4,5,6,7 이 담긴다
 """
-for k in range(0,len(a)):
-    try:
-        if a[k]>a[k+1]:
-            t=a[k]
-            a[k]=a[k+1]
-            a[k+1]=t
-        pass
-    except Exception:
-        pass
+for j in range(0,1000):
+    for k in range(0,len(a)):
+        try:
+            if a[k]>a[k+1]:
+                t=a[k]
+                a[k]=a[k+1]
+                a[k+1]=t
+            pass
+        except Exception:
+            pass
 
-    print(a)
-    
+print(a)
+
+
+
+"""
+인공지능 정의:=
+동물이나 사람을 모방하는 학문
+
+그래서 이거 어떻게 하는건데?
+소가 뒷걸질 치다 되는거에요
+"""
