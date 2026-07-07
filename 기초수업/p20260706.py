@@ -37,10 +37,21 @@ for, if문을 섞으면 인공지능을 만들수 있습니다
 """
 a=[6,99,0,7,56,88,197,1]
 
+print(f"len: {len(a)}")
+
+"""
+0~7 까지 반복하고
+k에 0,1,2,3,4,5,6,7 이 담긴다
+"""
 for k in range(0,len(a)):
-    if a[k]>a[k+1]:
-        t=a[k]
-        a[k]=a[k+1]
-        a[k+1]=t
+    try:
+        if a[k]>a[k+1]:
+            t=a[k]
+            a[k]=a[k+1]
+            a[k+1]=t
+        pass
+    except Exception:
+        pass
+
     print(a)
-    pass
+    
