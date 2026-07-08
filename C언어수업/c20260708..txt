@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+void main() {
+    int a = 11;
+    // %d := 정수
+    printf("a: %d \n", a);
+   
+    // %x := 16진수
+    printf("a: %x \n", a);
+    
+    double d1 = 1.1;
+    // %lf := 소수점
+    printf("d1: %lf \n", d1);
+
+    a = 65;
+    // %c := 문자
+    printf("a: %c \n", a);
+
+    char* str = "abc";
+    // %s := 문자열(문자가 여러개 모인것)
+    printf("str: %s \n", str);
+
+
+    // %o := 8진수
+    printf("a: %o \n", a);
+
+    // (재미용)메모리 주소는 16진수로 표현되요
+    printf("a: %p \n", &a);
+
+    d1 = 1.1;
+    printf("소수를 정수로 강제출력: %d \n", d1);
+    printf("str를 정수로 강제출력: %d \n", str);
+}
+
+-----------------------------------
