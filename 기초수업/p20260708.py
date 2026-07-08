@@ -22,16 +22,25 @@ def mymod(num1,num2):
 
 #print(mymod(3,5))
 
-
+"""
+함수가 호출이 되면 scope가 만들어집니다
+함수가 종료되면, scope도 날라갑니다
+"""
 def testscope():
     a=9
 
-a=1
-print(f"a: {a}")
-a=2
-print(f"a: {a}")
-testscope()
-print(f"a: {a}")
+
+"""
+java, python 자료 결합도
+- 숫자, boolean, string 얘네는 자료결합도,   나머지는 다 stamp 결합도
+- 원본 데이터는 손상이 안감
+"""
+def testchange(n):
+    n=n+1
+
+n=1
+testchange(n)
+print(f"n: {n}")
 
 
 
