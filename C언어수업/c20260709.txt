@@ -71,3 +71,27 @@ void main() {
 
     return;
 }
+----------------------------------
+
+#include <stdio.h>
+
+void main() {
+    int rank = 10;
+    int reward = 0;
+
+    //       10
+    switch (rank) {
+        case 1:
+            reward += 100;
+            break;
+        /* 똑같이 생긴거 선택. */
+        case 2:
+            reward += 150;
+            // break 만나면 switch 빠져나옴
+            break;
+        default:
+            reward = 50;
+    }
+    printf("rank:%d, reward:%d \n", rank, reward);
+    return;
+}
