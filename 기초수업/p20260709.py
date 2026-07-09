@@ -9,6 +9,7 @@ class Student:
         pass
     pass
 
-s=Student()
-print(s.name)
-print(s.score)
+s=Student(name="페페",score=60)
+s2=Student(score=70,name="올라프")
+print(f"{s.name} {s.score}")
+print(f"{s2.name} {s2.score}")
