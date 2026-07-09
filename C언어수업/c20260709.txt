@@ -116,3 +116,69 @@ void main() {
     printf("a: %d \n", a);
     return;
 }
+
+--------------------
+
+#include <stdio.h>
+
+void main() {
+    int i = 0;
+    while (++i) {
+        if (i > 100) {
+            // switch 에서뿐 아니라, 반복문 에서도 빠져나올수 있어요
+            break;
+        }
+        //printf("i:%d \n", i);
+    }
+
+    i = 10;
+    // 조건 수식이 false가 되면 자동으로 빠져 나와요
+    while (i--) {
+        //printf("i:%d \n", i);
+    }
+
+    i = 0;
+    do {
+        //printf("한번이라도 되요");
+    } while (i);
+
+    i = 90;
+    /* forloop 변수 초기화 부분에 int 있고 없고는 천지차이로 달라요 */
+    for (int i = 0; i < 5;i++) {
+        //printf("for i: %d \n", i);
+    }
+    for (i = 0; i < 5; i++) {
+        //printf("for i: %d \n", i);
+    }
+    
+    i = 5;
+    for (;i--;) {
+        //printf("%d \n", i);
+    }
+
+    for (int i = 0;i<99;i++) {
+        // 반복문 빠져나오는 조건을 내가 break로 조절할수도 있어요
+        if (i >= 3) {
+            break;
+        }
+    }
+
+    for (int i = 0; i <= 6;++i) {
+        if (i == 2) {
+            /* 아래에 있는거 실행하지 말고 ++i 로 점프해 */
+            continue;
+        }
+        //printf("i:%d \n", i);
+    }
+
+    for (int a = 2; a <= 9; a++) {
+        for (int b = 1; b <= 9;b++) {
+            //printf("%d * %d = %d \n", a, b, a * b);
+        }
+    }
+    
+
+
+
+    return;
+}
