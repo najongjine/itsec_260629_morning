@@ -45,3 +45,29 @@ void main() {
     return;
 }
 ----------------------------------------
+
+#include <stdio.h>
+
+void main() {
+    int score = 70;
+    if (score >= 80) {
+        printf("합격입니다 \n");
+    }
+    else if (score>=70) {
+        printf("재시험 대상입니다 \n");
+    }
+    else {
+        printf("불합격입니다 \n");
+    }
+    printf("수고하셨습니다 \n");
+
+    int a = 10;
+    int b = 5;
+    int c;
+
+    /* c= 10 == 5 ? 20 : 40 
+     10이랑 5랑 같니? 먼저 물어보고, true면 20, false면 40 선택함 */
+    c = a >= b ? 20 : 40;
+
+    return;
+}
