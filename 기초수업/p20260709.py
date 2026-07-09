@@ -7,9 +7,24 @@ class Student:
         self.name=name
         self.score=score
         pass
+    def show(self):
+        print(f"재 이름은 {self.name}, 점수는 {self.score}")
     pass
 
 s=Student(name="페페",score=60)
 s2=Student(score=70,name="올라프")
-print(f"{s.name} {s.score}")
-print(f"{s2.name} {s2.score}")
+s.show()
+s2.show()
+
+
+
+class FourLegAnimal:
+    def __init__(self):
+        self.leg=4
+        self.eye=2
+        self.nose=1
+        self.mouth=True
+    def make_sound(self):
+        print("낑낑")
+    def move(self):
+        print("걸어가요")
