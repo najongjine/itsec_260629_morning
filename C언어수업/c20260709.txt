@@ -95,3 +95,24 @@ void main() {
     printf("rank:%d, reward:%d \n", rank, reward);
     return;
 }
+-------------------------
+
+#include <stdio.h>
+
+void main() {
+    /* main scope 에 있는 a */
+    int a = 1;
+    if (a) {
+        /* 새끼 if문 안에 있는 a
+        * main 의 a랑 아무 관련 없음
+        */
+        int a = 5;
+        printf("a: %d \n", a);
+    }
+
+    /* 눈때중으론 제일 가까운 a가 if문 안에있는 a 인데
+    프로그램 세계에선 부모는 자식꺼 함부로 못갔다써요.
+    그래서 그냥 main scope에 있는 a 갔다 보여준 거에요 */
+    printf("a: %d \n", a);
+    return;
+}
