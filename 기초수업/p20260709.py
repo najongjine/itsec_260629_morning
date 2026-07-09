@@ -28,3 +28,25 @@ class FourLegAnimal:
         print("낑낑")
     def move(self):
         print("걸어가요")
+
+class Dog(FourLegAnimal):
+    def make_sound(self):
+        print("멍멍")
+    def move(self):
+        print("달려요")
+
+class 두더지(FourLegAnimal):
+    def __init__(self):
+        self.leg=4
+        self.eye=0
+        self.nose=1
+        self.mouth=True
+    def move(self):
+        print("땅을파요")
+
+
+dog=Dog()
+print(dog.leg)
+dog.move()
+dd=두더지()
+print(f"두더지 눈: {dd.eye}, 두더지 다리:{dd.leg}")
