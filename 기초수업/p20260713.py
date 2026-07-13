@@ -1,6 +1,25 @@
 """
 가위 바위 보
 """
+def rpc_r(human,comp):
+    # 판정
+    if human == comp:
+        print(f"무승부")
+    elif human=="가위" and comp=="바위":
+        print(f"컴퓨터 승")
+    elif human=="가위" and comp=="보":
+        print(f"사람 승")
+    elif human=="바위" and comp=="가위":
+        print(f"사람 승")
+    elif human=="바위" and comp=="보":
+        print(f"컴퓨터 승")
+    elif human=="보" and comp=="가위":
+        print(f"컴퓨터 승")
+    elif human=="보" and comp=="바위":
+        print(f"사람 승")
+    else:
+        print(f"몰라")
+    pass
 
 rpc=["가위","바위","보"]
 
@@ -19,22 +38,6 @@ human=rpc[human]
 # 사람이 뭐냈고 컴퓨터가 뭐 냈는지
 print(f" 사람:{human}, 컴퓨터:{comp}")
 
-# 판정
-if human == comp:
-    print(f"무승부")
-elif human=="가위" and comp=="바위":
-    print(f"컴퓨터 승")
-elif human=="가위" and comp=="보":
-    print(f"사람 승")
-elif human=="바위" and comp=="가위":
-    print(f"사람 승")
-elif human=="바위" and comp=="보":
-    print(f"컴퓨터 승")
-elif human=="보" and comp=="가위":
-    print(f"컴퓨터 승")
-elif human=="보" and comp=="바위":
-    print(f"사람 승")
-else:
-    print(f"몰라")
+
 
 
