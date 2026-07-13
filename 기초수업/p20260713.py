@@ -8,6 +8,16 @@ rpc=["가위","바위","보"]
 comp=rpc[984%len(rpc)]
 
 print(f"1=가위, 2=바위, 3=보 \n 입력하세요: ")
-human=int(input())
+"""
+1을 입력했다 치면
+human = 1-1 = 0 이 담겨요
+human = rpc[1] = "바위"    이렇게 담겨요
+"""
+human=int(input()) - 1
 human=rpc[human]
+
+if human == comp:
+    print(f"무승부")
+elif human=="가위" and comp=="바위":
+    print(f"컴퓨터 승")
 
