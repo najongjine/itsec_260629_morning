@@ -2,6 +2,16 @@
 가위 바위 보
 """
 def rpc_r(human,comp):
+    """
+    가위 바위 보의 판정을 맡아서 화면에 출력해주는 기능입니다
+    
+    Args:
+        human (str): 사람이 낸것 ("가위","바위","보")
+        comp (str): 컴퓨터가 낸것 ("가위","바위","보")
+        
+    Returns:
+        null
+    """
     # 판정
     if human == comp:
         print(f"무승부")
@@ -38,6 +48,8 @@ human=rpc[human]
 # 사람이 뭐냈고 컴퓨터가 뭐 냈는지
 print(f" 사람:{human}, 컴퓨터:{comp}")
 
+#함수 호출
+rpc_r(human,comp)
 
 
 
