@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main() {
+    // 문자.  알파벳 하나밖에 못담음
+    // A = 65,a = 97
+    char c1 = 'a';
+    
+    /* 문자열 
+    배열방식 : 무조건 heap 영역에 새로운 공간 만듬
+    포인터 방식 : 똑같은 문자열은 heap 영역 재사용함 */
+    char arr1[10] = "hello";
+    char arr2[10] = {'h','e','l','l','o','\0'};
+    char* arr3 = "hello";
+    char* arr4 = "hello";
+
+    printf("arr1:%p \n", arr1);
+    printf("arr2:%p \n", arr2);
+    printf("arr3:%p \n",arr3);
+    printf("arr3:%p \n", arr4);
+   
+    return 0;
+}
+
+
