@@ -21,4 +21,46 @@ int main() {
     return 0;
 }
 
+--------------------
+
+
+#include <stdio.h>
+
+int main() {
+    // 문자.  알파벳 하나밖에 못담음
+    // A = 65,a = 97
+    char c1 = 'a';
+    
+    /* 문자열 
+    배열방식 : 무조건 heap 영역에 새로운 공간 만듬
+    포인터 방식 : 똑같은 문자열은 heap 영역 재사용함 */
+    char arr1[10] = "hello";
+    char arr2[10] = {'h','e','l','l','o','\0'};
+    char* arr3 = "hello";
+    char* arr4 = "hello";
+
+    printf("%c \n", *arr3);
+    printf("%c \n", arr3[0]);
+
+    /* 문자 하나만 아니라 문자열 쭉 다 보기 */
+    for (int i = 0; i < 10;i++) {
+        if (*(arr3 + i) == '\0') break;
+        printf("%c", *(arr3 + i));
+        //printf("%c", arr3[i]);
+    }
+    printf("\n");
+
+    /* 도저히 안되겠다. 편한방법 도입해줘...
+    %s := 문자열 전용 출력. 
+    c언어에서 유일하게 법칙을 어긴 편의성 */
+    printf("arr: %s \n", arr3);
+
+    int a = 1;
+    int* pa = &a;
+    printf("a: %d \n ", *pa);
+   
+    return 0;
+}
+
+
 
