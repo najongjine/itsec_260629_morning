@@ -24,11 +24,11 @@ comp_r=0
 msg=f"컴퓨터의 숫자: {random_range1}"
 if random_range1 % 2 == 0:
     comp_r=0
-    msg+="(짝수)"
+    msg.join("(짝수)")
 else:
     comp_r=1
-    msg+="(홀수)"
-msg+="\n"
+    msg.join("(홀수)")
+msg.join("\n")
 
 if comp_r==human_input:
     print(f"맞췄습니다")
