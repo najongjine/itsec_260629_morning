@@ -1,3 +1,6 @@
-arr="hello"
+def myf():
+    pass
 
-print(arr)
+arr="hello nice to meet you"
+
+print(len(arr))

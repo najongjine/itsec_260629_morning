@@ -63,4 +63,42 @@ int main() {
 }
 
 
+------------------
+#include <stdio.h>
 
+void dummy1() {
+    printf("dummy1 \n");
+}
+void dummy2(int a, int b) {
+    printf("내가받은 a:%d, b:%d \n", a, b);
+}
+int dummy3(int a, int b) {
+    return a + b;
+}
+/** 문자열의 길이를 구하는 함수.
+c1: 문자열
+return : 문자열의 길이(int) */
+int strlen(char* c1) {
+    int count = 0;
+    while (*c1++ != '\0') {
+        int count = 0;
+        ++count;
+    }
+    return count;
+}
+
+int main() {
+    char* c1 = "hello nice to meet you";
+    int count = 0;
+
+    
+    printf("c1의 길이: %d \n", count);
+    dummy1();
+    dummy2(2, 3);
+    printf("dummy3: %d \n", dummy3(2, 3));
+    return 0;
+}
+
+
+
+-
