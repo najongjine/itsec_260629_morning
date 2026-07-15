@@ -20,17 +20,21 @@ random_range1 = random.randrange(10000)
 print(f" 랜덤으로 만든숫자: {random_range1}")
 
 
-comp_r=0
-msg=f"컴퓨터의 숫자: {random_range1}"
-if random_range1 % 2 == 0:
-    comp_r=0
-    msg.join("(짝수)")
-else:
-    comp_r=1
-    msg.join("(홀수)")
-msg.join("\n")
+comp_r = 0
+msg = f"컴퓨터의 숫자: {random_range1}"
 
-if comp_r==human_input:
-    print(f"맞췄습니다")
+if random_range1 % 2 == 0:
+    comp_r = 0
+    msg += " (짝수)"
 else:
-    print(f"틀렸습니다")
+    comp_r = 1
+    msg += " (홀수)"
+
+msg += "\n"
+
+if comp_r == human_input:
+    msg += "맞췄습니다"
+else:
+    msg += "틀렸습니다"
+
+print(msg)
