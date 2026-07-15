@@ -8,7 +8,12 @@
 # 딴 사람이 만든 코드 뭉탱이 가져오기
 import random
 
+
 def check(random_range1,human_input):
+    """
+    컴퓨터가 만든 숫자랑 사람이 입력한 0(짝수), 1(홀수)로
+    틀렸는지 맞췄는지 결과 문장 리턴 하는 함수
+    """
     msg=""
     msg = f"컴퓨터의 숫자: {random_range1}"
 
