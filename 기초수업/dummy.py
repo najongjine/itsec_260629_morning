@@ -3,4 +3,4 @@ def myf():
 
 arr="hello nice to meet you"
 
-print(len(arr))
+print(arr)

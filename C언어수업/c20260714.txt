@@ -89,7 +89,7 @@ int strlen(char* c1) {
 
 int main() {
     char* c1 = "hello nice to meet you";
-    int count = 0;
+    int count = strlen(c1);
 
     
     printf("c1의 길이: %d \n", count);
