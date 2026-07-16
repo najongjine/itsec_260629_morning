@@ -34,4 +34,9 @@ while len(arr)<6:
     #print(f"{i}, num1: {num1}")
 
 print(f"len(arr):{len(arr)}")
+
+arr=list(arr)
+arr.sort()
 print(arr)
+
+
