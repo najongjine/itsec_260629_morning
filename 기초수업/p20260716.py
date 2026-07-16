@@ -28,7 +28,7 @@ import random
 """
 arr=set()
 
-for i in range(45):
+while len(arr)<6:
     num1 = random.randrange(start=1,stop=46)
     arr.add(num1)
     #print(f"{i}, num1: {num1}")
