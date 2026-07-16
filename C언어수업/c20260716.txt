@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    int a = 1;
+    int* pa = &a;
+    int** ppa = &pa;
+
+    int ar[2][2] = {
+        {1,2},
+        {3,4}
+    };
+    int* ar2 = *(ar + 1);
+
+    printf("%d \n", ar[0][0]);
+    printf("%d \n", **ar);
+    printf("%d \n", *(ar2 + 0));
+
+    return 0;
+}
+
+
