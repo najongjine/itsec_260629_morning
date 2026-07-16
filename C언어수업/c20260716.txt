@@ -18,4 +18,25 @@ int main() {
     return 0;
 }
 
+---------------------
 
+#include <stdio.h>
+
+void func(int** arr, int size) {
+    for (int i = 0; i < size; i++) {
+        *(*arr + i) = (*(*arr + i) + i) % size;
+    }
+}
+int main() {
+    int arr[] = { 6,2, 9};
+    int* p = arr;
+    int** pp = &p;
+
+
+    func(pp, 5);
+    for (int i = 0; i < 3;i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
