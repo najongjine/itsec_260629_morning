@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int* arr;
+
+    arr = malloc(sizeof(int) * 2);
+
+    if (arr == NULL) {
+        printf("malloc 실패\n");
+        return 1;
+    }
+
+    arr[0] = 5;
+    arr[1] = 2;
+
+    int* arr2 = realloc(arr, sizeof(int) * 5);
+
+    if (arr2 == NULL) {
+        printf("realloc 실패\n");
+        free(arr);
+        return 1;
+    }
+
+    //arr2[2] = 10;
+    //arr2[3] = 20;
+    //arr2[4] = 30;
+
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", arr2[i]);
+    }
+
+    free(arr2);
+
+    return 0;
+}
