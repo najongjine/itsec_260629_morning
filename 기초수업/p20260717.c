@@ -28,7 +28,17 @@ int main() {
     int length = sizeof(arr) / sizeof(arr[0]);
 
     for (int i = 0; i < length; i++) {
-        int num1 = (myrand() % 45) + 1;
+        int num1 = (myrand() % 45) + 1; 
+        // arr에 중복있나 검사
+        int bDup = 0;
+        for (int a = 0; a < length; a++) {
+            if (num1 == arr[a]) {
+                bDup = 1;
+            }
+        }
+        if (bDup) {
+            continue;
+        }
         arr[i] = num1;
     }
     for (int i = 0; i < length; i++) {
