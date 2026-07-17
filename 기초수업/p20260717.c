@@ -3,7 +3,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-int main() {
+/** 정수 랜덤으로 퉤 뱉는놈 */
+int myrand() {
+    int mynum = 0;
+
     struct timespec ts;
 
     timespec_get(&ts, TIME_UTC);
@@ -15,12 +18,22 @@ int main() {
 
     srand(seed);
 
-    // 1부터 100 사이 랜덤 정수
     int random_num = rand();
-
-    printf("seed: %u\n", seed);
-    printf("random_num: %d\n", random_num);
+    mynum = random_num;
+    return mynum;
+}
+int main() {
     int arr[6] = { 0,0,0,0,0,0 };
+    // 배열 길이 구하기
+    int length = sizeof(arr) / sizeof(arr[0]);
+
+    for (int i = 0; i < length; i++) {
+        int num1 = (myrand() % 45) + 1;
+        arr[i] = num1;
+    }
+    for (int i = 0; i < length; i++) {
+        printf("%d  ", arr[i]);
+    }
 
     return 0;
 }
