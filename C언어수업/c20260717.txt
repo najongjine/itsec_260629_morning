@@ -36,3 +36,25 @@ int main(void) {
 
     return 0;
 }
+
+------------------
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int rows = 2, cols = 2, sum = 0;
+    int data[] = { 5, 2, 7, 4};
+    int** arr;
+    arr = (int**)malloc(sizeof(int*) * rows);
+    for (int i = 0; i < cols; i++) {
+        arr[i] = (int*)malloc(sizeof(int) * cols);
+    }
+
+    for (int i = 0; i < rows; i++) {
+        free(arr[i]);
+    }
+    free(arr);
+
+    printf("%d", sum);
+}
