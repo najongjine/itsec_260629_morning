@@ -3,7 +3,7 @@
 
 int main(void) {
     int* arr;
-
+    /* 동적으로 heap 영역에 메모리 공간 만들기 */
     arr = malloc(sizeof(int) * 2);
 
     if (arr == NULL) {
@@ -14,6 +14,8 @@ int main(void) {
     arr[0] = 5;
     arr[1] = 2;
 
+    /* 동적으로 만든 공간에 추가로 공간 추가해주기
+    malloc에서 2개 만들었으니 5개가 되도록 3개더 추가함 */
     int* arr2 = realloc(arr, sizeof(int) * 5);
 
     if (arr2 == NULL) {
@@ -22,9 +24,9 @@ int main(void) {
         return 1;
     }
 
-    //arr2[2] = 10;
-    //arr2[3] = 20;
-    //arr2[4] = 30;
+    arr2[2] = 10;
+    arr2[3] = 20;
+    arr2[4] = 30;
 
     for (int i = 0; i < 5; i++) {
         printf("%d ", arr2[i]);
