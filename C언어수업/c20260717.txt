@@ -44,17 +44,28 @@ int main(void) {
 
 int main() {
     int rows = 2, cols = 2, sum = 0;
-    int data[] = { 5, 2, 7, 4};
+    int data[] = { 5, 2, 7, 4 };
     int** arr;
     arr = (int**)malloc(sizeof(int*) * rows);
     for (int i = 0; i < cols; i++) {
         arr[i] = (int*)malloc(sizeof(int) * cols);
     }
-
+    int num1 = 1;
+    for (int a = 0; a < rows;a++) {
+        for (int b = 0; b < cols;b++) {
+            arr[a][b] = num1;
+            num1 += 2;
+        }
+    }
+    for (int a = 0; a < rows; a++) {
+        for (int b = 0; b < cols; b++) {
+            printf("arr[%d][%d]=%d \n", a,b,arr[a][b]);
+        }
+    }
     for (int i = 0; i < rows; i++) {
         free(arr[i]);
     }
     free(arr);
 
-    printf("%d", sum);
+    
 }
