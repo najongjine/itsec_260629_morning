@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+typedef struct Node {
+    int v;
+    struct Node* n;  // Node*가 아니라 struct Node*
+} Node;
+
+int main() {
+    Node n1 = { 1, NULL };
+    Node n2 = { 2, NULL };
+    Node n3 = { 3, NULL };
+
+    Node* h = &n1;
+
+    n1.n = &n2;
+    n2.n = &n3;
+
+    for (; h != NULL; h = h->n) {
+        printf("%d\n", h->v);
+    }
+
+    return 0;
+}
