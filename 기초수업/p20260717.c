@@ -26,9 +26,9 @@ int main() {
     int arr[6] = { 0,0,0,0,0,0 };
     // 배열 길이 구하기
     int length = sizeof(arr) / sizeof(arr[0]);
-
-    for (int i = 0; i < length; i++) {
-        int num1 = (myrand() % 45) + 1; 
+    
+    for (int i = 0; i < length; ) {
+        int num1 = (myrand() % 45) + 1;
         // arr에 중복있나 검사
         int bDup = 0;
         for (int a = 0; a < length; a++) {
@@ -39,7 +39,7 @@ int main() {
         if (bDup) {
             continue;
         }
-        arr[i] = num1;
+        arr[i++] = num1;
     }
     for (int i = 0; i < length; i++) {
         printf("%d  ", arr[i]);
