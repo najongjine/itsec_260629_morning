@@ -1,0 +1,28 @@
+
+#include <stdio.h>
+typedef struct Node {
+	int v;
+	Node* ln;
+	Node* rn;
+}Node;
+
+/** Heap 영역에 Node 라는 데이터 공간을 만들고, 값 저장하고,
+새로 만든 공간의 주소를 리턴 하는 함수 */
+Node* createNode(int v) {
+	Node* newnode = (Node*)malloc(sizeof(Node));
+	newnode->v = v;
+	newnode->ln = NULL;
+	newnode->rn = NULL;
+	return newnode;
+}
+
+int main() {
+	Node root = {
+		1,NULL,NULL
+	};
+
+	root.ln = createNode(2);
+	root.rn = createNode(3);
+
+	return 0;
+}
