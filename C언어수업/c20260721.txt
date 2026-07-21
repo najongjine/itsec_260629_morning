@@ -1,9 +1,11 @@
 
 #include <stdio.h>
+#include <stdlib.h>
+
 typedef struct Node {
 	int v;
-	Node* ln;
-	Node* rn;
+	struct Node* ln;
+	struct Node* rn;
 }Node;
 
 /** Heap 영역에 Node 라는 데이터 공간을 만들고, 값 저장하고,
@@ -17,6 +19,7 @@ Node* createNode(int v) {
 }
 
 int main() {
+	int a = 1;
 	Node root = {
 		1,NULL,NULL
 	};
