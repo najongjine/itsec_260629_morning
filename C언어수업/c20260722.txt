@@ -13,3 +13,52 @@ int main(void) {
 
     return 0;
 }
+
+-----------------
+
+
+#include <stdio.h>
+
+void sort(int ar[]) {
+    for (int a1 = 0; a1 < 10 - 1; a1++) {
+        for (int a2 = 0; a2 < 10 - 1; a2++) {
+            if (ar[a2] > ar[a2 + 1]) {
+                int t = ar[a2];
+                ar[a2] = ar[a2 + 1];
+                ar[a2 + 1] = t;
+            }
+        }
+    }
+    for (int i = 0; i < 10;i++) {
+        printf("%d ", ar[i]);
+    }
+    printf("\n");
+}
+int main(void) {
+    int ar[10] = { 0,9,7,1,3,99,87,65,35,11 };
+    int s = 11;
+    sort(ar);
+    int length = 10;
+    int left = 0;
+    int right = length - 1;
+    int middle = 0;
+    while (left<=right) {
+        middle = (left + right) / 2;
+        printf("left:%d, middle:%d, right:%d, 가운데값:%d \n",
+            left,middle,right,ar[middle]);
+        if (ar[middle]==s) {
+            printf("%d 있어 \n", s);
+            printf("%d 번째에 있어 \n", middle);
+            break;
+        }
+        else if (ar[middle]<s) {
+            left = middle + 1;
+        }
+        else {
+            right = middle - 1;
+        }
+
+    }
+
+    return 0;
+}
