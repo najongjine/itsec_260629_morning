@@ -28,6 +28,20 @@ Node* insert(Node* root, int data) {
     return root;
 }
 
+Node* search(Node* root, int target) {
+    if (!root) {
+        return NULL;
+    }
+    if (target == root->data) {
+        printf("있어요");
+        return root;
+    }
+    if (target < root->data) {
+        return search(root->left, target);
+    }
+    return search(root->right, target);
+}
+
 int main() {
     Node* root = NULL;
     root = insert(root, 50);
