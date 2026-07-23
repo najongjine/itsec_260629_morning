@@ -22,7 +22,7 @@
       display: grid;
 
       /* 헤더는 작게, 몸통은 나머지 전부 */
-      grid-template-rows: 100px 1fr;
+      grid-template-rows: 15vw 1fr;
     }
 
     /* 화면 전체 너비를 사용하는 헤더 */
@@ -39,7 +39,7 @@
       height: 100%;
 
       margin: 0 auto;
-      padding: 20px;
+      padding: 1.5vw;
 
       display: flex;
       align-items: center;
@@ -58,11 +58,17 @@
       max-width: 1200px;
 
       margin: 0 auto;
-      padding: clamp(20px, 3vw, 50px);
+      padding: 3vw;
     }
 
     .title {
-      font-size: clamp(24px, 3vw, 42px);
+      font-size: clamp(1vw, 3vw, 10vw);
+    }
+    .content {
+    width: 300px;
+    height: 150px;
+    overflow-y: auto; /* 세로로 넘칠 때 스크롤 표시 */
+    resize: none;     /* 사용자가 크기 조절 못 하게 함 */
     }
   </style>
 </head>
@@ -73,9 +79,9 @@
 
     <header class="top">
       <div class="top-inner">
-        <strong>사이트 로고</strong>
+        <strong class="title">사이트 로고</strong>
 
-        <nav>
+        <nav >
           홈 | 게시판 | 로그인
         </nav>
       </div>
@@ -93,7 +99,9 @@
         <p>
           게시글, 상품 목록, 이미지, 카드 등이 들어가는 영역입니다.
         </p>
-
+        <div>
+            <textarea class="content"></textarea>
+        </div>
       </div>
     </main>
 
