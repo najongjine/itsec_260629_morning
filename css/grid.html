@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+
+  <style>
+    /*
+    ┌──────────────────────┐
+    │       위쪽 영역       │
+    ├──────┬───────────┬───┤
+    │ 왼쪽 │   가운데   │오른쪽│
+    │ 영역 │    영역    │ 영역 │
+    └──────┴───────────┴───┘
+    */
+    .container {
+      width: 100%;
+      height: 100%;
+
+      display: grid;
+
+      /* 세로 방향: 위쪽 120px, 아래쪽 나머지 */
+      grid-template-rows: 30vw 1fr;
+
+      /* 가로 방향: 아래쪽을 3칸으로 나눔 */
+      grid-template-columns: 1fr 3fr 1fr;
+
+      border: 3px solid black;
+    }
+
+    .top {
+      /* 1번 줄부터 마지막 줄까지 차지 */
+      grid-column: 1 / -1;
+
+      border-bottom: 3px solid black;
+    }
+
+    .left {
+      border-right: 3px solid black;
+    }
+
+    .center {
+      border-right: 3px solid black;
+    }
+
+    .right {
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div class="container">
+    <div class="top">
+        <div>위쪽 영역</div>
+    </div>
+
+    <div class="left">
+        <div>왼쪽 영역</div>
+        <div>왼쪽 영역</div>
+        <div>왼쪽 영역</div>
+        <div>왼쪽 영역</div>
+        <div>왼쪽 영역</div>
+        <div>왼쪽 영역</div>
+        <div>왼쪽 영역</div>
+        <div>왼쪽 영역</div>
+    </div>
+    <div class="center">
+        <div>가운데 영역</div>
+        <div>가운데 영역</div>
+        <div>가운데 영역</div>
+        <div>가운데 영역</div>
+        <div>가운데 영역</div>
+        <div>가운데 영역</div>
+        <div>가운데 영역</div>
+        <div>가운데 영역</div>
+        <div>가운데 영역</div>
+    </div>
+    <div class="right">
+        <div>오른쪽 영역</div>
+        <div>오른쪽 영역</div>
+        <div>오른쪽 영역</div>
+        <div>오른쪽 영역</div>
+        <div>오른쪽 영역</div>
+        <div>오른쪽 영역</div>
+        <div>오른쪽 영역</div>
+        <div>오른쪽 영역</div>
+    </div>
+  </div>
+
+</body>
+</html>
