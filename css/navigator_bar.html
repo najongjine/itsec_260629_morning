@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+        .menu {
+            display: flex;
+            justify-content: center;
+            background-color: black;
+        }
+
+        .menu-item {
+            position: relative;
+            padding: 15px 30px;
+            color: white;
+        }
+
+        .sub-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: gray;
+            width: 130px;
+        }
+
+        .menu-item:hover .sub-menu {
+            display: block;
+        }
+
+        .sub-menu div {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="menu">
+
+        <div class="menu-item">
+            메뉴 1
+
+            <div class="sub-menu">
+                <div>서브메뉴 1</div>
+                <div>서브메뉴 2</div>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            메뉴 2
+
+            <div class="sub-menu">
+                <div>서브메뉴 1</div>
+                <div>서브메뉴 2</div>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            메뉴 3
+
+            <div class="sub-menu">
+                <div>서브메뉴 1</div>
+                <div>서브메뉴 2</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

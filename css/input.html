@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <style>
+        .button-group {
+            display: flex;              /* 버튼을 수평으로 배치 */
+            justify-content: center;    /* 가로 가운데 정렬 */
+            gap: 2vw;                  /* 버튼 사이 간격 */
+            opacity: 0.5;
+        }
+        .dummy{
+            opacity: 0.5;
+        }
+    </style>
+    <body>
+        <div>
+            <div class="button-group">
+                <button>버튼이름</button>
+                <button>버튼이름</button>
+                <button>버튼이름</button>
+            </div>
+            <div>
+                <label>한줄 입력:</label>
+                <input type="text" size="50" maxlength="50"/>
+            </div>
+            <div>
+                <input type="file" />
+            </div>
+            <div>
+                <label>여러줄 입력:</label>
+                <textarea rows="10" cols="30" ></textarea>
+            </div>
+            <div class="dummy">
+                <p>sdfsd sdfsdfd</p>
+            </div>
+        </div>
+    </body>
+</html>
