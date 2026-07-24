@@ -58,3 +58,61 @@ int main() {
 
     return 0;
 }
+
+--------------------
+
+//퀵정렬
+
+#include <stdio.h>
+
+void quickSort(int arr[], int left, int right) {
+    int i = left;
+    int j = right;
+    int pivot = arr[left];
+    int temp;
+
+    while (i <= j) {
+        // 피벗보다 작은 값은 건너뛴다.
+        while (arr[i] < pivot) {
+            i++;
+        }
+
+        // 피벗보다 큰 값은 건너뛴다.
+        while (arr[j] > pivot) {
+            j--;
+        }
+
+        // 잘못 배치된 두 값을 교환한다.
+        if (i <= j) {
+            temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+
+            i++;
+            j--;
+        }
+    }
+
+    // 왼쪽 부분 정렬
+    if (left < j) {
+        quickSort(arr, left, j);
+    }
+
+    // 오른쪽 부분 정렬
+    if (i < right) {
+        quickSort(arr, i, right);
+    }
+}
+
+int main() {
+    int arr[] = { 5, 3, 8, 4};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    quickSort(arr, 0, size - 1);
+
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
