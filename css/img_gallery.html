@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        .button-group {
+            display: flex; /* 버튼을 수평으로 배치 */
+            justify-content: center; /* 가로 가운데 정렬 */
+            gap: 2vw; /* 버튼 사이 간격 */
+            opacity: 0.5;
+        }
+
+        .dummy {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        <div class="gallery-item">
+            <a target="_blank" href="img_5terre.jpg">
+                <img src="img_5terre.jpg" alt="Cinque Terre" width="600" height="400">
+            </a>
+            <div class="desc">Cinque Terre</div>
+        </div>
+
+        <div class="gallery-item">
+            <a target="_blank" href="img_forest.jpg">
+                <img src="img_forest.jpg" alt="Forest" width="600" height="400">
+            </a>
+            <div class="desc">Green Forest</div>
+        </div>
+
+        <div class="gallery-item">
+            <a target="_blank" href="img_lights.jpg">
+                <img src="img_lights.jpg" alt="Northern Lights" width="600" height="400">
+            </a>
+            <div class="desc">Northern Lights</div>
+        </div>
+
+        <div class="gallery-item">
+            <a target="_blank" href="img_mountains.jpg">
+                <img src="img_mountains.jpg" alt="Mountains" width="600" height="400">
+            </a>
+            <div class="desc">Mountains</div>
+        </div>
+    </div>
+</body>
+</html>
