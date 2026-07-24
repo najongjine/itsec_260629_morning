@@ -27,3 +27,34 @@ int main() {
 
     return 0;
 }
+
+
+-------------------
+
+//삽입정렬
+#include <stdio.h>
+
+int main() {
+    int arr[] = {64, 25, 12, 22, 11};
+    int size = 5;
+
+    for (int i = 1; i < size; i++) {
+        int key = arr[i];     // 삽입할 값
+        int j = i - 1;
+
+        // key보다 큰 값들을 오른쪽으로 한 칸씩 이동
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+
+        // 알맞은 위치에 key 삽입
+        arr[j + 1] = key;
+    }
+
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
