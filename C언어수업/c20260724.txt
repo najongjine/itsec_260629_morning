@@ -1,0 +1,29 @@
+// 삽입정렬
+#include <stdio.h>
+
+int main() {
+    int arr[] = { 64, 25, 12, 22, 11 };
+    int size = 5;
+
+    for (int i = 0; i < size - 1; i++) {
+        int minIndex = i;
+
+        // i번째 이후에서 가장 작은 값의 위치 찾기
+        for (int j = i + 1; j < size; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        // i번째 값과 가장 작은 값 교환
+        int temp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = temp;
+    }
+
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
