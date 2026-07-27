@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>제목입니다</title>
+    </head>
+    <style>
+       
+    </style>
+    <body>
+       <div>
+            <time id="clock"></time>
+       </div>
+       <script>
+        const clock = document.querySelector("#clock");
+
+        function updateClock() {
+        const now = new Date();
+
+        // 화면에 현재 시간 표시
+        clock.textContent = now.toLocaleString("ko-KR");
+
+        // time 태그의 표준 날짜·시간 정보
+        clock.dateTime = now.toISOString();
+        }
+
+        // 페이지가 열리자마자 한 번 실행
+        updateClock();
+
+        // 1초마다 반복 실행
+        setInterval(updateClock, 1000);
+    </script>
+    </body>
+</html>
