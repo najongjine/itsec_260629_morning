@@ -16,7 +16,11 @@
         </div>
         <script type="module">
             (() => {
-                console.log("실행됨");
+                let nowdate=new Date();
+                nowdate=`${nowdate.getFullYear()}
+                -${nowdate.getMonth()+1}
+                -${nowdate.getDate()}`;
+                console.log(`nowdate:${nowdate}`);
             })();
         </script>
     </body>
