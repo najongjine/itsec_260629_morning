@@ -18,12 +18,18 @@
             (() => {
                 let nowdate=new Date();
                 let nowtime=`${nowdate.getHours()}:${nowdate.getMinutes()}:${nowdate.getSeconds()}.${nowdate.getMilliseconds()}`;
+                
                 console.log(`미국식 날짜: ${nowdate}`);
+                // 여기서는 Date 타입이 아니라 그냥 string 타입으로 변하기 때문에,
+                // 날짜 조작하는 함수 기능 다 날라감
                 nowdate=`${nowdate.getFullYear()}-${nowdate.getMonth()+1}-${nowdate.getDate()}`;
                 console.log(`nowdate:${nowdate}`);
 
                 const mydate=document.getElementById("mydate");
                 mydate.textContent=nowdate;
+
+                const mytime=document.getElementById("mytime");
+                mytime.textContent=nowtime;
             })();
         </script>
     </body>
