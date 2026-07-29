@@ -8,9 +8,9 @@
     content="width=device-width, initial-scale=1.0"
   />
 
-  <title>비트코인 가격 그래프</title>
+  <title>JavaScript 비트코인 가격 그래프</title>
 
-  <!-- Chart.js -->
+  <!-- 그래프 라이브러리 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -21,7 +21,7 @@
     body {
       margin: 0;
       padding: 30px;
-      background-color: #f5f7fa;
+      background-color: #f4f6f8;
       font-family: Arial, sans-serif;
     }
 
@@ -34,7 +34,7 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
 
-    h1 {
+    .title {
       margin-top: 0;
       margin-bottom: 10px;
       text-align: center;
@@ -50,7 +50,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 12px;
+      gap: 15px;
       margin-bottom: 25px;
     }
 
@@ -79,23 +79,36 @@
     }
 
     .button-area {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
       margin-top: 25px;
-      text-align: center;
     }
 
     button {
-      padding: 12px 24px;
+      padding: 12px 22px;
       border: none;
       border-radius: 8px;
-      background-color: #f7931a;
       color: white;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
 
-    button:hover {
-      background-color: #db7f0e;
+    .refresh-button {
+      background-color: #f7931a;
+    }
+
+    .refresh-button:hover {
+      background-color: #d97d0d;
+    }
+
+    .auto-button {
+      background-color: #333;
+    }
+
+    .auto-button:hover {
+      background-color: #111;
     }
 
     button:disabled {
@@ -111,7 +124,7 @@
     }
 
     .update-time {
-      margin-top: 10px;
+      margin-top: 8px;
       color: #888;
       font-size: 14px;
       text-align: center;
@@ -126,6 +139,11 @@
         padding: 18px;
       }
 
+      .price-box {
+        flex-direction: column;
+        gap: 5px;
+      }
+
       .current-price {
         font-size: 24px;
       }
@@ -138,62 +156,200 @@
 </head>
 
 <body>
-  <div class="container">
-    <h1>₿ 비트코인 가격</h1>
-
-    <p class="description">
-      최근 24시간 비트코인 원화 가격
-    </p>
-
-    <div class="price-box">
-      <span id="currentPrice" class="current-price">
-        불러오는 중...
-      </span>
-
-      <span id="changeRate" class="change-rate"></span>
-    </div>
-
-    <div class="chart-container">
-      <canvas id="bitcoinChart"></canvas>
-    </div>
-
-    <div class="button-area">
-      <button id="refreshButton">
-        가격 새로고침
-      </button>
-    </div>
-
-    <div id="status" class="status"></div>
-    <div id="updateTime" class="update-time"></div>
-  </div>
+  <!-- HTML에는 빈 공간만 존재 -->
+  <div id="app"></div>
 
   <script>
-    // CoinGecko 비트코인 최근 24시간 가격 API
     const API_URL =
       "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart" +
       "?vs_currency=krw&days=1";
 
-    const currentPriceElement =
-      document.getElementById("currentPrice");
+    /*
+      애플리케이션 상태
 
-    const changeRateElement =
-      document.getElementById("changeRate");
-
-    const statusElement =
-      document.getElementById("status");
-
-    const updateTimeElement =
-      document.getElementById("updateTime");
-
-    const refreshButton =
-      document.getElementById("refreshButton");
-
-    const canvas =
-      document.getElementById("bitcoinChart");
+      React에서는 보통 useState로 관리하지만,
+      순수 JavaScript에서는 직접 변수를 만들고
+      화면도 직접 수정해야 한다.
+    */
+    const state = {
+      currentPrice: 0,
+      changeRate: 0,
+      prices: [],
+      loading: false,
+      errorMessage: "",
+      lastUpdated: null,
+      autoRefresh: true
+    };
 
     let bitcoinChart = null;
+    let timerId = null;
 
-    // 원화 형식으로 바꾸는 함수
+    /*
+      화면 요소를 보관할 객체
+
+      나중에 가격이나 상태를 변경하려면
+      생성한 DOM 요소를 따로 기억해야 한다.
+    */
+    const elements = {
+      app: null,
+      container: null,
+      title: null,
+      description: null,
+      priceBox: null,
+      currentPrice: null,
+      changeRate: null,
+      chartContainer: null,
+      canvas: null,
+      buttonArea: null,
+      refreshButton: null,
+      autoButton: null,
+      status: null,
+      updateTime: null
+    };
+
+    /*
+      DOM 요소를 쉽게 생성하기 위한 함수
+    */
+    function createElement(tagName, className, text) {
+      const element = document.createElement(tagName);
+
+      if (className) {
+        element.className = className;
+      }
+
+      if (text !== undefined) {
+        element.textContent = text;
+      }
+
+      return element;
+    }
+
+    /*
+      전체 HTML 구조를 JavaScript로 생성
+    */
+    function createApp() {
+      elements.app = document.getElementById("app");
+
+      // 가장 바깥쪽 박스
+      elements.container =
+        createElement("main", "container");
+
+      // 제목
+      elements.title =
+        createElement(
+          "h1",
+          "title",
+          "₿ 비트코인 가격"
+        );
+
+      // 설명
+      elements.description =
+        createElement(
+          "p",
+          "description",
+          "최근 24시간 비트코인 원화 가격"
+        );
+
+      // 가격 표시 영역
+      elements.priceBox =
+        createElement("section", "price-box");
+
+      elements.currentPrice =
+        createElement(
+          "span",
+          "current-price",
+          "가격을 불러오는 중..."
+        );
+
+      elements.changeRate =
+        createElement(
+          "span",
+          "change-rate",
+          ""
+        );
+
+      elements.priceBox.append(
+        elements.currentPrice,
+        elements.changeRate
+      );
+
+      // 그래프 영역
+      elements.chartContainer =
+        createElement("section", "chart-container");
+
+      elements.canvas =
+        createElement("canvas");
+
+      elements.canvas.id = "bitcoinChart";
+
+      elements.chartContainer.append(
+        elements.canvas
+      );
+
+      // 버튼 영역
+      elements.buttonArea =
+        createElement("div", "button-area");
+
+      elements.refreshButton =
+        createElement(
+          "button",
+          "refresh-button",
+          "가격 새로고침"
+        );
+
+      elements.autoButton =
+        createElement(
+          "button",
+          "auto-button",
+          "자동 갱신 중지"
+        );
+
+      elements.buttonArea.append(
+        elements.refreshButton,
+        elements.autoButton
+      );
+
+      // 상태 메시지
+      elements.status =
+        createElement("div", "status");
+
+      // 마지막 갱신 시간
+      elements.updateTime =
+        createElement("div", "update-time");
+
+      // container에 자식 요소 추가
+      elements.container.append(
+        elements.title,
+        elements.description,
+        elements.priceBox,
+        elements.chartContainer,
+        elements.buttonArea,
+        elements.status,
+        elements.updateTime
+      );
+
+      // 최종적으로 app에 추가
+      elements.app.append(
+        elements.container
+      );
+
+      /*
+        이벤트도 JavaScript에서 직접 연결
+      */
+      elements.refreshButton.addEventListener(
+        "click",
+        loadBitcoinPrice
+      );
+
+      elements.autoButton.addEventListener(
+        "click",
+        toggleAutoRefresh
+      );
+    }
+
+    /*
+      원화 형식으로 변경
+    */
     function formatKRW(price) {
       return new Intl.NumberFormat("ko-KR", {
         style: "currency",
@@ -202,115 +358,198 @@
       }).format(price);
     }
 
-    // 시간 형식으로 바꾸는 함수
+    /*
+      시간만 표시
+    */
     function formatTime(timestamp) {
       const date = new Date(timestamp);
 
-      const hour = String(date.getHours()).padStart(2, "0");
-      const minute = String(date.getMinutes()).padStart(2, "0");
+      const hour =
+        String(date.getHours()).padStart(2, "0");
+
+      const minute =
+        String(date.getMinutes()).padStart(2, "0");
 
       return `${hour}:${minute}`;
     }
 
-    // 그래프 생성 함수
-    function drawChart(prices) {
-      const labels = prices.map(item => {
+    /*
+      state의 값을 화면에 반영하는 함수
+
+      React에서는 state가 바뀌면 화면이 자동으로 다시 렌더링되지만,
+      순수 JavaScript에서는 직접 DOM을 하나하나 수정해야 한다.
+    */
+    function render() {
+      // 로딩 중
+      if (state.loading) {
+        elements.refreshButton.disabled = true;
+
+        elements.status.textContent =
+          "비트코인 가격을 가져오는 중입니다.";
+      } else {
+        elements.refreshButton.disabled = false;
+      }
+
+      // 오류 발생
+      if (state.errorMessage) {
+        elements.currentPrice.textContent =
+          "가격 조회 실패";
+
+        elements.changeRate.textContent = "";
+
+        elements.status.textContent =
+          state.errorMessage;
+
+        return;
+      }
+
+      // 가격이 존재하는 경우
+      if (state.currentPrice > 0) {
+        elements.currentPrice.textContent =
+          formatKRW(state.currentPrice);
+
+        const arrow =
+          state.changeRate >= 0 ? "▲" : "▼";
+
+        elements.changeRate.textContent =
+          `${arrow} ${Math.abs(state.changeRate).toFixed(2)}%`;
+
+        /*
+          기존 클래스를 직접 제거하고
+          새로운 클래스를 직접 추가한다.
+        */
+        elements.changeRate.classList.remove(
+          "up",
+          "down"
+        );
+
+        if (state.changeRate >= 0) {
+          elements.changeRate.classList.add("up");
+        } else {
+          elements.changeRate.classList.add("down");
+        }
+
+        elements.status.textContent =
+          "가격을 정상적으로 불러왔습니다.";
+      }
+
+      // 마지막 갱신 시간
+      if (state.lastUpdated) {
+        elements.updateTime.textContent =
+          "마지막 갱신: " +
+          state.lastUpdated.toLocaleString("ko-KR");
+      }
+
+      // 자동 갱신 버튼
+      elements.autoButton.textContent =
+        state.autoRefresh
+          ? "자동 갱신 중지"
+          : "자동 갱신 시작";
+    }
+
+    /*
+      그래프 생성
+    */
+    function drawChart() {
+      const labels = state.prices.map(item => {
         return formatTime(item[0]);
       });
 
-      const priceValues = prices.map(item => {
+      const priceValues = state.prices.map(item => {
         return item[1];
       });
 
-      // 기존 그래프가 있으면 삭제
       if (bitcoinChart !== null) {
         bitcoinChart.destroy();
       }
 
-      bitcoinChart = new Chart(canvas, {
-        type: "line",
+      bitcoinChart = new Chart(
+        elements.canvas,
+        {
+          type: "line",
 
-        data: {
-          labels: labels,
+          data: {
+            labels: labels,
 
-          datasets: [
-            {
-              label: "비트코인 가격",
-              data: priceValues,
-
-              borderColor: "#f7931a",
-              backgroundColor: "rgba(247, 147, 26, 0.15)",
-
-              borderWidth: 2,
-              pointRadius: 0,
-              pointHoverRadius: 5,
-
-              fill: true,
-              tension: 0.2
-            }
-          ]
-        },
-
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-
-          interaction: {
-            mode: "index",
-            intersect: false
+            datasets: [
+              {
+                label: "비트코인 가격",
+                data: priceValues,
+                borderColor: "#f7931a",
+                backgroundColor:
+                  "rgba(247, 147, 26, 0.15)",
+                borderWidth: 2,
+                pointRadius: 0,
+                pointHoverRadius: 5,
+                fill: true,
+                tension: 0.2
+              }
+            ]
           },
 
-          plugins: {
-            legend: {
-              display: true
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            interaction: {
+              mode: "index",
+              intersect: false
             },
 
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  return formatKRW(context.raw);
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return formatKRW(context.raw);
+                  }
                 }
-              }
-            }
-          },
-
-          scales: {
-            x: {
-              ticks: {
-                // 시간이 너무 많이 표시되지 않도록 제한
-                maxTicksLimit: 12
-              },
-
-              title: {
-                display: true,
-                text: "시간"
               }
             },
 
-            y: {
-              ticks: {
-                callback: function(value) {
-                  return Math.round(value / 10000) + "만 원";
+            scales: {
+              x: {
+                ticks: {
+                  maxTicksLimit: 12
+                },
+
+                title: {
+                  display: true,
+                  text: "시간"
                 }
               },
 
-              title: {
-                display: true,
-                text: "비트코인 가격"
+              y: {
+                ticks: {
+                  callback: function(value) {
+                    return (
+                      Math.round(value / 10000) +
+                      "만 원"
+                    );
+                  }
+                },
+
+                title: {
+                  display: true,
+                  text: "비트코인 가격"
+                }
               }
             }
           }
         }
-      });
+      );
     }
 
-    // 비트코인 가격 가져오기
+    /*
+      API에서 비트코인 데이터 가져오기
+    */
     async function loadBitcoinPrice() {
-      try {
-        refreshButton.disabled = true;
-        statusElement.textContent =
-          "비트코인 가격을 가져오는 중입니다.";
+      state.loading = true;
+      state.errorMessage = "";
 
+      // 상태가 바뀌었으므로 직접 화면 갱신
+      render();
+
+      try {
         const response = await fetch(API_URL);
 
         if (!response.ok) {
@@ -321,73 +560,101 @@
 
         const data = await response.json();
 
-        if (!data.prices || data.prices.length === 0) {
-          throw new Error("가격 데이터가 없습니다.");
+        if (
+          !data.prices ||
+          data.prices.length === 0
+        ) {
+          throw new Error(
+            "가격 데이터가 없습니다."
+          );
         }
 
         const prices = data.prices;
 
-        // 24시간 전 가격
-        const firstPrice = prices[0][1];
+        const firstPrice =
+          prices[0][1];
 
-        // 가장 최근 가격
         const currentPrice =
           prices[prices.length - 1][1];
 
-        // 24시간 등락률
         const changeRate =
-          ((currentPrice - firstPrice) / firstPrice) * 100;
+          (
+            (currentPrice - firstPrice) /
+            firstPrice
+          ) * 100;
 
-        currentPriceElement.textContent =
-          formatKRW(currentPrice);
-
-        changeRateElement.textContent =
-          `${changeRate >= 0 ? "▲" : "▼"} ` +
-          `${Math.abs(changeRate).toFixed(2)}%`;
-
-        // 상승이면 빨간색, 하락이면 파란색
-        if (changeRate >= 0) {
-          changeRateElement.className =
-            "change-rate up";
-        } else {
-          changeRateElement.className =
-            "change-rate down";
-        }
-
-        drawChart(prices);
-
-        statusElement.textContent =
-          "가격을 정상적으로 불러왔습니다.";
-
-        updateTimeElement.textContent =
-          `마지막 갱신: ${new Date().toLocaleString("ko-KR")}`;
+        /*
+          상태 변경
+        */
+        state.prices = prices;
+        state.currentPrice = currentPrice;
+        state.changeRate = changeRate;
+        state.lastUpdated = new Date();
       } catch (error) {
         console.error(error);
 
-        currentPriceElement.textContent =
-          "가격 조회 실패";
-
-        changeRateElement.textContent = "";
-
-        statusElement.textContent =
+        state.errorMessage =
           "가격을 가져오지 못했습니다: " +
           error.message;
       } finally {
-        refreshButton.disabled = false;
+        state.loading = false;
+
+        /*
+          상태 변경 후 화면도 직접 갱신
+        */
+        render();
+
+        if (state.prices.length > 0) {
+          drawChart();
+        }
       }
     }
 
-    // 버튼을 누르면 새로고침
-    refreshButton.addEventListener(
-      "click",
-      loadBitcoinPrice
-    );
+    /*
+      자동 갱신 시작 또는 중지
+    */
+    function toggleAutoRefresh() {
+      state.autoRefresh =
+        !state.autoRefresh;
 
-    // 페이지가 열리면 바로 실행
+      if (state.autoRefresh) {
+        startAutoRefresh();
+      } else {
+        stopAutoRefresh();
+      }
+
+      render();
+    }
+
+    /*
+      1분마다 갱신
+    */
+    function startAutoRefresh() {
+      stopAutoRefresh();
+
+      timerId = setInterval(
+        loadBitcoinPrice,
+        60 * 1000
+      );
+    }
+
+    /*
+      자동 갱신 중지
+    */
+    function stopAutoRefresh() {
+      if (timerId !== null) {
+        clearInterval(timerId);
+        timerId = null;
+      }
+    }
+
+    /*
+      프로그램 시작
+    */
+    createApp();
+    render();
     loadBitcoinPrice();
-
-    // 1분마다 자동으로 가격 갱신
-    setInterval(loadBitcoinPrice, 60 * 1000);
+    startAutoRefresh();
   </script>
 </body>
 </html>
