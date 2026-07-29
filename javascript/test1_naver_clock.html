@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>디지털 시계</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f6f7;
+            font-family: Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+            color: #202124;
+        }
+
+        .clock-card {
+            width: min(760px, calc(100% - 32px));
+            padding: 56px 36px 48px;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            background: #ffffff;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .clock-title {
+            margin: 0 0 12px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #03c75a;
+            letter-spacing: -0.5px;
+        }
+
+        .date {
+            margin-bottom: 22px;
+            font-size: 18px;
+            color: #666666;
+            letter-spacing: -0.4px;
+        }
+
+        .time-row {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 10px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .time {
+            font-size: clamp(56px, 12vw, 112px);
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: -4px;
+            color: #111111;
+        }
+
+        .milliseconds {
+            min-width: 78px;
+            padding-bottom: 10px;
+            font-size: clamp(24px, 5vw, 42px);
+            line-height: 1;
+            font-weight: 700;
+            color: #03c75a;
+            text-align: left;
+        }
+
+        .guide {
+            margin-top: 28px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 540px) {
+            .clock-card {
+                padding: 42px 18px 38px;
+            }
+
+            .time-row {
+                gap: 6px;
+            }
+
+            .time {
+                letter-spacing: -2px;
+            }
+
+            .milliseconds {
+                min-width: 58px;
+                padding-bottom: 6px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="clock-card">
+        <h1 class="clock-title">현재 시각</h1>
+        <div id="mydate" class="date"></div>
+
+        <div class="time-row" aria-label="현재 시간">
+            <span id="mytime" class="time">00:00:00</span>
+            <span id="milliseconds" class="milliseconds">000</span>
+        </div>
+
+        <div class="guide">대한민국 표준시 기준</div>
+    </main>
+
+    <script type="module">
+        const mydate = document.getElementById("mydate");
+        const mytime = document.getElementById("mytime");
+        const milliseconds = document.getElementById("milliseconds");
+
+        function addZero(value, length = 2) {
+            return String(value).padStart(length, "0");
+        }
+
+        function updateClock() {
+            const now = new Date();
+
+            const year = now.getFullYear();
+            const month = addZero(now.getMonth() + 1);
+            const date = addZero(now.getDate());
+            const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
+            const day = dayNames[now.getDay()];
+
+            const hours = addZero(now.getHours());
+            const minutes = addZero(now.getMinutes());
+            const seconds = addZero(now.getSeconds());
+            const ms = addZero(now.getMilliseconds(), 3);
+
+            mydate.textContent = `${year}년 ${month}월 ${date}일 ${day}요일`;
+            mytime.textContent = `${hours}:${minutes}:${seconds}`;
+            milliseconds.textContent = ms;
+
+            requestAnimationFrame(updateClock);
+        }
+
+        updateClock();
+    </script>
+</body>
+</html>
