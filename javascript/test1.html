@@ -15,6 +15,12 @@
             </div>
         </div>
         <script type="module">
+            async function updateTime(){
+                let nowdate=new Date();
+                let nowtime=`${nowdate.getHours()}:${nowdate.getMinutes()}:${nowdate.getSeconds()}.${nowdate.getMilliseconds()}`;
+                const mytime=document.getElementById("mytime");
+                mytime.textContent=nowtime;
+            }
             (() => {
                 let nowdate=new Date();
                 let nowtime=`${nowdate.getHours()}:${nowdate.getMinutes()}:${nowdate.getSeconds()}.${nowdate.getMilliseconds()}`;
@@ -28,8 +34,7 @@
                 const mydate=document.getElementById("mydate");
                 mydate.textContent=nowdate;
 
-                const mytime=document.getElementById("mytime");
-                mytime.textContent=nowtime;
+                setInterval(updateTime, 10);
             })();
         </script>
     </body>
