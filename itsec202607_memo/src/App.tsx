@@ -8,6 +8,8 @@ function App() {
 
   function dummy(){
     num1++;
+    let _count=count;
+    setCount(++_count);
     console.log(`#num1:${num1}`)
   }
 
@@ -15,6 +17,7 @@ function App() {
    <div>
     <div>ㅎㅇ</div>
     <div>num1: {num1}</div>
+    <div>count: {count}</div>
     <div>
       <button onClick={dummy}>숫자증가1</button>
     </div>
