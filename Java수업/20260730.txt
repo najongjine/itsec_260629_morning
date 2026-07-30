@@ -20,3 +20,35 @@ public class itsecmorning_2607 {
 	}
 
 }
+
+----------------------
+
+
+package itsecmorning_2607;
+
+class Myclass{
+	/* public: 다 보여줄게 다 가져가
+	 * protected: 내 가족과 지인만되
+	 * private: 내꺼야, 개인화, 외부공개 거부 */
+	private int a;
+	
+	public Myclass() {}
+	
+	void show() {
+		System.out.println("a:"+a);
+	}
+}
+
+public class itsecmorning_2607 {
+
+	public static void main(String[] args) {
+		Myclass myclass= new Myclass();
+		/* 어떤 클래스가 다른 클래스를 호출, 사용 하면
+		 * 메세지를 주고받는다, 메세지가 오간다, 상호작호 한다 */
+		myclass.a=1;
+		
+
+	}
+
+}
+
