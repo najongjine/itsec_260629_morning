@@ -1,0 +1,22 @@
+package itsecmorning_2607;
+
+class Myclass{
+	int a;
+	
+	void show() {
+		System.out.println("a:"+a);
+	}
+}
+
+public class itsecmorning_2607 {
+	/* 함수, 메소드, 모듈 */
+	void dummy() {
+		
+	}
+	public static void main(String[] args) {
+		Myclass myclass= new Myclass();
+		myclass.show();
+
+	}
+
+}
