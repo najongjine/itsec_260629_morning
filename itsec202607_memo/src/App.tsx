@@ -8,6 +8,7 @@ function App() {
 
   function dummy(){
     num1++;
+    console.log(`#num1:${num1}`)
   }
 
   return (
