@@ -10,7 +10,7 @@ function App() {
     for(;nums.size<45;){
       let _nums=Array.from(
         {length:45},
-        (_,index)=> index+1
+        (_,index)=> Math.floor(Math.random()*45)+1
       );
       _nums.forEach((e)=>{nums.add(e)}); 
     }
@@ -24,7 +24,7 @@ function App() {
     <div>로또번호 자동생성기</div>
    
     <div>
-      <button onClick={()=>{}}>번호생성</button>
+      <button onClick={()=>{randomnum();}}>번호생성</button>
     </div>
    </div>
   )
