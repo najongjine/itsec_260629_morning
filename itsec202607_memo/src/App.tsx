@@ -3,23 +3,28 @@ import './App.css'
 
 
 function App() {
-  let num1=1;
-  const [count, setCount] = useState(0)
+  let nums:Set<number>=new Set();
+  const [lottonums,set_lottonums]=useState<Number[]>([]);
 
-  function dummy(){
-    num1++;
-    let _count=count;
-    setCount(++_count);
-    console.log(`#num1:${num1}`)
+  function randomnum(){
+    for(;nums.size<45;){
+      let _nums=Array.from(
+        {length:45},
+        (_,index)=> index+1
+      );
+      _nums.forEach((e)=>{nums.add(e)}); 
+    }
+    nums=new Set([...nums].slice(0,45));
+    console.log(`# nums: `,nums);
   }
+ 
 
   return (
    <div>
-    <div>ㅎㅇ</div>
-    <div>num1: {num1}</div>
-    <div>count: {count}</div>
+    <div>로또번호 자동생성기</div>
+   
     <div>
-      <button onClick={dummy}>숫자증가1</button>
+      <button onClick={()=>{}}>번호생성</button>
     </div>
    </div>
   )
