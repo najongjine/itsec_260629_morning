@@ -29,6 +29,10 @@ function App() {
   return (
    <div>
     <div>로또번호 자동생성기</div>
+    <div>
+      <div>**생성한 랜덤 번호**</div>
+      <div>{lottonums.join(",")}</div>
+    </div>
    
     <div>
       <button onClick={()=>{randomnum();}}>번호생성</button>
