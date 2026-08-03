@@ -40,22 +40,22 @@ function App() {
 
         <div className="result-box">
           <div className="result-title">생성한 랜덤 번호</div>
-        </div>
-        <div className="number-list">
-          {lottonums.length &&
-            lottonums.map((number) => (
-              <span className="empty-message">
-                아직 생성된 번호가 없습니다.
+          <div className="number-list">
+            {!lottonums?.length && (
+                <span className="empty-message">
+                  아직 생성된 번호가 없습니다.
+                </span>
+            )}
+          </div>
+          <div className="number-list">
+            {lottonums?.map((number) => (
+              <span className="number-ball" key={number}>
+                {number}
               </span>
-          ))}
+            ))}
+          </div>
         </div>
-        <div className="number-list">
-          {lottonums.map((number) => (
-            <span className="number-ball" key={number}>
-              {number}
-            </span>
-          ))}
-        </div>
+        
 
         <button className="generate-button" onClick={randomnum}>
           번호 생성
