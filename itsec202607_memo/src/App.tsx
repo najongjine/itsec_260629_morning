@@ -1,46 +1,68 @@
-import { useState } from 'react'
-import './App.css'
-
+import { useState } from 'react';
+import './App.css';
 
 function App() {
-  let nums:Set<number>=new Set();
-  const [lottonums,set_lottonums]=useState<Number[]>([]);
+  let nums: Set<number> = new Set();
+
+  // Number[]보다 number[] 사용을 권장합니다.
+  const [lottonums, setLottonums] = useState<number[]>([]);
 
   /**
-   * 1~45 중 랜덤숫자 45개를 만들어서 nums 에 저장하는 코드.
-   *@param 없음
-   @returns 없음
+   * 1~45 중 랜덤 숫자 45개를 만들어서 nums에 저장
    */
-  function randomnum(){
-    for(;nums.size<45;){
-      // 1~45중 랜덤 숫자 45개
-      let _nums=Array.from(
-        {length:45},
-        (_,index)=> Math.floor(Math.random()*45)+1
+  function randomnum() {
+    for (; nums.size < 45; ) {
+      const randomNumbers = Array.from(
+        { length: 45 },
+        () => Math.floor(Math.random() * 45) + 1
       );
-      _nums.forEach((e)=>{nums.add(e)}); 
+
+      randomNumbers.forEach((number) => {
+        nums.add(number);
+      });
     }
-    // 100% 45개만 갖게됨
-    nums=new Set([...nums].slice(0,45));
-    set_lottonums([...nums]);
-    console.log(`# nums: `,nums);
+
+    nums = new Set([...nums].slice(0, 45));
+
+    setLottonums([...nums]);
+
+    console.log('# nums:', nums);
   }
- 
 
   return (
-   <div>
-    <div>로또번호 자동생성기</div>
-    <div>
-      <div>**생성한 랜덤 번호**</div>
-      <div>{lottonums.join(",")}</div>
-    </div>
-   
-    <div>
-      <button onClick={()=>{randomnum();}}>번호생성</button>
-    </div>
-   </div>
-  )
+    <div className="app">
+      <div className="lotto-card">
+        <h1 className="title">로또번호 자동생성기</h1>
 
+        <p className="description">
+          버튼을 누르면 1부터 45까지의 번호를 무작위로 생성합니다.
+        </p>
+
+        <div className="result-box">
+          <div className="result-title">생성한 랜덤 번호</div>
+        </div>
+        <div className="number-list">
+          {lottonums.length &&
+            lottonums.map((number) => (
+              <span className="empty-message">
+                아직 생성된 번호가 없습니다.
+              </span>
+          ))}
+        </div>
+        <div className="number-list">
+          {lottonums.map((number) => (
+            <span className="number-ball" key={number}>
+              {number}
+            </span>
+          ))}
+        </div>
+
+        <button className="generate-button" onClick={randomnum}>
+          번호 생성
+        </button>
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
