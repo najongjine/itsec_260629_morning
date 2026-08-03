@@ -45,3 +45,26 @@ public class itsecmorning_2607 {
 	}
 
 }
+
+---------------------
+
+package itsecmorning_2607;
+
+
+public class itsecmorning_2607 {
+	public static void main(String[] args) {
+		/* 자바도 c언어처럼 문자열은 시작주소를 저장하는 형태로 가요
+		 * 처음 등장하는 문자열은 heap 영역에 만들고
+		 * 똑같은 문자열 나오면 재사용.
+		 * new 나 배열을 사용하면 무조건 새로운 영역 만들어요 */
+		String str1="abc";
+		String str2="abc_";
+		String str3="abc";
+		String str4=new String("abc");
+		
+		// equals는 주소 비교하는게 아니라 내용물 비교하는 놈이에요
+		System.out.println(str1.equals(str4));
+
+	}
+
+}
