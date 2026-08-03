@@ -1,0 +1,47 @@
+package itsecmorning_2607;
+
+
+class A{
+	// public은 아무 scope에서나 접근 가능
+	int v4;
+	public int v=1;
+	// 상속 관계 scope 에서는 접근 가능
+	protected int v2=2;
+	// 자기 자신만 접근 가능
+	private int v3=3;
+			
+	
+	/* 생성자.
+	 * 자신의 클래스이름과 똑같은 method 이름.
+	 * 만약 생성자를 안만들면, 컴파일러가
+	 * 껍데기 생성자를 지가 만들어요 */
+	A(int v){v=3;}
+	
+	void showvalue() {
+		/* 문자열 + 데이터 := 문자열 붙이기 */
+		System.out.println("v:"+v);
+	}
+}
+// 상속. 나중에 배울거임
+class B extends A{
+	B(){
+		super(1);
+	}
+	void change() {
+		v2=3;
+	}
+}
+
+public class itsecmorning_2607 {
+	
+	public static void main(String[] args) {
+		A a1= new A(2);
+		a1.v4=4;
+		/* 다른 scope 에서는 protected, private 접근 불가능
+		a2.v2=2;
+		*/
+
+
+	}
+
+}
