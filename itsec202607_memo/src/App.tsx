@@ -22,6 +22,7 @@ function App() {
     }
     // 100% 45개만 갖게됨
     nums=new Set([...nums].slice(0,45));
+    set_lottonums([...nums]);
     console.log(`# nums: `,nums);
   }
  
