@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useEffect } from "react";
 import './App.css';
 
 function App() {
@@ -7,8 +8,40 @@ function App() {
   // Number[]보다 number[] 사용을 권장합니다.
   const [lottonums, setLottonums] = useState<number[]>([]);
 
+  useEffect(() => {
+    getLottoResult(1235);
+  }, []);
+
+  async function getLottoResult(round: number) {
+  const url =
+    `https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${round}`;
+
+  const response = await fetch(url, {
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+      },
+    });
+
+    const contentType = response.headers.get("content-type");
+
+    if (!response.ok) {
+      throw new Error(`요청 실패: ${response.status}`);
+    }
+
+    if (!contentType?.includes("application/json")) {
+      const text = await response.text();
+
+      throw new Error(
+        `JSON이 아닌 응답이 왔습니다. 응답 일부: ${text.slice(0, 100)}`
+      );
+    }
+
+    return response.json();
+  }
+
+
   /**
-   * 1~45 중 랜덤 숫자 45개를 만들어서 nums에 저장
+   * 1~45 중 랜덤 숫자 45개를 만들어서 nums,lottonums에 저장
    */
   function randomnum() {
     for (; nums.size < 45; ) {
@@ -22,7 +55,7 @@ function App() {
       });
     }
 
-    nums = new Set([...nums].slice(0, 45));
+    nums = new Set([...nums].slice(0, 7));
 
     setLottonums([...nums]);
 
@@ -48,11 +81,17 @@ function App() {
             )}
           </div>
           <div className="number-list">
-            {lottonums?.map((number) => (
+            {/* 0번부터 5번까지 일반 번호 */}
+            {lottonums.slice(0, 6).map((number) => (
               <span className="number-ball" key={number}>
                 {number}
               </span>
             ))}
+
+            {/* 6번 인덱스는 보너스 번호 */}
+            <span className="bonus-text">
+              보너스 : {lottonums[6]}
+            </span>
           </div>
         </div>
         
