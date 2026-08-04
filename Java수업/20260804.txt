@@ -1,0 +1,30 @@
+package itsecmorning_2607;
+
+class Animal{
+	/* static은 신의영역. 공용영역.
+	 * 프로그램이 시작하기 전에 이미 만들어져 있어야함.
+	 * 모든곳에서 접근 가능.
+	 * 모든곳에서 공용으로 쓰는 변수.
+	 * */
+	static int eye=2;
+	int leg=4;
+	boolean fur=true;
+	
+	void makesound() {
+		System.out.println("으르렁");
+	}
+}
+public class itsecmorning_2607 {
+	public static void main(String[] args) {
+		Animal a1=new Animal();
+		Animal a2=new Animal();
+		
+		Animal.eye=1;
+		a1.eye++;
+		a2.eye++;
+		// 9
+		System.out.println(Animal.eye+a1.eye+a2.eye);
+
+	}
+
+}
