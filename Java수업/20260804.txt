@@ -28,3 +28,41 @@ public class itsecmorning_2607 {
 	}
 
 }
+
+
+---------------------
+
+
+package itsecmorning_2607;
+
+class A0804{
+	int v=1;
+	/* 오버로딩:=
+	 * 함수 이름은 똑같은데, 매개변수 갯수와 타입이 다르면
+	 * 다른함수처럼 취급됨.
+	 * 사용하는 사람 입장에선 꼭 같은 이름의 함수가 여러 기능을 가진것처럼
+	 * 보임. */
+	A0804(){
+		
+	}
+	A0804(int v){
+		this.v=v;
+	}
+	void dummy() {
+		System.out.println("dummy() 에요");
+	}
+	void dummy(int a, int b) {
+		System.out.println("dummy(int a, int b) 에요.");
+		System.out.println("a:"+a+", "+"b: "+b);
+	}
+	
+}
+public class itsecmorning_2607 {
+	public static void main(String[] args) {
+		A0804 a1= new A0804(3);
+		a1.dummy(10,20);
+		System.out.println(a1.v);
+
+	}
+
+}
