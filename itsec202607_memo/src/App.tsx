@@ -9,37 +9,9 @@ function App() {
   const [lottonums, setLottonums] = useState<number[]>([]);
 
   useEffect(() => {
-    getLottoResult(1235);
   }, []);
 
-  async function getLottoResult(round: number) {
-  const url =
-    `https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${round}`;
-
-  const response = await fetch(url, {
-      headers: {
-        "User-Agent": "Mozilla/5.0",
-      },
-    });
-
-    const contentType = response.headers.get("content-type");
-
-    if (!response.ok) {
-      throw new Error(`요청 실패: ${response.status}`);
-    }
-
-    if (!contentType?.includes("application/json")) {
-      const text = await response.text();
-
-      throw new Error(
-        `JSON이 아닌 응답이 왔습니다. 응답 일부: ${text.slice(0, 100)}`
-      );
-    }
-
-    return response.json();
-  }
-
-
+  
   /**
    * 1~45 중 랜덤 숫자 45개를 만들어서 nums,lottonums에 저장
    */
