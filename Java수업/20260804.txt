@@ -66,3 +66,16 @@ public class itsecmorning_2607 {
 	}
 
 }
+
+------------------
+
+class A{
+	int a=1;
+	int b=1;
+}
+/* 상속:=
+지한테 있는건 안가져오고, 없는건 부모한테서 싹 가져옴
+*/
+class B extends A{
+	int b=2;
+}
