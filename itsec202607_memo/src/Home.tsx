@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from "react";
-import './App.css';
+import './Home.css';
 
 function Home() {
   let nums: Set<number> = new Set();

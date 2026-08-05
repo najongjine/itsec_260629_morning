@@ -1,0 +1,146 @@
+/* 전체 화면 */
+.app {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #f4f6f8;
+
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* 로또 생성기 카드 */
+.lotto-card {
+  width: 100%;
+  max-width: 700px;
+
+  background-color: white;
+
+  padding: 40px;
+  border-radius: 16px;
+
+  text-align: center;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 */
+.title {
+  margin: 0 0 10px;
+
+  font-size: 32px;
+  color: #222222;
+}
+
+/* 제목 아래 설명 */
+.description {
+  margin-bottom: 30px;
+
+  font-size: 16px;
+  color: #777777;
+}
+
+/* 번호 결과 영역 */
+.result-box {
+  min-height: 180px;
+
+  padding: 25px;
+  margin-bottom: 25px;
+
+  background-color: #f8f9fa;
+
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+}
+
+/* 생성한 랜덤 번호 글자 */
+.result-title {
+  margin-bottom: 20px;
+
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
+}
+
+/* 번호들을 담는 영역 */
+.number-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+/* 번호가 없을 때 표시하는 글자 */
+.empty-message {
+  color: #999999;
+}
+
+/* 각각의 로또 번호 */
+.number-ball {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ffd43b;
+
+  border-radius: 50%;
+
+  font-size: 16px;
+  font-weight: bold;
+  color: #333333;
+
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.15);
+}
+
+/* 번호 생성 버튼 */
+.generate-button {
+  width: 180px;
+
+  padding: 14px 20px;
+
+  background-color: #4c6ef5;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 17px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+/* 버튼 위에 마우스를 올렸을 때 */
+.generate-button:hover {
+  background-color: #3b5bdb;
+}
+
+/* 버튼을 누르는 순간 */
+.generate-button:active {
+  transform: scale(0.97);
+}
+
+/* 모바일 화면 */
+@media (max-width: 600px) {
+  .lotto-card {
+    padding: 25px 15px;
+  }
+
+  .title {
+    font-size: 25px;
+  }
+
+  .number-ball {
+    width: 40px;
+    height: 40px;
+
+    font-size: 14px;
+  }
+}
