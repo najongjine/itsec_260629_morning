@@ -95,3 +95,41 @@ public class itsecmorning_2607 {
 	}
 
 }
+
+
+------------------------
+
+package itsecmorning_2607;
+
+import java.util.Iterator;
+
+class A2608{
+	int a=1;
+	A2608(){
+		System.out.println("a 탄생");
+	}
+	void hello() {
+		System.out.println("a hello");
+	}
+}
+class B2608 extends A2608{
+	int b=2;
+	B2608(){
+		/* 상속 관계에선 super() 가 없어도 지가 컴파일 단계에서 넣어버림 */
+		//super();
+		System.out.println("b 탄생");
+	}
+	void hello() {
+		System.out.println("b hello");
+	}
+}
+
+public class itsecmorning_2607 {
+	public static void main(String[] args) {
+		A2608 a1=new A2608();
+		B2608 b1=new B2608();
+		System.out.println(a1.hello());
+
+	}
+
+}
