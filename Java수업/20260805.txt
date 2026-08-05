@@ -34,7 +34,7 @@ public class itsecmorning_2607 {
 		System.out.println(a1.a);
 		a1.show();
 		a1.hello();
-		a1.bye();
+
 	}
 
 }
