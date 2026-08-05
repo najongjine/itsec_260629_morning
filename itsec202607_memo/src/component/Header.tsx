@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from "react";
+import { Link } from 'react-router';
 
 
 function Header() {
@@ -7,7 +8,10 @@ function Header() {
 
   return (
     <div>
-      <div> header </div>
+      <div> 
+        <Link to="/"> 홈 </Link>
+        <Link to="/boardlist"> 게시판 </Link>
+      </div>
     </div>
   );
 }
