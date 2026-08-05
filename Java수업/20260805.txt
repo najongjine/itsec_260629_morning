@@ -128,7 +128,7 @@ public class itsecmorning_2607 {
 	public static void main(String[] args) {
 		A2608 a1=new A2608();
 		B2608 b1=new B2608();
-		System.out.println(a1.hello());
+		a1.hello();
 
 	}
 
