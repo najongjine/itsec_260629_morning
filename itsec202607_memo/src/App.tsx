@@ -7,6 +7,7 @@ import { Route, Routes } from 'react-router';
 import Home from './Home';
 import BoardList from './BoardList';
 
+
 function App() { 
 
   return (
