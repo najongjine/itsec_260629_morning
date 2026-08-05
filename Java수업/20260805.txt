@@ -38,3 +38,59 @@ public class itsecmorning_2607 {
 	}
 
 }
+
+----------------------------------
+
+package itsecmorning_2607;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+class Creature{
+	int hp=100;
+	void speak() {
+		System.out.println("크르릉");
+	}
+}
+class Npc extends Creature{
+	int mp=100;
+	void speak() {
+		System.out.println("hello greeting");
+	}
+}
+class Orc extends Creature{
+	int hp=100000;
+	void speak() {
+		System.out.println("인간시대의 끝이 왔다");
+	}
+}
+class Rock{
+	
+}
+
+public class itsecmorning_2607 {
+	public static void main(String[] args) {
+		/* 다형성 예제 
+		 * 타입은 부모쪽으로 주고 new는 자식 */
+		List<Object> arr=new ArrayList<Object>();
+		arr.add(new Npc());
+		arr.add(new Orc());
+		arr.add(new Rock());
+		
+		for (Object e : arr) {
+			try {
+				// 부모 타입으로 통일 시켜버리고
+				Creature c1=(Creature) e;
+				// speak이라는 똑같은 코드를 수행
+				// 하지만 기능은 다 다르게 작동
+				c1.speak();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+			
+		}
+
+	}
+
+}
