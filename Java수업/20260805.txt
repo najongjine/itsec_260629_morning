@@ -17,7 +17,8 @@ class A2608{
 class B2608 extends A2608{
 	int b=2;
 	B2608(){
-		super();
+		/* 상속 관계에선 super() 가 없어도 지가 컴파일 단계에서 넣어버림 */
+		//super();
 		System.out.println("b 탄생");
 	}
 	void show() {
