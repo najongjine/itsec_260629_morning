@@ -105,3 +105,52 @@ public class itsecmorning_2607 {
 	}
 
 }
+
+---------------------
+
+package itsecmorning_2607;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+/* 인터페이스 (이론파트에 있는 인터페이스를 말하는게 아님)
+ * 인터페이스라는 아이디어를 자바 입맛대로 구현한것
+ * 인터페이스에 선언한 필드는 static이랑 동일.
+ * 인터페이스엔 함수 이름만 지어두고, 구체화는 자식클래스에서 함 */
+interface Punch{
+	static int p=1;
+	void jap();
+	void hook();
+}
+interface Fireball{
+	int f=2;
+	void smallFire();
+}
+
+class Hero implements Punch, Fireball{
+	@Override
+	public void smallFire() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void jap() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void hook() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
+public class itsecmorning_2607 {
+	public static void main(String[] args) {
+		Hero  hero= new Hero();
+		Punch hero2=new Hero();
+		List<Integer> arr1=new ArrayList<Integer>(); 
+		
+	}
+
+}
