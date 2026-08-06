@@ -31,3 +31,44 @@ public class itsecmorning_2607 {
 	}
 
 }
+
+
+----------------------
+
+
+package itsecmorning_2607;
+
+import java.util.Iterator;
+
+class A2608{
+	static String s="hi";
+	int a=1;
+	int b=2;
+	A2608(){
+		b=3;
+		System.out.println("a탄생. b:"+b);
+	}
+	A2608(int a){
+		System.out.println("a탄생, "+ a +", b:"+b);
+		b=3;
+	}
+	void dummy() {
+		System.out.println("a:"+a);
+	}
+}
+class B2608 extends A2608{
+	int b=1;
+	B2608(){
+		super(1);
+	}
+	void dummy() {
+		System.out.println("b:"+b);
+	}
+}
+public class itsecmorning_2607 {
+	public static void main(String[] args) {
+		A2608 b1= new B2608();
+		b1.dummy();
+	}
+
+}
