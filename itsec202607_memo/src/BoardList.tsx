@@ -32,7 +32,9 @@ function BoardList() {
         cols={50} rows={20}>
         </textarea>
       </div>
-      <div>내가 입력한거: {title2}</div>
+      <div>
+        <button>저장</button>
+      </div>
     </div>
   );
 }
