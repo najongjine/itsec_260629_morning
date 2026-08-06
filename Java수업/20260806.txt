@@ -1,0 +1,33 @@
+package itsecmorning_2607;
+
+import java.util.Iterator;
+
+class A2608{
+	static String s="hi";
+	static int a=1;
+	A2608(){
+		
+	}
+	A2608(int a){
+		this.a=a;
+	}
+	/* static 함수:=
+	 * 프로그램 시작하기도 전에 이미 만들어져 있는 함수
+	 * static 함수에서 변수를 사용할때는 그 변수도 static 이어야 한다 */
+	static void dummy() {
+		System.out.println(a);
+	}
+}
+class B2608{
+	int b=1;
+}
+public class itsecmorning_2607 {
+	public static void main(String[] args) {
+		A2608.dummy();
+		A2608 a1 = new A2608(1);
+		a1.dummy();
+		B2608 b1= new B2608();
+	
+	}
+
+}
