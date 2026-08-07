@@ -12,6 +12,16 @@ function BoardList() {
   let [content,set_content]=useState("");
   let [boardList,set_boardList]=useState<BoardType[]>([]);
 
+  async function saveBoard(){
+    let newBoard:BoardType={
+      title:title2
+      ,content:content
+      ,date:new Date().toString()
+    };
+    set_boardList([...boardList,newBoard]);
+    console.log(boardList)
+  }
+
   return (
     <div>
       <div> 게시판 리스트에요 </div>
@@ -21,7 +31,6 @@ function BoardList() {
           let title=""
           title=e?.target?.value;
           set_title2(title);
-          console.log(title);
         } } />
       </div>
       <div>
@@ -37,7 +46,7 @@ function BoardList() {
         </textarea>
       </div>
       <div>
-        <button>저장</button>
+        <button onClick={(e)=>{saveBoard();}}>저장</button>
       </div>
     </div>
   );
