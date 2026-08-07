@@ -84,3 +84,31 @@ public class itsecmorning_2607 {
 	}
 
 }
+
+-----------------
+
+package itsecmorning_2607;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+/* Thread를 상속 받으면
+ * run() 메소드를 반드시 구현 해줘야해요 */
+class Box extends Thread{
+	public void run() {
+		System.out.println("실행");
+	}
+}
+public class itsecmorning_2607 {
+	public static void main(String[] args) {
+		Box a=new Box();
+		// 실행은 start로 해요
+		a.start();
+		
+		System.out.println("코드 끝");
+		
+		
+	}
+
+}
