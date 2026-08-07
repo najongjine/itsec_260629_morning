@@ -1,0 +1,31 @@
+package itsecmorning_2607;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+class A{
+	
+}
+public class itsecmorning_2607 {
+	public static void main(String[] args) {
+		int a=1;
+		int b=1;
+		
+		/* try catch
+		 * try 문에 있는 코드에 런타임 에러가 나면 catch로 빠짐
+		 * finally는 에러가 나든 안나든 무조건 실행 */
+		try {
+			int c=b/a;
+			System.out.println("c:"+c);
+		} catch (Exception e) {
+			System.out.println("!에러임");
+		}finally {
+			System.out.println("너는 finally 에요");
+		}
+		System.out.println("코드 끝");
+		
+		
+	}
+
+}

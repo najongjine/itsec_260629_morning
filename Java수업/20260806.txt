@@ -113,6 +113,7 @@ package itsecmorning_2607;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 /* 인터페이스 (이론파트에 있는 인터페이스를 말하는게 아님)
  * 인터페이스라는 아이디어를 자바 입맛대로 구현한것
  * 인터페이스에 선언한 필드는 static이랑 동일.
