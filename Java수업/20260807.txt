@@ -112,3 +112,37 @@ public class itsecmorning_2607 {
 	}
 
 }
+
+-----------------
+
+package itsecmorning_2607;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+/* Runnable 이란것도 Thread
+ * Runnable이 나온 이유는 상속이랑 Thread 기능을 같이 쓰기 위해서
+ * run() 이란걸 구현해주고
+ * start() 로 run() 을 실행한다 */
+class 멍멍{
+
+}
+class Box extends 멍멍 implements Runnable{
+	@Override
+	public void run() {
+		System.out.println("실행");
+	}
+}
+public class itsecmorning_2607 {
+	public static void main(String[] args) {
+		Thread a= new Thread(new Box());
+		// 실행은 start로 해요
+		a.start();
+		
+		System.out.println("코드 끝");
+		
+		
+	}
+
+}
