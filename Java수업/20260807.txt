@@ -29,3 +29,58 @@ public class itsecmorning_2607 {
 	}
 
 }
+
+-----------------------
+
+
+package itsecmorning_2607;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class itsecmorning_2607 {
+	public static void main(String[] args) {
+		int[] arr= {1,2,3};
+		int a=0;
+		int b=1;
+		String str1="멍멍";
+		
+		/* try catch
+		 * try 문에 있는 코드에 런타임 에러가 나면 catch로 빠짐
+		 * finally는 에러가 나든 안나든 무조건 실행 
+		 * 만약에 에러와 딱 맞는 catch문이 있으면 그걸로 선택됨
+		 * 에러와 딱맞는 catch 문이 없으면
+		 * 고조 할아버지 Exception이 처리함ㄴ
+		 * */
+		try {
+			//int t=Integer.valueOf(str1); // NumberFormatException
+			//int c=b/a; // ArithmeticException
+			//System.out.println("c:"+c);
+			// System.out.println(arr[99]); // IndexOutOfBoundsException
+			//arr = null; // NullPointerException
+			// arr[0]=1; // NullPointerException
+		}
+		catch(NullPointerException e) {
+			System.out.println("null 에러");
+		}
+		catch(IndexOutOfBoundsException e) {
+			System.out.println("배열첨자 에러");
+		}
+		catch(NumberFormatException e) {
+			System.out.println("문자열 숫자변환 에러");
+		}
+		catch (ArithmeticException e) {
+			System.out.println("산술에러");
+		}
+		catch (Exception e) {
+			System.out.println("!에러임");
+		}finally {
+			System.out.println("너는 finally 에요");
+		}
+		System.out.println("코드 끝");
+		
+		
+	}
+
+}
