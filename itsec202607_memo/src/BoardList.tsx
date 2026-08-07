@@ -29,7 +29,11 @@ function BoardList() {
       </div>
       <div>
         <textarea placeholder='내용을 입력하세요'
-        cols={50} rows={20}>
+        cols={50} rows={20}
+        onChange={(e)=>{
+          let _content=e?.target?.value||""
+          set_content(_content);
+        }}>
         </textarea>
       </div>
       <div>
