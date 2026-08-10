@@ -48,6 +48,9 @@ function BoardList() {
       <div>
         <button onClick={(e)=>{saveBoard();}}>저장</button>
       </div>
+      <div>
+        <div>{JSON.stringify(boardList)}</div>
+      </div>
     </div>
   );
 }
