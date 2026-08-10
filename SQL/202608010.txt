@@ -12,3 +12,9 @@ CREATE TABLE t_user(
  gender VARCHAR CHECK (gender IN ('m', 'f')),
  created_dt TIMESTAMPTZ DEFAULT NOW()
 );
+
+
+INSERT INTO t_user(username, password, email, gender)
+VALUES('pepe','pepe','pepe@gmail.com','m');
+INSERT INTO t_user(username, password, email, gender)
+VALUES('momo','momo','momo@gmail.com','f');
