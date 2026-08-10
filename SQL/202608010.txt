@@ -1,0 +1,14 @@
+https://wildojisan.tistory.com/151
+- 디자인 패턴
+
+https://wildojisan.tistory.com/127
+- DB DCL
+
+CREATE TABLE t_user(
+ id SERIAL PRIMARY KEY,
+ username VARCHAR NOT NULL UNIQUE,
+ password VARCHAR NOT NULL,
+ email VARCHAR,
+ gender VARCHAR CHECK('m','f'),
+ created_dt TIMESTAMPTZ DEFAULT NOW()
+);
