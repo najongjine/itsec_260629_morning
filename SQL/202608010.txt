@@ -9,6 +9,6 @@ CREATE TABLE t_user(
  username VARCHAR NOT NULL UNIQUE,
  password VARCHAR NOT NULL,
  email VARCHAR,
- gender VARCHAR CHECK('m','f'),
+ gender VARCHAR CHECK (gender IN ('m', 'f')),
  created_dt TIMESTAMPTZ DEFAULT NOW()
 );
