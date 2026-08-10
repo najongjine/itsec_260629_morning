@@ -1,2 +1,5 @@
 https://wildojisan.tistory.com/151
 - 디자인 패턴
+
+https://wildojisan.tistory.com/127
+- DB DCL
