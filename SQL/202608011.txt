@@ -36,3 +36,22 @@ INSERT INTO t_board(title,content,user_id)
 VALUES('첫글','내가 1등',
  (SELECT id FROM t_user ORDER BY RANDOM() LIMIT 1)
 );
+
+
+CREATE TABLE t_comment(
+ id SERIAL PRIMARY KEY,
+ cmt TEXT,
+ created_dt TIMESTAMPTZ DEFAULT NOW(),
+ user_id INT,
+ board_id INT,
+ CONSTRAINT fk_cmt_user
+	 FOREIGN KEY (user_id)
+	 REFERENCES t_user(id)
+	 ON DELETE CASCADE
+	 ON UPDATE CASCADE,
+ CONSTRAINT fk_cmt_board
+	 FOREIGN KEY (board_id)
+	 REFERENCES t_board(id)
+	 ON DELETE CASCADE
+	 ON UPDATE CASCADE
+);
