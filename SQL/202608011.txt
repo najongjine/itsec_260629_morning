@@ -55,3 +55,14 @@ CREATE TABLE t_comment(
 	 ON DELETE CASCADE
 	 ON UPDATE CASCADE
 );
+
+
+INSERT INTO t_comment(cmt,user_id,board_id)
+SELECT
+	md5(random()::text)
+	,user_id
+	,id
+FROM t_board
+ORDER BY random()
+LIMIT 1
+;
