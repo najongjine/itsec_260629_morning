@@ -79,3 +79,37 @@ LEFT JOIN t_board as b ON b.user_id = u.id
 LEFT JOIN t_comment as c ON c.board_id = b.id
 ORDER BY u.id
 ;
+
+
+
+SELECT 
+    u.id AS user_id,
+    u.username,
+    b.id AS board_id,
+    b.title,
+
+    json_agg(
+        json_build_object(
+            'id', c.id,
+            'cmt', c.cmt,
+            'user_id', c.user_id
+        )
+    ) AS comments
+
+FROM t_user AS u
+
+LEFT JOIN t_board AS b 
+    ON b.user_id = u.id
+
+LEFT JOIN t_comment AS c 
+    ON c.board_id = b.id
+
+GROUP BY 
+    u.id,
+    u.username,
+    b.id,
+    b.title
+
+ORDER BY 
+    u.id,
+    b.id;
