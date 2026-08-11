@@ -31,3 +31,8 @@ CREATE TABLE t_board(
  ON DELETE CASCADE
  ON UPDATE CASCADE
 );
+
+INSERT INTO t_board(title,content,user_id)
+VALUES('첫글','내가 1등',
+ (SELECT id FROM t_user ORDER BY RANDOM() LIMIT 1)
+);
