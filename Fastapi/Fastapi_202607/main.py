@@ -14,10 +14,15 @@ def query_string_example(name:str,age:int):
     result={"success":True,
             "data":None,
             "msg":""}
-    result["data"]={
-        "안내문":"데이터 잘 받았어요",
-        "받은데이터":f"이름:{name}, 나이는{age}"
-    }
+    try:
+        result["data"]={
+            "안내문":"데이터 잘 받았어요",
+            "받은데이터":f"이름:{name}, 나이는{age/0}"
+        }
+    except Exception as e:
+        result["success"]=False
+        result["msg"]=e
+    
     
     return result
 
