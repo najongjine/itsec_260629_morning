@@ -9,6 +9,18 @@ app=FastAPI()
 def healthcheck():
     return {"success":True,"msg":"서버 건강함"}
 
+@app.get("/query-string1")
+def query_string_example(name:str,age:int):
+    result={"success":True,
+            "data":None,
+            "msg":""}
+    result["data"]={
+        "안내문":"데이터 잘 받았어요",
+        "받은데이터":f"이름:{name}, 나이는{age}"
+    }
+    
+    return result
+
 
 
 if __name__=="__main__":
