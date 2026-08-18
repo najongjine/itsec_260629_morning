@@ -60,3 +60,12 @@ FROM t_board
 WHERE created_dt BETWEEN '2026-08-08' AND '2026-08-12'
 ;
 -- 2026-08-08 이상 ~ 2026-08-12 이하
+
+
+
+SELECT
+*
+FROM t_user 
+WHERE email IS NULL
+;
+-- NULL은 =, != 로 검색하면 결과가 안나옴. 꼭 IS NULL, IS NOT NULL 로 검색 해야함
