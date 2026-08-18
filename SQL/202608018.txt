@@ -79,3 +79,14 @@ LIMIT 2
 ;
 -- ORDER BY 는 정렬. ASC(디폴트) 오름차순, DESC 내림차순
 -- LIMIT 결과 튜플의 수를 제한 하는것
+
+
+SELECT
+c.board_id
+,COUNT(c.board_id) AS "COUNT(c.board_id)"
+FROM t_comment AS c
+GROUP BY c.board_id
+ORDER BY c.board_id
+;
+-- GROUP BY 결과 창에는 중복 제거된거처럼 보이지만, 내부적으로는 배열처리 된것
+-- 그래서 GROUP BY 랑 DISTINCT랑 착각하면 안되요
