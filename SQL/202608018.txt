@@ -13,3 +13,11 @@ DISTINCT (c.board_id) AS "게시글을쓴_유저목록"
 FROM t_comment as c
 ;
 -- DISTINCT 는 진짜 중복 제거
+
+
+SELECT -- 3번째 실행
+*
+FROM t_user AS u -- 1번째 실행
+WHERE u.gender = 'f' -- 2번째 실행
+AND u.created_dt < '2026-08-13'
+;
