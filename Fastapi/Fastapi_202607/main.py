@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 import uvicorn
 
 # 서버 뿅 하고 완성 됨
@@ -21,12 +21,23 @@ def query_string_example(name:str,age:int):
         }
     except Exception as e:
         result["success"]=False
-        result["msg"]=e
+        result["msg"]=str(e)
     
     
     return result
 
-
+@app.post("/post-example")
+def postmethod_example(name:str=Form("")
+                       ,password:str=Form("")):
+    result={"success":True,
+                "data":None,
+                "msg":""}
+    try:
+        pass
+    except Exception as e:
+        result["success"]=False
+        result["msg"]=str(e)
+    return {"success":True,"msg":"서버 건강함"}
 
 if __name__=="__main__":
     uvicorn.run(
