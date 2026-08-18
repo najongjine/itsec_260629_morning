@@ -6,7 +6,7 @@ from routers.router_example import router as example_router
 # 서버 뿅 하고 완성 됨
 app=FastAPI()
 
-app.include_router(example_router)
+app.include_router(example_router,tags=["예제 API"])
 
 # api endpoint, router, controller
 @app.get("/")
