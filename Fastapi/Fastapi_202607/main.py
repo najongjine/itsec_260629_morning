@@ -40,7 +40,7 @@ def postmethod_example(name:str=Form("")
     except Exception as e:
         result["success"]=False
         result["msg"]=str(e)
-    return {"success":True,"msg":"서버 건강함"}
+    return result
 
 if __name__=="__main__":
     uvicorn.run(
