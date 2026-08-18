@@ -1,46 +1,21 @@
 from fastapi import FastAPI, Form
 import uvicorn
 
+from routers.router_example import router as example_router
+
 # 서버 뿅 하고 완성 됨
 app=FastAPI()
+
+app.include_router(example_router)
 
 # api endpoint, router, controller
 @app.get("/")
 def healthcheck():
     return {"success":True,"msg":"서버 건강함"}
 
-@app.get("/query-string1")
-def query_string_example(name:str,age:int):
-    result={"success":True,
-            "data":None,
-            "msg":""}
-    try:
-        result["data"]={
-            "안내문":"데이터 잘 받았어요",
-            "받은데이터":f"이름:{name}, 나이는{age/0}"
-        }
-    except Exception as e:
-        result["success"]=False
-        result["msg"]=str(e)
-    
-    
-    return result
 
-@app.post("/post-example")
-def postmethod_example(name:str=Form("")
-                       ,password:str=Form("")):
-    result={"success":True,
-                "data":None,
-                "msg":""}
-    try:
-        result["data"]={
-            "안내문":"데이터 잘 받았어요",
-            "받은데이터":f"이름:{name}, password:{password}"
-        }
-    except Exception as e:
-        result["success"]=False
-        result["msg"]=str(e)
-    return result
+
+
 
 if __name__=="__main__":
     uvicorn.run(
