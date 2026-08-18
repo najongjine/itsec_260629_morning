@@ -21,3 +21,19 @@ FROM t_user AS u -- 1번째 실행
 WHERE u.gender = 'f' -- 2번째 실행
 AND u.created_dt < '2026-08-13'
 ;
+
+SELECT
+*
+FROM t_board AS b
+WHERE b.title LIKE '%첫%'
+;
+-- LIKE 는 문자열 부분검색 할때 사용됨
+-- 속도는 느림
+
+SELECT
+*
+FROM t_board AS b
+WHERE b.title = '첫'
+;
+-- =은 완전일치에 사용됨
+-- 속도는 빠름
