@@ -6,3 +6,10 @@ FROM t_user AS t -- 1번째 실행
 ;
 
 -- AS 는 별명 붙이기
+
+
+SELECT
+DISTINCT (c.board_id) AS "게시글을쓴_유저목록"
+FROM t_comment as c
+;
+-- DISTINCT 는 진짜 중복 제거
