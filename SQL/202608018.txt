@@ -69,3 +69,10 @@ FROM t_user
 WHERE email IS NULL
 ;
 -- NULL은 =, != 로 검색하면 결과가 안나옴. 꼭 IS NULL, IS NOT NULL 로 검색 해야함
+
+SELECT
+*
+FROM t_board
+ORDER BY created_dt DESC
+;
+-- ORDER BY 는 정렬. ASC(디폴트) 오름차순, DESC 내림차순
