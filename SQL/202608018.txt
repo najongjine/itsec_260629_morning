@@ -37,3 +37,18 @@ WHERE b.title = '첫'
 ;
 -- =은 완전일치에 사용됨
 -- 속도는 빠름
+
+
+SELECT
+*
+FROM t_board AS b
+WHERE b.user_id = 2 OR b.user_id = 4 OR b.user_id = 1
+;
+-- OR 뜻은 조건 만족되는거 다 보여줘
+
+SELECT
+*
+FROM t_board AS b
+WHERE b.user_id IN(1,2,3,4)
+;
+-- IN 이랑 OR이랑 같다. 그런데 IN의 장점은 쿼리조건이 훨씬 짧아진다
