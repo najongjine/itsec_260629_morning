@@ -33,7 +33,10 @@ def postmethod_example(name:str=Form("")
                 "data":None,
                 "msg":""}
     try:
-        pass
+        result["data"]={
+            "안내문":"데이터 잘 받았어요",
+            "받은데이터":f"이름:{name}, password:{password}"
+        }
     except Exception as e:
         result["success"]=False
         result["msg"]=str(e)
