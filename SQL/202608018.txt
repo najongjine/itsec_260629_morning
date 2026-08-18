@@ -1,0 +1,8 @@
+SELECT -- 2번째 실핼
+t.id as "유저아이디"
+, t.id * t.id AS "테이블엔없는칼럼"
+,t.username as "유저네임"
+FROM t_user AS t -- 1번째 실행
+;
+
+-- AS 는 별명 붙이기
