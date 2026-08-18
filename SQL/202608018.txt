@@ -70,9 +70,12 @@ WHERE email IS NULL
 ;
 -- NULL은 =, != 로 검색하면 결과가 안나옴. 꼭 IS NULL, IS NOT NULL 로 검색 해야함
 
+
 SELECT
 *
 FROM t_board
 ORDER BY created_dt DESC
+LIMIT 2
 ;
 -- ORDER BY 는 정렬. ASC(디폴트) 오름차순, DESC 내림차순
+-- LIMIT 결과 튜플의 수를 제한 하는것
