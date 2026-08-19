@@ -1,0 +1,31 @@
+* DCL : Data Control Language
+  DB 권한, 계정권한, DB 사용관련...
+
+- GRANT : 권한을 부여할때 쓰는 키워드
+  GRANT SELECT, INSERT, UPDATE TO postgres 
+  WITH GRAND OPTION; -- 내가 받은 권한을 다른 계정한테도 부여할수 있는 옵션
+
+- REMOVE : 권한 뺏는데 쓰는 키워드
+  REVOKE UPDATE FROM postgres
+
+- ROLE: 역활, 사용자들을 역활이라는 그룹으로 묶음
+  CREATE ROLE myrole1
+  myrole1:[pepe,momo,mimi]
+  GRANT * TO myrole1
+
+- CREATE DATABASE dcl_test; 데이터베이스 생성 명령어
+
+- USE dcl_test;   데이터베이스 사용명령어
+
+- CREATE USER 'testuser'@'localhost' IDENTIFIED BY 'test1234';
+  유저생성 명령어
+
+- DROP USER 'testuser'@'localhost';
+  사용자 삭제 명령어
+
+- DROP DATABASE dcl_test;
+  DB 삭제 명령어
+
+
+
+  
