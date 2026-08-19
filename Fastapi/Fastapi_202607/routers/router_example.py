@@ -44,12 +44,11 @@ def db_conn_test(name:str=""):
             "msg":""}
     try:
         with get_db() as conn:
-            cursor=conn.cursor()
-            cursor.execute("""
-                SELECT NOW()
-            """)
-            data=cursor.fetchall()
-            cursor.close()
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    SELECT NOW()
+                """)
+                data=cursor.fetchall()
         result["data"]=data
     except Exception as e:
         result["success"]=False
