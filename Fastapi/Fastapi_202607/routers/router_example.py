@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Form
+from utils.db import get_db
 
 router=APIRouter()
 
@@ -33,4 +34,25 @@ def postmethod_example(name:str=Form("")
     except Exception as e:
         result["success"]=False
         result["msg"]=str(e)
+    return result
+
+
+@router.get("/db-conn-test")
+def db_conn_test(name:str=""):
+    result={"success":True,
+            "data":None,
+            "msg":""}
+    try:
+        with get_db() as conn:
+            cursor=conn.cursor()
+            cursor.execute("""
+                SELECT NOW()
+            """)
+            data=cursor.fetchall()
+            cursor.close()
+        result["data"]=data
+    except Exception as e:
+        result["success"]=False
+        result["msg"]=str(e)
+    
     return result
