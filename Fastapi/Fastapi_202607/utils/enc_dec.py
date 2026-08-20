@@ -3,7 +3,7 @@ from cryptography.fernet import Fernet
 import hashlib
 import hmac
 import base64
-
+from Crypto.Cipher import AES
 """
 단반향 암호화 (비밀번호용)
 """
@@ -43,4 +43,4 @@ def verify_password(plain_password:str
 """
 양방향 암호화
 """
-
+AES_KEY = b"12345678901234567890123456789012"
