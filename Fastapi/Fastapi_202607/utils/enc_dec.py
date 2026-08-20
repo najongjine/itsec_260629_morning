@@ -44,3 +44,19 @@ def verify_password(plain_password:str
 양방향 암호화
 """
 AES_KEY = b"12345678901234567890123456789012"
+
+def encrypt(text:str) -> str:
+    cipher=AES.new(AES_KEY,AES.MODE_SIV)
+    encrypted,tag=cipher.encrypt_and_digest(
+        text.encode("utf-8")
+    )
+    result=tag+encrypted
+    return base64.urlsafe_b64encode(result).decode()
+
+def decrypt(encrypted_text:str)->str:
+    data=base64.urlsafe_b64decode(encrypted_text.encode())
+    tag=data[:16]
+    encrypted=data[16:]
+    cipher=AES.new(AES_KEY,AES.MODE_SIV)
+    decrypted=cipher.decrypt_and_verify(encrypted,tag)
+    return decrypted.decode("utf-8")
