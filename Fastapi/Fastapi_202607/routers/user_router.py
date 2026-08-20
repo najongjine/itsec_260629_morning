@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Form
 from utils.db import get_db
+from utils.enc_dec import hash_password,verify_password
 
 router=APIRouter()
 
@@ -13,6 +14,7 @@ def register(username:str=Form("")
                 "data":None,
                 "msg":""}
     try:
+        password=hash_password(password)
         with get_db() as conn:
             with conn.cursor() as cursor:
                 cursor.execute("""
