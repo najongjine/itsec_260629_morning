@@ -37,3 +37,10 @@ def verify_password(plain_password:str
     """
     return password_hash.verify(plain_password
                                 ,hashed_password)
+
+
+
+"""
+양방향 암호화
+"""
+
