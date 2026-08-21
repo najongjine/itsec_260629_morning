@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Form
 from utils.db import get_db
 from utils.enc_dec import hash_password,verify_password
+from utils.jwtutil import create_access_token, decode_access_token
 
 router=APIRouter()
 
@@ -26,8 +27,15 @@ def register(username:str=Form("")
                 """
                     ,(username,password,email,gender)
                 )
-                data=cursor.fetchall()
-        result["data"]=data
+                row=cursor.fetchOne()
+        row["password"]=""
+        columns = [
+            desc[0]
+            for desc in cursor.description
+        ]
+        data = dict(zip(columns, row))
+        token=create_access_token(data=data)
+        result["data"]=token
     except Exception as e:
         result["success"]=False
         result["msg"]=str(e)
