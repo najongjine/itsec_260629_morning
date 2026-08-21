@@ -27,12 +27,13 @@ def register(username:str=Form("")
                 """
                     ,(username,password,email,gender)
                 )
-                row=cursor.fetchOne()
-        columns = [
-            desc[0]
-            for desc in cursor.description
-        ]
-        data = dict(zip(columns, row))
+                row=cursor.fetchone()
+                columns = [
+                    desc[0]
+                    for desc in cursor.description
+                ]
+                data = dict(zip(columns, row))
+                data["created_dt"] = data["created_dt"].isoformat()
         token=create_access_token(data=data)
         result["data"]=token
     except Exception as e:
