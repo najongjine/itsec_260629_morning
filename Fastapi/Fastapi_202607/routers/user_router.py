@@ -23,12 +23,11 @@ def register(username:str=Form("")
                     (username,password,email,gender)
                     VALUES
                     (%s,%s,%s,%s)
-                    RETURNING *
+                    RETURNING id, username, email, gender, created_dt
                 """
                     ,(username,password,email,gender)
                 )
                 row=cursor.fetchOne()
-        row["password"]=""
         columns = [
             desc[0]
             for desc in cursor.description
