@@ -42,6 +42,48 @@ def register(username:str=Form("")
     return result
 
 
+@router.post("/login")
+def login(username:str=Form("")
+            ,password:str=Form("")
+            ):
+    result={"success":True,
+                "data":None,
+                "msg":""}
+    try:
+        with get_db() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    SELECT
+                    u.id
+                    ,u.username
+                    ,u.password
+                    ,u.email
+                    ,u.gender
+                    ,u.created_dt
+                    FROM t_user AS u
+                    WHERE u.username = %s
+                """
+                    ,(username)
+                )
+                row=cursor.fetchone()
+                columns = [
+                    desc[0]
+                    for desc in cursor.description
+                ]
+                data = dict(zip(columns, row))
+                data["created_dt"] = data["created_dt"].isoformat()
+        bcheck=verify_password(password,data["password"])
+        if not bcheck:
+           raise Exception("password not match")
+        data["password"]=""
+        token=create_access_token(data=data)
+        result["data"]=token
+    except Exception as e:
+        result["success"]=False
+        result["msg"]=str(e)
+    return result
+
+
 @router.get("/db-conn-test")
 def db_conn_test(name:str=""):
     result={"success":True,
