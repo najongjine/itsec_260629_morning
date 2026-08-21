@@ -6,3 +6,4 @@ python-multipart
 pwdlib[argon2]
 cryptography
 pycryptodome
+pyjwt
