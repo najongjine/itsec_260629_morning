@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Form
+from fastapi import APIRouter, Form, Header
 from utils.db import get_db
+from utils.jwtutil import decode_access_token
 
 router=APIRouter()
 
@@ -42,17 +43,45 @@ def boardlist():
     return result
 
 
-@router.post("/post-example")
-def postmethod_example(name:str=Form("")
-                       ,password:str=Form("")):
+@router.post("/upsertboard")
+def upsertboard(title:str=Form("")
+                ,content:str=Form("")
+                ,authorization: str = Header(None)
+                ):
     result={"success":True,
                 "data":None,
                 "msg":""}
     try:
-        result["data"]={
-            "안내문":"데이터 잘 받았어요",
-            "받은데이터":f"이름:{name}, password:{password}"
-        }
+        # 1. Authorization 헤더 확인
+        # 예: Authorization: Bearer eyJhbGciOi...
+        if not authorization:
+            raise Exception("토큰이 없습니다.")
+
+        # 2. Bearer 제거
+        token = authorization.replace("Bearer ", "")
+        user_info=decode_access_token(token)
+        user_id=user_info["id"]
+
+        with get_db() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    INSERT INTO t_board
+                    (title,content,user_id)
+                    VALUES
+                    (%s,%s,%s)
+                    RETURNING id, title, content, created_dt
+                """
+                    ,(title,content,user_id)
+                )
+                row=cursor.fetchone()
+                columns = [
+                    desc[0]
+                    for desc in cursor.description
+                ]
+                data = dict(zip(columns, row))
+                data["created_dt"] = data["created_dt"].isoformat()
+
+        result["data"]=data
     except Exception as e:
         result["success"]=False
         result["msg"]=str(e)
