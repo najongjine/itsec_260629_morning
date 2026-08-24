@@ -26,7 +26,7 @@ def boardlist():
                     ,()
                 )
                 row=cursor.fetchall()
-            result["data"]=row
+        result["data"]=row
     except Exception as e:
         result["success"]=False
         result["msg"]=str(e)
