@@ -3,12 +3,14 @@ import uvicorn
 
 from routers.router_example import router as example_router
 from routers.user_router import router as user_router
+from routers.board_router import router as board_router
 
 # 서버 뿅 하고 완성 됨
 app=FastAPI()
 
 app.include_router(example_router,tags=["예제 API"])
 app.include_router(user_router,tags=["회원"])
+app.include_router(board_router,tags=["게시판"])
 
 # api endpoint, router, controller
 @app.get("/")
