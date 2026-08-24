@@ -63,7 +63,7 @@ def login(username:str=Form("")
                     FROM t_user AS u
                     WHERE u.username = %s
                 """
-                    ,(username)
+                    ,(username,)
                 )
                 row=cursor.fetchone()
                 columns = [
