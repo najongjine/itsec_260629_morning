@@ -25,8 +25,16 @@ def boardlist():
                 """
                     ,()
                 )
-                row=cursor.fetchall()
-        result["data"]=row
+                rows=cursor.fetchall()
+                columns = [
+                    desc[0]
+                    for desc in cursor.description
+                ]
+                data = [
+                    dict(zip(columns, row))
+                    for row in rows
+                ]
+        result["data"]=data
     except Exception as e:
         result["success"]=False
         result["msg"]=str(e)
