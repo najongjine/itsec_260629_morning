@@ -1,8 +1,10 @@
-from fastapi import APIRouter, Form, Header
+from fastapi import APIRouter, Form, Security
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from utils.db import get_db
 from utils.jwtutil import decode_access_token
 
 router=APIRouter()
+bearer_scheme = HTTPBearer(auto_error=False)
 
 @router.get("/boardlist")
 def boardlist():
@@ -46,7 +48,7 @@ def boardlist():
 @router.post("/upsertboard")
 def upsertboard(title:str=Form("")
                 ,content:str=Form("")
-                ,authorization: str = Header(None)
+                ,credentials: HTTPAuthorizationCredentials | None = Security(bearer_scheme)
                 ):
     result={"success":True,
                 "data":None,
@@ -54,12 +56,15 @@ def upsertboard(title:str=Form("")
     try:
         # 1. Authorization 헤더 확인
         # 예: Authorization: Bearer eyJhbGciOi...
-        if not authorization:
+        print("credentials:",credentials)
+        if not credentials:
             raise Exception("토큰이 없습니다.")
 
-        # 2. Bearer 제거
-        token = authorization.replace("Bearer ", "")
+        # 2. Swagger Authorize로 받은 Bearer 토큰 값
+        token = credentials.credentials
         user_info=decode_access_token(token)
+        if not user_info:
+            raise Exception("토큰이 유효하지 않습니다.")
         user_id=user_info["id"]
 
         with get_db() as conn:
