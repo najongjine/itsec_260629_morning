@@ -25,7 +25,8 @@ def boardlist():
                 """
                     ,()
                 )
-                row=cursor.fetchone()
+                row=cursor.fetchall()
+            result["data"]=row
     except Exception as e:
         result["success"]=False
         result["msg"]=str(e)
