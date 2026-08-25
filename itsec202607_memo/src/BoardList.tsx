@@ -2,12 +2,15 @@ import { useState } from 'react';
 import { useEffect } from "react";
 
 interface BoardType{
-  title:string;
-  content:string;
-  date:string;
+  board_id:number
+  ,title:string
+  ,created_dt:string
+  ,user_id:number
+  ,username:string
 }
 
 function BoardList() {
+  const [boardlist,setBoardlist]=useState<BoardType[]>([]);
   useEffect(
     ()=>{
       init();
