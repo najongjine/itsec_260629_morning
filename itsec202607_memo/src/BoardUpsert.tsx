@@ -7,7 +7,7 @@ interface BoardType{
   date:string;
 }
 
-function BoardList() {
+function BoardUpsert() {
   let [title2,set_title2]=useState("");
   let [content,set_content]=useState("");
   let [boardList,set_boardList]=useState<BoardType[]>([]);
@@ -55,4 +55,4 @@ function BoardList() {
   );
 }
 
-export default BoardList;
+export default BoardUpsert;
