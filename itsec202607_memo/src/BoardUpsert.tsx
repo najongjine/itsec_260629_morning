@@ -10,7 +10,7 @@ interface BoardType{
 function BoardUpsert() {
   let [title2,set_title2]=useState("");
   let [content,set_content]=useState("");
-  let [boardList,set_boardList]=useState<BoardType[]>([]);
+  
 
   async function saveBoard(){
     let newBoard:BoardType={
@@ -18,8 +18,7 @@ function BoardUpsert() {
       ,content:content
       ,date:new Date().toString()
     };
-    set_boardList([...boardList,newBoard]);
-    console.log(boardList)
+
   }
 
   return (
@@ -49,7 +48,7 @@ function BoardUpsert() {
         <button onClick={(e)=>{saveBoard();}}>저장</button>
       </div>
       <div>
-        <div>{JSON.stringify(boardList)}</div>
+
       </div>
     </div>
   );

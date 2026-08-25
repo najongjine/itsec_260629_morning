@@ -6,6 +6,7 @@ import Footer from './component/Footer';
 import { Route, Routes } from 'react-router';
 import Home from './Home';
 import BoardUpsert from './BoardUpsert';
+import BoardList from './BoardList';
 
 
 function App() { 
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={ <Home /> }  />
         <Route path="/boardupsert" element={ <BoardUpsert /> }  />
+        <Route path="/boardlist" element={ <BoardList /> }  />
       </Routes>
 
       <Footer/>
