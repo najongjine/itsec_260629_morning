@@ -1,0 +1,35 @@
+.board-list-page {
+  min-height: 100%; padding: clamp(24px, 5vw, 72px) clamp(16px, 4vw, 48px);
+  background: #f6f8fb; color: #172033;
+}
+.board-list { width: min(100%, 1120px); margin: 0 auto; }
+.board-list__heading { margin-bottom: 24px; }
+.board-list__eyebrow { margin: 0 0 6px; color: #4f6ee8; font-size: .75rem; font-weight: 800; letter-spacing: .12em; }
+.board-list__heading h1 { margin: 0; font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.25; }
+.board-list__table { overflow: hidden; border: 1px solid #e5e9f1; border-radius: 16px; background: #fff; box-shadow: 0 10px 30px rgb(20 38 74 / 6%); }
+.board-list__row { display: grid; grid-template-columns: 100px minmax(0, 1fr) 150px 170px; align-items: center; min-height: 68px; padding: 0 24px; border-bottom: 1px solid #edf0f5; transition: background-color .2s ease; }
+.board-list__row:not(.board-list__row--header):hover { background: #f8faff; }
+.board-list__row:last-of-type { border-bottom: 0; }
+.board-list__row--header { min-height: 48px; background: #f1f4fa; color: #60708d; font-size: .8rem; font-weight: 700; }
+.board-list__id, .board-list__date { color: #71809a; font-size: .9rem; }
+.board-list__title { overflow: hidden; color: #26334c; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.board-list__author { color: #4a5870; font-size: .95rem; }
+.board-list__empty { margin: 0; padding: 56px 24px; color: #71809a; text-align: center; }
+
+@media (max-width: 720px) {
+  .board-list-page { padding: 28px 16px; }
+  .board-list__heading { margin-bottom: 18px; }
+  .board-list__table { overflow: visible; border: 0; background: transparent; box-shadow: none; }
+  .board-list__row--header { display: none; }
+  .board-list__row { grid-template-columns: 1fr auto; gap: 10px 16px; min-height: 0; margin-bottom: 12px; padding: 18px; border: 1px solid #e5e9f1; border-radius: 12px; background: #fff; box-shadow: 0 4px 12px rgb(20 38 74 / 4%); }
+  .board-list__row:last-of-type { border-bottom: 1px solid #e5e9f1; }
+  .board-list__title { grid-column: 1 / -1; grid-row: 1; font-size: 1rem; }
+  .board-list__id, .board-list__author, .board-list__date { font-size: .82rem; }
+  .board-list__id::before, .board-list__author::before, .board-list__date::before { margin-right: 5px; color: #95a1b6; content: attr(data-label) ' '; }
+  .board-list__id, .board-list__author { grid-column: 1; }
+  .board-list__date { grid-column: 2; grid-row: 2 / span 2; align-self: end; text-align: right; }
+}
+@media (max-width: 380px) {
+  .board-list__row { padding: 16px; }
+  .board-list__date { grid-column: 1; grid-row: auto; justify-self: start; text-align: left; }
+}

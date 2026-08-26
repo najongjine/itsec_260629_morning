@@ -1,47 +1,52 @@
-import { useState } from 'react';
-import { useEffect } from "react";
+import { useEffect, useState } from 'react';
+import './BoardList.css';
 
-interface BoardType{
-  board_id:number
-  ,title:string
-  ,created_dt:string
-  ,user_id:number
-  ,username:string
+interface BoardType {
+  board_id: number;
+  title: string;
+  created_dt: string;
+  user_id: number;
+  username: string;
 }
 
 function BoardList() {
-  const [boardlist,setBoardlist]=useState<BoardType[]>([]);
-  useEffect(
-    ()=>{
-      init();
-    }
-  ,[]);
-  async function init(){
-    let response:any= await fetch(`http://localhost:8000/boardlist`
-      ,{method:"GET"}
-    );
-    response= await response?.json()||{};
-    console.log(`#response: `,response);
-    setBoardlist(response?.data||[]);
+  const [boardlist, setBoardlist] = useState<BoardType[]>([]);
+
+  useEffect(() => {
+    init();
+  }, []);
+
+  async function init() {
+    let response: any = await fetch('http://localhost:8000/boardlist', { method: 'GET' });
+    response = await response?.json() || {};
+    console.log('#response: ', response);
+    setBoardlist(response?.data || []);
   }
 
-
   return (
-    <div>
-      <div> 게시판 리스트에요 </div>
-      <div>
-        {boardlist?.map(
-          (e:BoardType)=>(
-            <div key={e.board_id}>
-              <div>게시글id:{e.board_id}</div>
-              <div>제목:</div>
-              <div>작성자username:</div>
-              <div>생성일:</div>
+    <main className="board-list-page">
+      <section className="board-list" aria-labelledby="board-list-title">
+        <div className="board-list__heading">
+          <p className="board-list__eyebrow">COMMUNITY</p>
+          <h1 id="board-list-title">게시글 리스트</h1>
+        </div>
+
+        <div className="board-list__table" role="list">
+          <div className="board-list__row board-list__row--header" aria-hidden="true">
+            <span>번호</span><span>제목</span><span>작성자</span><span>작성일</span>
+          </div>
+          {boardlist.map((board) => (
+            <div className="board-list__row" key={board.board_id} role="listitem">
+              <div className="board-list__id" data-label="번호">{board.board_id}</div>
+              <div className="board-list__title" data-label="제목">{board.title}</div>
+              <div className="board-list__author" data-label="작성자">{board.username}</div>
+              <div className="board-list__date" data-label="작성일">{board.created_dt}</div>
             </div>
-          )
-        )}
-      </div>
-    </div>
+          ))}
+          {boardlist.length === 0 && <p className="board-list__empty">등록된 게시글이 없습니다.</p>}
+        </div>
+      </section>
+    </main>
   );
 }
 
