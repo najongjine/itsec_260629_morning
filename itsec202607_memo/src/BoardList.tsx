@@ -17,13 +17,14 @@ function BoardList() {
     }
   ,[]);
   async function init(){
-    let response:any=await fetch(`http://localhost:8000/boardlist`
+    let response:any= await fetch(`http://localhost:8000/boardlist`
       ,{method:"GET"}
     );
-    response=await response.json();
+    response= await response?.json()||{};
     console.log(`#response: `,response);
+    setBoardlist(response?.data||[]);
   }
- 
+
 
   return (
     <div>
