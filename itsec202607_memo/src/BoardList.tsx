@@ -29,7 +29,18 @@ function BoardList() {
   return (
     <div>
       <div> 게시판 리스트에요 </div>
-      
+      <div>
+        {boardlist?.map(
+          (e:BoardType)=>(
+            <div key={e.board_id}>
+              <div>게시글id:{e.board_id}</div>
+              <div>제목:</div>
+              <div>작성자username:</div>
+              <div>생성일:</div>
+            </div>
+          )
+        )}
+      </div>
     </div>
   );
 }
