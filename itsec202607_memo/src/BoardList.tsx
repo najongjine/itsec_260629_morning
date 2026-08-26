@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './BoardList.css';
+import { useNavigate } from 'react-router';
 
 interface BoardType {
   board_id: number;
@@ -10,6 +11,7 @@ interface BoardType {
 }
 
 function BoardList() {
+  const navigate=useNavigate();
   const [boardlist, setBoardlist] = useState<BoardType[]>([]);
 
   useEffect(() => {
@@ -44,6 +46,11 @@ function BoardList() {
             </div>
           ))}
           {boardlist.length === 0 && <p className="board-list__empty">등록된 게시글이 없습니다.</p>}
+        </div>
+        <div>
+          <button onClick={(e)=>{
+            navigate("/boardupsert")
+          }}>글 작성</button>
         </div>
       </section>
     </main>
