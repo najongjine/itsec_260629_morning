@@ -18,7 +18,20 @@ function BoardUpsert() {
       ,content:content
       ,date:new Date().toString()
     };
-
+    const formdata=new URLSearchParams()
+    formdata.append("title",title2)
+    formdata.append("content",content)
+    let response:any=await fetch(`http://localhost:8000/upsertboard`
+      ,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/x-www-form-urlencoded"
+        },
+        body:formdata
+      }
+    );
+    response=await response?.json()||{};
+    console.log(`#response: `,response);
   }
 
   return (
