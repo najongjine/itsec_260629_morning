@@ -77,7 +77,10 @@ def login(username:str=Form("")
            raise Exception("password not match")
         data["password"]=""
         token=create_access_token(data=data)
-        result["data"]=token
+        result["data"]={
+            "token":token
+            ,"userinfo":data
+        }
     except Exception as e:
         result["success"]=False
         result["msg"]=str(e)
