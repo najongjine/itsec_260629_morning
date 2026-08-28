@@ -1,26 +1,19 @@
 import { useState } from 'react';
 import { useEffect } from "react";
+import { useAuth } from './auth'
 
-interface BoardType{
-  title:string;
-  content:string;
-  date:string;
-}
 
 function Login() {
-  let [title2,set_title2]=useState("");
-  let [content,set_content]=useState("");
+  const { isLoggedIn, user, token, logout } = useAuth()
+  let [username,set_username]=useState("");
+  let [password,set_password]=useState("");
   
 
-  async function saveBoard(){
-    let newBoard:BoardType={
-      title:title2
-      ,content:content
-      ,date:new Date().toString()
-    };
+  async function login(){
+
     const formdata=new URLSearchParams()
-    formdata.append("title",title2)
-    formdata.append("content",content)
+    formdata.append("username",username)
+    formdata.append("password",password)
     let response:any=await fetch(`http://localhost:8000/upsertboard`
       ,{
         method:"POST",
@@ -58,7 +51,7 @@ function Login() {
         </textarea>
       </div>
       <div>
-        <button onClick={(e)=>{saveBoard();}}>저장</button>
+        <button onClick={(e)=>{login();}}>저장</button>
       </div>
       <div>
 
