@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from "react";
 import { useAuth } from './auth';
+import { useNavigate } from 'react-router';
 
 interface BoardType{
   title:string;
@@ -10,16 +11,12 @@ interface BoardType{
 
 function BoardUpsert() {
   const { isLoggedIn, user, token, logout,login } = useAuth();
+  const navigate=useNavigate();
   let [title2,set_title2]=useState("");
   let [content,set_content]=useState("");
   
 
   async function saveBoard(){
-    let newBoard:BoardType={
-      title:title2
-      ,content:content
-      ,date:new Date().toString()
-    };
     const formdata=new URLSearchParams()
     formdata.append("title",title2)
     formdata.append("content",content)
@@ -35,6 +32,11 @@ function BoardUpsert() {
     );
     response=await response?.json()||{};
     console.log(`#response: `,response);
+    if(!response?.success){
+      alert(`게시글 저장 실패. ${response?.msg||""}`)
+      return;
+    }
+    navigate("/boardlist")
   }
 
   return (
