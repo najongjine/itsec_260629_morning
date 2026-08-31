@@ -4,7 +4,7 @@ import { useAuth } from './auth'
 
 
 function Login() {
-  const { isLoggedIn, user, token, logout,login } = useAuth()
+  const { isLoggedIn, user, token, logout,login } = useAuth();
   let [username,set_username]=useState("");
   let [password,set_password]=useState("");
   

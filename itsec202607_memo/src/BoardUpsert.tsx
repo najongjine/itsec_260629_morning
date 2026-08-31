@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from "react";
+import { useAuth } from './auth';
 
 interface BoardType{
   title:string;
@@ -8,6 +9,7 @@ interface BoardType{
 }
 
 function BoardUpsert() {
+  const { isLoggedIn, user, token, logout,login } = useAuth();
   let [title2,set_title2]=useState("");
   let [content,set_content]=useState("");
   
@@ -26,6 +28,7 @@ function BoardUpsert() {
         method:"POST",
         headers:{
           "Content-Type":"application/x-www-form-urlencoded"
+          ,Authorization: `Bearer ${token}`
         },
         body:formdata
       }
