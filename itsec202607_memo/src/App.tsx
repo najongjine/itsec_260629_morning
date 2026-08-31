@@ -8,6 +8,7 @@ import Home from './Home';
 import BoardUpsert from './BoardUpsert';
 import BoardList from './BoardList';
 import Login from './Login';
+import Register from './Register';
 
 
 function App() { 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/boardupsert" element={ <BoardUpsert /> }  />
         <Route path="/boardlist" element={ <BoardList /> }  />
         <Route path="/login" element={ <Login /> }  />
+        <Route path="/register" element={ <Register /> }  />
       </Routes>
 
       <Footer/>
