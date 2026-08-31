@@ -14,7 +14,7 @@ function Login() {
     const formdata=new URLSearchParams()
     formdata.append("username",username)
     formdata.append("password",password)
-    let response:any=await fetch(`http://localhost:8000/upsertboard`
+    let response:any=await fetch(`http://localhost:8000/login`
       ,{
         method:"POST",
         headers:{
@@ -29,26 +29,24 @@ function Login() {
 
   return (
     <div>
-      <div> 게시판 리스트에요 </div>
+      <div> 로그인 </div>
       <div>
-        <label>제목:</label>
+        <label>username:</label>
         <input onChange={ (e)=>{
-          let title=""
-          title=e?.target?.value;
-          set_title2(title);
+          let 사용자입력=""
+          사용자입력=e?.target?.value;
+          set_username(사용자입력);
         } } />
       </div>
       <div>
-        <label>내용:</label>
+        <label>비밀번호:</label>
       </div>
       <div>
-        <textarea placeholder='내용을 입력하세요'
-        cols={50} rows={20}
-        onChange={(e)=>{
-          let _content=e?.target?.value||""
-          set_content(_content);
-        }}>
-        </textarea>
+        <input onChange={ (e)=>{
+          let 사용자입력=""
+          사용자입력=e?.target?.value;
+          set_password(사용자입력);
+        } } />
       </div>
       <div>
         <button onClick={(e)=>{login();}}>저장</button>

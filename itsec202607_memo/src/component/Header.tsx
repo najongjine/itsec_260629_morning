@@ -11,6 +11,7 @@ function Header() {
       <div> 
         <Link to="/"> 홈 </Link>
         <Link to="/boardlist"> 게시판 </Link>
+        <Link to="/login"> 로그인 </Link>
       </div>
     </div>
   );
