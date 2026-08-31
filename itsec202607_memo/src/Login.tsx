@@ -4,13 +4,12 @@ import { useAuth } from './auth'
 
 
 function Login() {
-  const { isLoggedIn, user, token, logout } = useAuth()
+  const { isLoggedIn, user, token, logout,login } = useAuth()
   let [username,set_username]=useState("");
   let [password,set_password]=useState("");
   
 
-  async function login(){
-
+  async function onlogin(){
     const formdata=new URLSearchParams()
     formdata.append("username",username)
     formdata.append("password",password)
@@ -24,7 +23,16 @@ function Login() {
       }
     );
     response=await response?.json()||{};
-    console.log(`#response: `,response);
+    if(!response?.success){
+      alert("너 아이디나 비번 틀림");
+      return;
+    }
+    response=response?.data||{}
+    login({
+      token:response?.token||""
+      ,userinfo:response?.userinfo||{}
+    })
+    
   }
 
   return (
@@ -49,7 +57,7 @@ function Login() {
         } } />
       </div>
       <div>
-        <button onClick={(e)=>{login();}}>저장</button>
+        <button onClick={(e)=>{onlogin();}}>로그인</button>
       </div>
       <div>
 
