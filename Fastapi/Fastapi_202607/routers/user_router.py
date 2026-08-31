@@ -34,8 +34,12 @@ def register(username:str=Form("")
                 ]
                 data = dict(zip(columns, row))
                 data["created_dt"] = data["created_dt"].isoformat()
+        data["password"]=""
         token=create_access_token(data=data)
-        result["data"]=token
+        result["data"]={
+            "token":token
+            ,"userinfo":data
+        }
     except Exception as e:
         result["success"]=False
         result["msg"]=str(e)
