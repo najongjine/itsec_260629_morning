@@ -7,13 +7,17 @@ function Register() {
   const { isLoggedIn, user, token, logout,login } = useAuth();
   let [username,set_username]=useState("");
   let [password,set_password]=useState("");
+  let [email,set_email]=useState("");
+  let [gender,set_gender]=useState("m");
   
 
-  async function onlogin(){
+  async function onRegister(){
     const formdata=new URLSearchParams()
     formdata.append("username",username)
     formdata.append("password",password)
-    let response:any=await fetch(`http://localhost:8000/login`
+    formdata.append("email",email)
+    formdata.append("gender",gender)
+    let response:any=await fetch(`http://localhost:8000/register`
       ,{
         method:"POST",
         headers:{
@@ -24,7 +28,7 @@ function Register() {
     );
     response=await response?.json()||{};
     if(!response?.success){
-      alert("너 아이디나 비번 틀림");
+      alert(`회원가입 실패. ${response?.msg}`);
       return;
     }
     response=response?.data||{}
@@ -57,7 +61,27 @@ function Register() {
         } } />
       </div>
       <div>
-        <button onClick={(e)=>{onlogin();}}>로그인</button>
+        <label>email:</label>
+      </div>
+      <div>
+        <input onChange={ (e)=>{
+          let 사용자입력=""
+          사용자입력=e?.target?.value;
+          set_email(사용자입력);
+        } } />
+      </div>
+      <div>
+        <label>성별:</label>
+      </div>
+      <div>
+        <input onChange={ (e)=>{
+          let 사용자입력=""
+          사용자입력=e?.target?.value;
+          set_gender(사용자입력);
+        } } />
+      </div>
+      <div>
+        <button onClick={(e)=>{onRegister();}}>회원가입</button>
       </div>
       <div>
 
