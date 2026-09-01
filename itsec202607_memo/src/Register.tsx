@@ -74,11 +74,10 @@ function Register() {
         <label>성별:</label>
       </div>
       <div>
-        <input onChange={ (e)=>{
-          let 사용자입력=""
-          사용자입력=e?.target?.value;
-          set_gender(사용자입력);
-        } } />
+        <select value={gender} onChange={(e) => set_gender(e.target.value)}>
+          <option value="m">남자</option>
+          <option value="f">여자</option>
+        </select>
       </div>
       <div>
         <button onClick={(e)=>{onRegister();}}>회원가입</button>
