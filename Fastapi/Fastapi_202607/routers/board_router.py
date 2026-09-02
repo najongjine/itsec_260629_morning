@@ -66,7 +66,7 @@ def get_a_board(id:str="0"):
                     ON b.user_id = u.id
                     WHERE b.id = %s
                 """
-                    ,(id)
+                    ,(id,)
                 )
                 row=cursor.fetchone()
                 columns = [
