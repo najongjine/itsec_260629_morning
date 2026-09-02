@@ -69,6 +69,10 @@ def get_a_board(id:str="0"):
                     ,(id,)
                 )
                 row=cursor.fetchone()
+                if row is None:
+                    result["success"]=False
+                    result["msg"]="그런 게시글 없음"
+                    return result
                 columns = [
                     desc[0]
                     for desc in cursor.description
