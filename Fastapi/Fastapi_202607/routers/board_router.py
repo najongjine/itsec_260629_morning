@@ -45,6 +45,44 @@ def boardlist():
     return result
 
 
+@router.get("/get_a_board")
+def get_a_board(id:str="0"):
+    result={"success":True,
+            "data":None,
+            "msg":""}
+    try:
+        id=int(id)
+        with get_db() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    SELECT
+                    b.id as "board_id"
+                    ,b.title
+                    ,b.created_dt
+                    ,u.id as "user_id"
+                    ,u.username
+                    FROM t_board as b
+                    JOIN t_user as u
+                    ON b.user_id = u.id
+                    WHERE b.id = %s
+                """
+                    ,(id)
+                )
+                row=cursor.fetchone()
+                columns = [
+                    desc[0]
+                    for desc in cursor.description
+                ]
+                data = dict(zip(columns, row))
+                data["created_dt"] = data["created_dt"].isoformat()
+        result["data"]=data
+    except Exception as e:
+        result["success"]=False
+        result["msg"]=str(e)
+    
+    return result
+
+
 @router.post("/upsertboard")
 def upsertboard(title:str=Form("")
                 ,content:str=Form("")
