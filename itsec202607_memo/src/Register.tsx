@@ -7,11 +7,16 @@ function Register() {
   const { isLoggedIn, user, token, logout,login } = useAuth();
   let [username,set_username]=useState("");
   let [password,set_password]=useState("");
+  let [password2,set_password2]=useState("");
   let [email,set_email]=useState("");
   let [gender,set_gender]=useState("m");
   
 
   async function onRegister(){
+    if(password != password2){
+      alert(`비밀번호 잘 확인해봐`);
+      return;
+    }
     const formdata=new URLSearchParams()
     formdata.append("username",username)
     formdata.append("password",password)
@@ -54,10 +59,20 @@ function Register() {
         <label>비밀번호:</label>
       </div>
       <div>
-        <input onChange={ (e)=>{
+        <input type='password' onChange={ (e)=>{
           let 사용자입력=""
           사용자입력=e?.target?.value;
           set_password(사용자입력);
+        } } />
+      </div>
+      <div>
+        <label>비밀번호 재입력:</label>
+      </div>
+      <div>
+        <input type='password' onChange={ (e)=>{
+          let 사용자입력=""
+          사용자입력=e?.target?.value;
+          set_password2(사용자입력);
         } } />
       </div>
       <div>
