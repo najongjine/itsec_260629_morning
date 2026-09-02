@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useEffect } from "react";
 import { useAuth } from './auth'
+import { useNavigate } from 'react-router';
 
 
 function Register() {
+  const navigate=useNavigate();
   const { isLoggedIn, user, token, logout,login } = useAuth();
   let [username,set_username]=useState("");
   let [password,set_password]=useState("");
@@ -41,7 +43,7 @@ function Register() {
       token:response?.token||""
       ,userinfo:response?.userinfo||{}
     })
-    
+    navigate("/boardlist")
   }
 
   return (
