@@ -9,12 +9,13 @@ interface BoardType {
   created_dt: string;
   user_id: number;
   username: string;
+  content:string;
 }
 
 function Detail() {
   const navigate=useNavigate();
   const [searchParams]=useSearchParams();
-  const id=searchParams.get("id");
+  const id=searchParams?.get("id")||0;
   const { isLoggedIn, user, token, logout,login } = useAuth();
   const [board, setBoard] = useState<BoardType>();
 
@@ -23,7 +24,12 @@ function Detail() {
   }, [id]);
 
   async function init() {
-    let response: any = await fetch(`http://localhost:8000/get_a_board?id=2`, { method: 'GET' });
+    const params=new URLSearchParams({id:String(id)})
+    let response: any = 
+    await fetch(`http://localhost:8000/get_a_board?${params}`
+      , { method: 'GET' }
+      
+    );
     response = await response?.json() || {};
     console.log('#response: ', response);
     setBoard(response?.data || {});
@@ -32,7 +38,11 @@ function Detail() {
   return (
     <div>
       <div> 디테일 </div>
-      
+      <div>{board?.title}</div>
+      <div>{board?.username}</div>
+      <div>{board?.created_dt}</div>
+      <hr/>
+      <div>{board?.content}</div>
     </div>
   );
 }

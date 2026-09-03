@@ -58,6 +58,7 @@ def get_a_board(id:str="0"):
                     SELECT
                     b.id as "board_id"
                     ,b.title
+                    ,b.content
                     ,b.created_dt
                     ,u.id as "user_id"
                     ,u.username
