@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from "react";
 import { useAuth } from './auth';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 
 interface BoardType{
   title:string;
@@ -10,10 +10,29 @@ interface BoardType{
 }
 
 function BoardUpsert() {
+  const [searchParams]=useSearchParams();
+  const id=searchParams?.get("id")||0;
   const { isLoggedIn, user, token, logout,login } = useAuth();
   const navigate=useNavigate();
   let [title2,set_title2]=useState("");
   let [content,set_content]=useState("");
+
+  useEffect(() => {
+    init();
+  }, [id]);
+
+  async function init() {
+    const params=new URLSearchParams({id:String(id)})
+    let response: any = 
+    await fetch(`http://localhost:8000/get_a_board?${params}`
+      , { method: 'GET' }
+      
+    );
+    response = await response?.json() || {};
+    console.log('#response: ', response);
+    let data=response?.data||{};
+    
+  }
   
 
   async function saveBoard(){
