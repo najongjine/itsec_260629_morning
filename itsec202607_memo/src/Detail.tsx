@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useEffect } from "react";
 import { useAuth } from './auth'
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 
 interface BoardType {
   board_id: number;
@@ -13,15 +13,17 @@ interface BoardType {
 
 function Detail() {
   const navigate=useNavigate();
+  const [searchParams]=useSearchParams();
+  const id=searchParams.get("id");
   const { isLoggedIn, user, token, logout,login } = useAuth();
   const [board, setBoard] = useState<BoardType>();
 
   useEffect(() => {
     init();
-  }, []);
+  }, [id]);
 
   async function init() {
-    let response: any = await fetch('http://localhost:8000/boardlist', { method: 'GET' });
+    let response: any = await fetch(`http://localhost:8000/get_a_board?id=2`, { method: 'GET' });
     response = await response?.json() || {};
     console.log('#response: ', response);
     setBoard(response?.data || {});
