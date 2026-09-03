@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useEffect } from "react";
 import { useAuth } from './auth'
 import { useNavigate, useSearchParams } from 'react-router';
+import './Detail.css';
 
 interface BoardType {
   board_id: number;
@@ -36,14 +37,28 @@ function Detail() {
   }
 
   return (
-    <div>
-      <div> 디테일 </div>
-      <div>{board?.title}</div>
-      <div>{board?.username}</div>
-      <div>{board?.created_dt}</div>
-      <hr/>
-      <div>{board?.content}</div>
-    </div>
+    <main className="detail-page">
+      <article className="detail-card" aria-labelledby="detail-title">
+        <header className="detail-card__header">
+          <p className="detail-card__eyebrow">COMMUNITY</p>
+          <h1 id="detail-title" className="detail-card__title">{board?.title || '게시글을 불러오는 중입니다.'}</h1>
+
+          <dl className="detail-card__meta">
+            <div>
+              <dt>작성자</dt>
+              <dd>{board?.username || '-'}</dd>
+            </div>
+            <div>
+              <dt>작성일</dt>
+              <dd>{board?.created_dt || '-'}</dd>
+            </div>
+          </dl>
+        </header>
+
+        <div className="detail-card__divider" />
+        <div className="detail-card__content">{board?.content || '내용이 없습니다.'}</div>
+      </article>
+    </main>
   );
 }
 

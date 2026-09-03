@@ -40,7 +40,8 @@ function BoardList() {
           {boardlist.map((board) => (
             <div className="board-list__row" key={board.board_id} role="listitem">
               <div className="board-list__id" data-label="번호">{board.board_id}</div>
-              <div className="board-list__title" data-label="제목">{board.title}</div>
+              <div className="board-list__title" data-label="제목" 
+              onClick={(e)=>{navigate(`/detail?id=${board?.board_id||0}`)}}>{board.title}</div>
               <div className="board-list__author" data-label="작성자">{board.username}</div>
               <div className="board-list__date" data-label="작성일">{board.created_dt}</div>
             </div>
