@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useEffect } from "react";
 import { useAuth } from './auth';
 import { useNavigate, useSearchParams } from 'react-router';
+import './BoardUpsert.css';
 
 interface BoardType{
   title:string;
@@ -62,40 +63,35 @@ function BoardUpsert() {
     navigate("/boardlist")
   }
 
-  return (
-    <div>
-      <div> 게시판 리스트에요 </div>
-      <div>
-        <label>제목:</label>
-        <input 
-        value={title2}
-        onChange={ (e)=>{
-          let title=""
-          title=e?.target?.value;
-          set_title2(title);
-        } } />
-      </div>
-      <div>
-        <label>내용:</label>
-      </div>
-      <div>
-        <textarea 
-        value={content}
-        placeholder='내용을 입력하세요'
-        cols={50} rows={20}
-        onChange={(e)=>{
-          let _content=e?.target?.value||""
-          set_content(_content);
-        }}>
-        </textarea>
-      </div>
-      <div>
-        <button onClick={(e)=>{saveBoard();}}>저장</button>
-      </div>
-      <div>
+  const isEdit = Boolean(Number(id));
 
-      </div>
-    </div>
+  return (
+    <main className="board-upsert-page">
+      <section className="board-upsert" aria-labelledby="board-upsert-title">
+        <header className="board-upsert__header">
+          <p className="board-upsert__eyebrow">COMMUNITY</p>
+          <h1 id="board-upsert-title">{isEdit ? '게시글 수정' : '게시글 작성'}</h1>
+          <p className="board-upsert__description">다른 사람에게 전하고 싶은 이야기를 작성해 주세요.</p>
+        </header>
+        <div className="board-upsert__form">
+          <div className="board-upsert__field">
+            <label htmlFor="board-title">제목</label>
+            <input id="board-title" type="text" value={title2} placeholder="제목을 입력해 주세요" onChange={(e) => set_title2(e.target.value)} />
+          </div>
+          <div className="board-upsert__field board-upsert__field--content">
+            <div className="board-upsert__label-row">
+              <label htmlFor="board-content">내용</label>
+              <span>{content.length.toLocaleString()}자</span>
+            </div>
+            <textarea id="board-content" value={content} placeholder="내용을 입력해 주세요" onChange={(e) => set_content(e.target.value)} />
+          </div>
+          <div className="board-upsert__actions">
+            <button className="board-upsert__cancel" type="button" onClick={() => navigate('/boardlist')}>취소</button>
+            <button className="board-upsert__submit" type="button" onClick={saveBoard}>저장하기</button>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
 
