@@ -42,6 +42,7 @@ function BoardUpsert() {
     const formdata=new URLSearchParams()
     formdata.append("title",title2)
     formdata.append("content",content)
+    formdata.append("id",String(id))
     let response:any=await fetch(`http://localhost:8000/upsertboard`
       ,{
         method:"POST",
