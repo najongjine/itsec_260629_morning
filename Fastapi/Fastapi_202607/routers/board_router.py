@@ -91,6 +91,7 @@ def get_a_board(id:str="0"):
 @router.post("/upsertboard")
 def upsertboard(title:str=Form("")
                 ,content:str=Form("")
+                ,id:str=Form("0")
                 ,credentials: HTTPAuthorizationCredentials 
                               | None = Security(bearer_scheme)
                 ):
@@ -114,15 +115,26 @@ def upsertboard(title:str=Form("")
 
         with get_db() as conn:
             with conn.cursor() as cursor:
-                cursor.execute("""
-                    INSERT INTO t_board
-                    (title,content,user_id)
-                    VALUES
-                    (%s,%s,%s)
-                    RETURNING id, title, content, created_dt
-                """
-                    ,(title,content,user_id)
-                )
+                if int(id) <= 0:
+                    cursor.execute("""
+                        INSERT INTO t_board
+                        (title,content,user_id)
+                        VALUES
+                        (%s,%s,%s)
+                        RETURNING id, title, content, created_dt
+                    """
+                        ,(title,content,user_id)
+                    )
+                else:
+                    cursor.execute("""
+                        UPDATE t_board
+                        SET title=%s
+                        ,content=%s
+                        WHERE id=%s AND user_id=%s
+                        RETURNING id, title, content, created_dt
+                    """
+                        ,(title,content,id,user_id)
+                    )
                 row=cursor.fetchone()
                 columns = [
                     desc[0]
