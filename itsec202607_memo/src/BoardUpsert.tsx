@@ -11,11 +11,12 @@ interface BoardType{
 
 function BoardUpsert() {
   const [searchParams]=useSearchParams();
-  const id=searchParams?.get("id")||0;
+  let id=searchParams?.get("id")||0;
   const { isLoggedIn, user, token, logout,login } = useAuth();
   const navigate=useNavigate();
   let [title2,set_title2]=useState("");
   let [content,set_content]=useState("");
+  let [userid,set_userid]=useState("0");
 
   useEffect(() => {
     init();
@@ -31,7 +32,9 @@ function BoardUpsert() {
     response = await response?.json() || {};
     console.log('#response: ', response);
     let data=response?.data||{};
-    
+    set_userid(String(data?.user_id||"0"));
+    set_title2(data?.title||"");
+    set_content(data?.content||"");
   }
   
 
