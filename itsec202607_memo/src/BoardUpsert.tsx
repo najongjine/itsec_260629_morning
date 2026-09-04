@@ -30,8 +30,8 @@ function BoardUpsert() {
       
     );
     response = await response?.json() || {};
-    console.log('#response: ', response);
     let data=response?.data||{};
+    console.log('#data: ', data);
     set_userid(String(data?.user_id||"0"));
     set_title2(data?.title||"");
     set_content(data?.content||"");
@@ -66,7 +66,9 @@ function BoardUpsert() {
       <div> 게시판 리스트에요 </div>
       <div>
         <label>제목:</label>
-        <input onChange={ (e)=>{
+        <input 
+        value={title2}
+        onChange={ (e)=>{
           let title=""
           title=e?.target?.value;
           set_title2(title);
@@ -76,7 +78,9 @@ function BoardUpsert() {
         <label>내용:</label>
       </div>
       <div>
-        <textarea placeholder='내용을 입력하세요'
+        <textarea 
+        value={content}
+        placeholder='내용을 입력하세요'
         cols={50} rows={20}
         onChange={(e)=>{
           let _content=e?.target?.value||""

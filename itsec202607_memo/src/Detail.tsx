@@ -57,6 +57,12 @@ function Detail() {
 
         <div className="detail-card__divider" />
         <div className="detail-card__content">{board?.content || '내용이 없습니다.'}</div>
+        <div>
+          <button 
+          onClick={(e)=>{navigate(`/boardupsert?id=${board?.board_id||"0"}`)}}
+          >수정</button>
+          <button>삭제</button>
+        </div>
       </article>
     </main>
   );
