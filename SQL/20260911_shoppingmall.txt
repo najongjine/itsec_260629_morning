@@ -1,0 +1,18 @@
+CREATE TABLE t_user(
+ id SERIAL PRIMARY KEY,
+ username VARCHAR NOT NULL UNIQUE,
+ password VARCHAR NOT NULL,
+ email VARCHAR,
+ gender VARCHAR CHECK (gender IN ('m', 'f')),
+ address VARCHAR(1000), 
+ created_dt TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE t_category(
+ id SERIAL PRIMARY KEY,
+ name VARCHAR UNIQUE,
+ created_dt TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE t_user
+ADD COLUMN address VARCHAR(1000);

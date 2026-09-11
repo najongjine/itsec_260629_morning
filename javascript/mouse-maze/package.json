@@ -1,0 +1,1 @@
+{"private":true,"type":"module","scripts":{"test":"node --test maze.test.js","build":"esbuild entry.js --bundle --format=iife --target=es2020 --minify --legal-comments=linked --outfile=app.bundle.js"},"dependencies":{"three":"0.180.0"},"devDependencies":{"esbuild":"0.28.2"}}

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mouse Lab · A* 미로 탐험</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header><a class="brand" href="./"><span class="brand-icon">m.</span> MOUSE LAB <span class="tag">INTERACTIVE EXPERIMENT / 001</span></a><span class="live"><i></i> THREE.JS × A*</span></header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">작은 쥐의 가장 똑똑한 모험</p><h1>치즈까지, <span>최단 거리.</span></h1><p class="subtitle">새로운 미로, 새로운 출발. A*와 함께 길을 찾아보세요.</p></div><div class="experiment">PATHFINDING<br><strong>PLAYGROUND ↗</strong></div></section>
+    <div class="workspace">
+      <section class="stage" aria-label="3D 미로 시뮬레이션">
+        <div class="stage-top"><span class="pill" id="status" role="status">미로 준비 중</span><span class="seed" id="maze-label">RANDOM MAZE</span></div>
+        <div id="viewport"></div>
+        <div id="error" role="alert" hidden></div>
+        <div class="stage-bottom"><span>드래그로 회전 · 스크롤로 확대</span><button id="camera" class="camera">↗ 시점 초기화</button></div>
+      </section>
+      <aside>
+        <div class="panel-title"><h2>탐험 컨트롤</h2><span>01 / SETUP</span></div>
+        <label for="size">미로 크기</label><select id="size"><option value="7">작게 · 7 × 7</option><option value="11" selected>보통 · 11 × 11</option><option value="17">크게 · 17 × 17</option><option value="23">아주 크게 · 23 × 23</option></select>
+        <div class="label-row"><label for="speed">진행 속도</label><output id="speed-label">1×</output></div><input id="speed" type="range" min="0.5" max="5" step="0.5" value="1"><div class="range-labels"><span>천천히 관찰</span><span>빠르게 탐험</span></div>
+        <button id="play" class="primary" disabled>▶ 탐색 시작</button><div class="button-row"><button id="generate">↻ 새 미로</button><button id="endpoints">⚄ 출발·도착 변경</button></div>
+        <div class="stats"><div><span>탐색한 칸</span><strong id="visited">0 <small>칸</small></strong></div><div><span>최단 경로</span><strong id="distance">— <small>걸음</small></strong></div></div>
+        <div class="legend"><h3>미로 읽는 법</h3><div><span><i class="dot start"></i>쥐의 출발점</span><span><i class="dot goal"></i>치즈 · 도착점</span><span><i class="dot explored"></i>탐색한 통로</span><span><i class="dot route"></i>최단 경로</span></div></div>
+        <div class="note"><span>HOW IT WORKS</span><h3>똑똑하게, 한 걸음씩.</h3><p>A*는 지금까지 온 거리 <b>g</b>와 도착점까지 예상 거리 <b>h</b>를 더해, 가장 유망한 칸부터 탐색해요.</p><code>f(n) = g(n) + h(n)</code><p class="hint">미로와 출발·도착점은 무작위로 생성되며, 항상 도착 가능한 길이 있어요.</p></div>
+      </aside>
+    </div>
+    <footer><span>FOLLOW THE CURIOSITY. FIND THE CHEESE.</span><span>랜덤 미로 생성 + 맨해튼 거리 기반 A*</span></footer>
+  </main>
+  <script src="app.bundle.js" onerror="document.querySelector('#error').hidden=false; document.querySelector('#error').textContent='app.bundle.js 파일이 없어요. 같은 폴더에 있는지 확인해 주세요.'"></script>
+</body>
+</html>
