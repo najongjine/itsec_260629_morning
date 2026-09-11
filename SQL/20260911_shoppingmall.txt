@@ -35,6 +35,19 @@ CREATE TABLE t_product(
  ON UPDATE CASCADE
 );
 
+CREATE TABLE t_product_img(
+ id SERIAL PRIMARY KEY,
+ product_id INT,
+ filepath VARCHAR(3000),
+ created_dt TIMESTAMPTZ DEFAULT NOW(),
+
+ CONSTRAINT fk_productimg_product
+ FOREIGN KEY (product_id)
+ REFERENCES t_product(id)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE
+);
+
 
 ALTER TABLE t_user
 ADD COLUMN address VARCHAR(1000);
