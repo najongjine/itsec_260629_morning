@@ -1,115 +1,40 @@
-https://wildojisan.tistory.com/151
-- 디자인 패턴
-
-https://wildojisan.tistory.com/127
-- DB DCL
-
 CREATE TABLE t_user(
  id SERIAL PRIMARY KEY,
  username VARCHAR NOT NULL UNIQUE,
  password VARCHAR NOT NULL,
  email VARCHAR,
  gender VARCHAR CHECK (gender IN ('m', 'f')),
+ address VARCHAR(1000), 
  created_dt TIMESTAMPTZ DEFAULT NOW()
 );
 
-
-INSERT INTO t_user(username, password, email, gender)
-VALUES('pepe','pepe','pepe@gmail.com','m');
-INSERT INTO t_user(username, password, email, gender)
-VALUES('momo','momo','momo@gmail.com','f');
-
-CREATE TABLE t_board(
+CREATE TABLE t_category(
  id SERIAL PRIMARY KEY,
- title VARCHAR,
- content TEXT,
- created_dt TIMESTAMPTZ DEFAULT NOW(),
+ name VARCHAR UNIQUE,
+ created_dt TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE t_product(
+ id SERIAL PRIMARY KEY,
+ name VARCHAR,
+ price DECIMAL DEFAULT 0,
  user_id INT,
- CONSTRAINT fk_user
+ category_id INT,
+ created_dt TIMESTAMPTZ DEFAULT NOW(),
+ 
+ CONSTRAINT fk_product_user
  FOREIGN KEY (user_id)
  REFERENCES t_user(id)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
+ 
+ CONSTRAINT fk_product_category
+ FOREIGN KEY (category_id)
+ REFERENCES t_category(id)
  ON DELETE CASCADE
  ON UPDATE CASCADE
 );
 
-INSERT INTO t_board(title,content,user_id)
-VALUES('첫글','내가 1등',
- (SELECT id FROM t_user ORDER BY RANDOM() LIMIT 1)
-);
 
-
-CREATE TABLE t_comment(
- id SERIAL PRIMARY KEY,
- cmt TEXT,
- created_dt TIMESTAMPTZ DEFAULT NOW(),
- user_id INT,
- board_id INT,
- CONSTRAINT fk_cmt_user
-	 FOREIGN KEY (user_id)
-	 REFERENCES t_user(id)
-	 ON DELETE CASCADE
-	 ON UPDATE CASCADE,
- CONSTRAINT fk_cmt_board
-	 FOREIGN KEY (board_id)
-	 REFERENCES t_board(id)
-	 ON DELETE CASCADE
-	 ON UPDATE CASCADE
-);
-
-
-INSERT INTO t_comment(cmt,user_id,board_id)
-SELECT
-	md5(random()::text)
-	,user_id
-	,id
-FROM t_board
-ORDER BY random()
-LIMIT 1
-;
-
-SELECT 
-u.id as user_id
-,u.username
-,b.id as board_id
-,b.title
-,c.id as cmt_id
-,c.cmt
-FROM t_user as u
-LEFT JOIN t_board as b ON b.user_id = u.id
-LEFT JOIN t_comment as c ON c.board_id = b.id
-ORDER BY u.id
-;
-
-
-
-SELECT 
-    u.id AS user_id,
-    u.username,
-    b.id AS board_id,
-    b.title,
-
-    json_agg(
-        json_build_object(
-            'id', c.id,
-            'cmt', c.cmt,
-            'user_id', c.user_id
-        )
-    ) AS comments
-
-FROM t_user AS u
-
-LEFT JOIN t_board AS b 
-    ON b.user_id = u.id
-
-LEFT JOIN t_comment AS c 
-    ON c.board_id = b.id
-
-GROUP BY 
-    u.id,
-    u.username,
-    b.id,
-    b.title
-
-ORDER BY 
-    u.id,
-    b.id;
+ALTER TABLE t_user
+ADD COLUMN address VARCHAR(1000);
