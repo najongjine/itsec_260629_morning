@@ -14,5 +14,27 @@ CREATE TABLE t_category(
  created_dt TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE TABLE t_product(
+ id SERIAL PRIMARY KEY,
+ name VARCHAR,
+ price DECIMAL DEFAULT 0,
+ user_id INT,
+ category_id INT,
+ created_dt TIMESTAMPTZ DEFAULT NOW(),
+ 
+ CONSTRAINT fk_product_user
+ FOREIGN KEY (user_id)
+ REFERENCES t_user(id)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE,
+ 
+ CONSTRAINT fk_product_category
+ FOREIGN KEY (category_id)
+ REFERENCES t_category(id)
+ ON DELETE CASCADE
+ ON UPDATE CASCADE
+);
+
+
 ALTER TABLE t_user
 ADD COLUMN address VARCHAR(1000);
