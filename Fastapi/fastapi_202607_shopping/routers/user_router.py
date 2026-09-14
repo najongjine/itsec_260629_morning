@@ -24,7 +24,7 @@ def register(
                     (username,password,email,gender,address)
                     VALUES
                     (%s,%s,%s,%s,%s)
-                    RETURNING id, username, email, gender, created_dt
+                    RETURNING id, username, email, gender, address, created_dt
                 """
                     ,(username,password,email,gender,address)
                 )
@@ -64,6 +64,7 @@ def login(username:str=Form("")
                     ,u.password
                     ,u.email
                     ,u.gender
+                    ,u.address
                     ,u.created_dt
                     FROM t_user AS u
                     WHERE u.username = %s
