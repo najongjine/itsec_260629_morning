@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Form, Header
-
+from utils.db import get_db
+from utils.enc_dec import hash_password,verify_password
+from utils.jwtutil import create_access_token, decode_access_token
 router=APIRouter()
 
 @router.post("/register")
@@ -14,7 +16,31 @@ def register(
             ,"data":None
             ,"msg":""}
     try:
-        pass
+        password=hash_password(password)
+        with get_db() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    INSERT INTO t_user
+                    (username,password,email,gender,address)
+                    VALUES
+                    (%s,%s,%s,%s,%s)
+                    RETURNING id, username, email, gender, created_dt
+                """
+                    ,(username,password,email,gender,address)
+                )
+                row=cursor.fetchone()
+                columns = [
+                    desc[0]
+                    for desc in cursor.description
+                ]
+                data = dict(zip(columns, row))
+                data["created_dt"] = data["created_dt"].isoformat()
+        data["password"]=""
+        token=create_access_token(data=data)
+        result["data"]={
+            "token":token
+            ,"userinfo":data
+        }
     except Exception as e:
         result["success"]=False
         result["msg"]=str(e)
