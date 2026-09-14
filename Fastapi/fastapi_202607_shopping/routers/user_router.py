@@ -8,6 +8,7 @@ def register(
     ,password=Form("")
     ,email=Form("")
     ,gender=Form("m")
+    ,address=Form("")
 ):
     result={"success":True
             ,"data":None

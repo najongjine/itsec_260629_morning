@@ -3,7 +3,6 @@ from datetime import datetime, timedelta, timezone
 import jwt
 from jwt.exceptions import InvalidTokenError
 
-
 SECRET_KEY = "my-super-secret-key-change-this-232343434244554g54t3343"
 ALGORITHM = "HS256"
 # 60분 × 24시간 × 365일
