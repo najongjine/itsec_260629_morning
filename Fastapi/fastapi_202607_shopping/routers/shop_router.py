@@ -12,7 +12,17 @@ def upsert_product(name=Form("")
                    ,category_id=Form("0")
                    ,credentials: HTTPAuthorizationCredentials 
                               | None = Security(bearer_scheme)):
+    result={"success":True,
+                "data":None,
+                "msg":""}
     try:
-        pass
+        if not credentials:
+            raise Exception("토큰이 없습니다. 토큰 보내줘.")
+        token = credentials.credentials
+        user_info=decode_access_token(token)
+        print(f"#user_info:",user_info)
+        if not user_info:
+            raise Exception("토큰이 유효하지 않습니다.")
+        user_id=user_info["id"]
     except Exception as e:
         pass
