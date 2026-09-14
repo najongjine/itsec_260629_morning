@@ -1,6 +1,5 @@
-s1="aaa"
-s2="aaa"
-s3=str("aaa")
-
-print(f"s1==s2:{s1==s2}")
-print(f"s1==s3:{s1==s3}")
+print("입력:")
+a=input()
+print(f"a:{a}, type:{type(a)}")
+a,b=a.split()
+print(f"{a},{b}")
