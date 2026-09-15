@@ -143,4 +143,7 @@ def upsert_product(name=Form("")
 
         result["data"]=data
     except Exception as e:
-        pass
+            result["success"]=False
+            result["msg"]=str(e)
+        
+    return result
