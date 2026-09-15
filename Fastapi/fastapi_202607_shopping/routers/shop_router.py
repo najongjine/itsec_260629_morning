@@ -46,8 +46,8 @@ def productlist():
     
     return result
 
-@router.get("/get_a_board")
-def get_a_board(id:str="0"):
+@router.get("/get_a_product")
+def get_a_product(id:str="0"):
     result={"success":True,
             "data":None,
             "msg":""}
@@ -57,13 +57,14 @@ def get_a_board(id:str="0"):
             with conn.cursor() as cursor:
                 cursor.execute("""
                     SELECT
-                    b.id as "board_id"
-                    ,b.title
-                    ,b.content
-                    ,b.created_dt
+                    p.id as "product_id"
+                    ,p.name
+                    ,p.price
+                    ,p.category_id
+                    ,p.created_dt
                     ,u.id as "user_id"
                     ,u.username
-                    FROM t_board as b
+                    FROM t_product as p
                     JOIN t_user as u
                     ON b.user_id = u.id
                     WHERE b.id = %s
@@ -73,7 +74,7 @@ def get_a_board(id:str="0"):
                 row=cursor.fetchone()
                 if row is None:
                     result["success"]=False
-                    result["msg"]="그런 게시글 없음"
+                    result["msg"]="그런 상품 없음"
                     return result
                 columns = [
                     desc[0]
