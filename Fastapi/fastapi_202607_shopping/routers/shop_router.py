@@ -10,6 +10,7 @@ bearer_scheme = HTTPBearer(auto_error=False)
 def upsert_product(name=Form("")
                    ,price=Form("0")
                    ,category_id=Form("0")
+                   ,product_id=Form("0")
                    ,credentials: HTTPAuthorizationCredentials 
                               | None = Security(bearer_scheme)):
     result={"success":True,
@@ -24,5 +25,38 @@ def upsert_product(name=Form("")
         if not user_info:
             raise Exception("토큰이 유효하지 않습니다.")
         user_id=user_info["id"]
+        product_id=int(product_id)
+
+        with get_db() as conn:
+            with conn.cursor() as cursor:
+                if product_id <= 0:
+                    cursor.execute("""
+                        INSERT INTO t_product
+                        (name,price,user_id,category_id)
+                        VALUES
+                        (%s,%s,%s,%s)
+                        RETURNING id, name, price,category_id, created_dt
+                    """
+                        ,(name,price,user_id,category_id)
+                    )
+                else:
+                    cursor.execute("""
+                        UPDATE t_product
+                        SET title=%s
+                        ,content=%s
+                        WHERE id=%s AND user_id=%s
+                        RETURNING id, title, content, created_dt
+                    """
+                        ,(title,content,id,user_id)
+                    )
+                row=cursor.fetchone()
+                columns = [
+                    desc[0]
+                    for desc in cursor.description
+                ]
+                data = dict(zip(columns, row))
+                data["created_dt"] = data["created_dt"].isoformat()
+
+        result["data"]=data
     except Exception as e:
         pass
