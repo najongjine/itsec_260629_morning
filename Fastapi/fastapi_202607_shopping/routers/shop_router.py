@@ -66,8 +66,8 @@ def get_a_product(id:str="0"):
                     ,u.username
                     FROM t_product as p
                     JOIN t_user as u
-                    ON b.user_id = u.id
-                    WHERE b.id = %s
+                    ON p.user_id = u.id
+                    WHERE p.id = %s
                 """
                     ,(id,)
                 )
