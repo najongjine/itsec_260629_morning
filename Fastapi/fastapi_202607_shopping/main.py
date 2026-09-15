@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Form
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from utils.static import PUBLIC_DIR
 
 #from routers.router_example import router as example_router
 from routers.user_router import router as user_router
@@ -8,6 +10,7 @@ from routers.shop_router import router as shop_router
 
 # 서버 뿅 하고 완성 됨
 app=FastAPI()
+app.mount("/public", StaticFiles(directory=PUBLIC_DIR), name="public")
 app.add_middleware(
     CORSMiddleware
     ,allow_origins=["*"]

@@ -1,4 +1,8 @@
-from fastapi import APIRouter, Form, Header, Security
+from fastapi import APIRouter, File, Form, Header, Security, UploadFile
+from pathlib import Path
+from shutil import copyfileobj
+from uuid import uuid4
+from utils.static import PRODUCT_IMAGE_DIR
 from utils.db import get_db
 from utils.enc_dec import hash_password,verify_password
 from utils.jwtutil import create_access_token, decode_access_token
@@ -94,11 +98,14 @@ def upsert_product(name=Form("")
                    ,price=Form("0")
                    ,category_id=Form("0")
                    ,product_id=Form("0")
+                   ,images: list[UploadFile] | None = File(None)
                    ,credentials: HTTPAuthorizationCredentials 
                               | None = Security(bearer_scheme)):
     result={"success":True,
                 "data":None,
                 "msg":""}
+    new_files = []
+    old_files = []
     try:
         if not credentials:
             raise Exception("토큰이 없습니다. 토큰 보내줘.")
@@ -109,6 +116,17 @@ def upsert_product(name=Form("")
             raise Exception("토큰이 유효하지 않습니다.")
         user_id=user_info["id"]
         product_id=int(product_id)
+
+        # 파일을 선택하지 않았다면 이미지 관련 작업을 하지 않습니다.
+        images = [img for img in (images or []) if img.filename]
+        if len(images) > 5:
+            raise Exception("이미지는 최대 5개까지 업로드할 수 있습니다.")
+        for img in images:
+            extension = Path(img.filename).suffix.lower()
+            if extension not in (".jpg", ".jpeg", ".png", ".gif", ".webp"):
+                raise Exception("jpg, jpeg, png, gif, webp 이미지만 업로드할 수 있습니다.")
+            if not (img.content_type or "").startswith("image/"):
+                raise Exception("이미지 파일만 업로드할 수 있습니다.")
 
         with get_db() as conn:
             with conn.cursor() as cursor:
@@ -134,6 +152,8 @@ def upsert_product(name=Form("")
                         ,(name,price,category_id,product_id,user_id)
                     )
                 row=cursor.fetchone()
+                if row is None:
+                    raise Exception("상품이 없거나 수정 권한이 없습니다.")
                 columns = [
                     desc[0]
                     for desc in cursor.description
@@ -141,9 +161,49 @@ def upsert_product(name=Form("")
                 data = dict(zip(columns, row))
                 data["created_dt"] = data["created_dt"].isoformat()
 
+                if images:
+                    product_id = data["id"]
+                    # 기존 경로를 기억해 두고, DB에는 새 이미지 경로를 저장합니다.
+                    cursor.execute("SELECT filepath FROM t_product_img WHERE product_id=%s",
+                                   (product_id,))
+                    old_files = [row[0] for row in cursor.fetchall()]
+                    cursor.execute("DELETE FROM t_product_img WHERE product_id=%s",
+                                   (product_id,))
+
+                    data["images"] = []
+                    for img in images:
+                        filename = f"{uuid4().hex}{Path(img.filename).suffix.lower()}"
+                        save_path = PRODUCT_IMAGE_DIR / filename
+                        new_files.append(save_path)
+                        with save_path.open("wb") as file:
+                            copyfileobj(img.file, file)
+
+                        filepath = f"/public/products/{filename}"
+                        cursor.execute("""
+                            INSERT INTO t_product_img (product_id, filepath)
+                            VALUES (%s, %s)
+                        """, (product_id, filepath))
+                        data["images"].append(filepath)
+
         result["data"]=data
     except Exception as e:
-            result["success"]=False
-            result["msg"]=str(e)
+        # DB 저장에 실패하면 이번에 만든 파일도 삭제합니다.
+        for path in new_files:
+            try:
+                path.unlink(missing_ok=True)
+            except OSError:
+                pass
+        result["success"]=False
+        result["msg"]=str(e)
+        return result
+
+    # DB 저장이 성공한 뒤에만 기존 실제 파일을 삭제합니다.
+    for filepath in old_files:
+        if filepath and filepath.startswith("/public/products/"):
+            path = PRODUCT_IMAGE_DIR / Path(filepath).name
+            try:
+                path.unlink(missing_ok=True)
+            except OSError as e:
+                print(f"기존 이미지 삭제 실패: {path.name}: {e}")
         
     return result
