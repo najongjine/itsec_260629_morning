@@ -42,12 +42,13 @@ def upsert_product(name=Form("")
                 else:
                     cursor.execute("""
                         UPDATE t_product
-                        SET title=%s
-                        ,content=%s
+                        SET name=%s
+                        ,price=%s
+                        ,category_id=%s
                         WHERE id=%s AND user_id=%s
-                        RETURNING id, title, content, created_dt
+                        RETURNING id, name, price, category_id, user_id,created_dt
                     """
-                        ,(title,content,id,user_id)
+                        ,(name,price,category_id,product_id,user_id)
                     )
                 row=cursor.fetchone()
                 columns = [
