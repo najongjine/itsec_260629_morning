@@ -6,6 +6,88 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 router=APIRouter()
 bearer_scheme = HTTPBearer(auto_error=False)
 
+@router.get("/productlist")
+def productlist():
+    result={"success":True,
+            "data":None,
+            "msg":""}
+    try:
+        with get_db() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    SELECT
+                    p.id as "product_id"
+                    ,p.name
+                    ,p.price
+                    ,p.category_id
+                    ,p.created_dt
+                    ,u.id as "user_id"
+                    ,u.username
+                    FROM t_product as p
+                    JOIN t_user as u
+                    ON p.user_id = u.id
+                    ORDER BY p.created_dt DESC
+                """
+                    ,()
+                )
+                rows=cursor.fetchall()
+                columns = [
+                    desc[0]
+                    for desc in cursor.description
+                ]
+                data = [
+                    dict(zip(columns, row))
+                    for row in rows
+                ]
+        result["data"]=data
+    except Exception as e:
+        result["success"]=False
+        result["msg"]=str(e)
+    
+    return result
+
+@router.get("/get_a_board")
+def get_a_board(id:str="0"):
+    result={"success":True,
+            "data":None,
+            "msg":""}
+    try:
+        id=int(id)
+        with get_db() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    SELECT
+                    b.id as "board_id"
+                    ,b.title
+                    ,b.content
+                    ,b.created_dt
+                    ,u.id as "user_id"
+                    ,u.username
+                    FROM t_board as b
+                    JOIN t_user as u
+                    ON b.user_id = u.id
+                    WHERE b.id = %s
+                """
+                    ,(id,)
+                )
+                row=cursor.fetchone()
+                if row is None:
+                    result["success"]=False
+                    result["msg"]="그런 게시글 없음"
+                    return result
+                columns = [
+                    desc[0]
+                    for desc in cursor.description
+                ]
+                data = dict(zip(columns, row))
+                data["created_dt"] = data["created_dt"].isoformat()
+        result["data"]=data
+    except Exception as e:
+        result["success"]=False
+        result["msg"]=str(e)
+    
+    return result
+
 @router.post("/upsert_product")
 def upsert_product(name=Form("")
                    ,price=Form("0")
