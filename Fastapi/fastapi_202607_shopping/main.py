@@ -3,6 +3,8 @@ import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 
 #from routers.router_example import router as example_router
+from routers.user_router import router as user_router
+from routers.shop_router import router as shop_router
 
 # 서버 뿅 하고 완성 됨
 app=FastAPI()
@@ -15,6 +17,8 @@ app.add_middleware(
 )
 
 #app.include_router(example_router,tags=["예제 API"])
+app.include_router(user_router,tags=["user"])
+app.include_router(shop_router,tags=["shop"])
 
 # api endpoint, router, controller
 @app.get("/")
