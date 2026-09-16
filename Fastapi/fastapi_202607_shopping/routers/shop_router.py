@@ -27,9 +27,10 @@ def productlist():
                     ,p.created_dt
                     ,u.id as "user_id"
                     ,u.username
+                    ,c.name as "category_name"
                     FROM t_product as p
-                    JOIN t_user as u
-                    ON p.user_id = u.id
+                    JOIN t_user as u ON p.user_id = u.id
+                    JOIN t_category as c ON c.id = p.category_id
                     ORDER BY p.created_dt DESC
                 """
                     ,()
@@ -68,9 +69,10 @@ def get_a_product(id:str="0"):
                     ,p.created_dt
                     ,u.id as "user_id"
                     ,u.username
+                    ,c.name as "category_name"
                     FROM t_product as p
-                    JOIN t_user as u
-                    ON p.user_id = u.id
+                    JOIN t_user as u ON p.user_id = u.id
+                    JOIN t_category as c ON c.id = p.category_id
                     WHERE p.id = %s
                 """
                     ,(id,)

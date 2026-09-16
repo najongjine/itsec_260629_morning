@@ -1,0 +1,39 @@
+.board-upsert-page {
+  min-height: 100%; box-sizing: border-box; padding: clamp(24px, 5vw, 72px) clamp(16px, 4vw, 48px);
+  background: #f6f8fb; color: #172033;
+}
+.board-upsert { width: min(100%, 820px); margin: 0 auto; overflow: hidden; border: 1px solid #e5e9f1; border-radius: 18px; background: #fff; box-shadow: 0 12px 32px rgb(20 38 74 / 7%); }
+.board-upsert__header { padding: clamp(24px, 4vw, 44px) clamp(24px, 5vw, 52px) 28px; border-bottom: 1px solid #edf0f5; }
+.board-upsert__eyebrow { margin: 0 0 8px; color: #4f6ee8; font-size: .75rem; font-weight: 800; letter-spacing: .12em; }
+.board-upsert__header h1 { margin: 0; color: #1e293b; font-size: clamp(1.55rem, 3.5vw, 2.25rem); font-weight: 750; line-height: 1.3; letter-spacing: -.035em; }
+.board-upsert__description { margin: 10px 0 0; color: #71809a; font-size: .95rem; }
+.board-upsert__form { padding: clamp(24px, 5vw, 52px); }
+.board-upsert__field + .board-upsert__field { margin-top: 28px; }
+.board-upsert__field label { display: block; margin-bottom: 10px; color: #344158; font-size: .92rem; font-weight: 700; }
+.board-upsert__field input, .board-upsert__field textarea { width: 100%; box-sizing: border-box; border: 1px solid #dce2ec; border-radius: 10px; outline: none; background: #fff; color: #1e293b; font: inherit; line-height: 1.55; transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
+.board-upsert__field input { height: 52px; padding: 0 16px; }
+.board-upsert__field textarea { display: block; min-height: 300px; padding: 14px 16px; resize: vertical; }
+.board-upsert__field input::placeholder, .board-upsert__field textarea::placeholder { color: #a0aabd; }
+.board-upsert__field input:hover, .board-upsert__field textarea:hover { border-color: #b9c5dc; }
+.board-upsert__field input:focus, .board-upsert__field textarea:focus { border-color: #4f6ee8; box-shadow: 0 0 0 4px rgb(79 110 232 / 13%); }
+.board-upsert__label-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.board-upsert__label-row span { color: #95a1b6; font-size: .78rem; }
+.board-upsert__actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 36px; }
+.board-upsert__actions button { min-width: 104px; height: 46px; border-radius: 9px; font: inherit; font-size: .92rem; font-weight: 700; cursor: pointer; transition: transform .15s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.board-upsert__actions button:active { transform: translateY(1px); }
+.board-upsert__cancel { border: 1px solid #dce2ec; background: #fff; color: #5d6b82; }
+.board-upsert__cancel:hover { border-color: #b9c5dc; background: #f8faff; }
+.board-upsert__submit { border: 1px solid #4f6ee8; background: #4f6ee8; color: #fff; box-shadow: 0 5px 12px rgb(79 110 232 / 22%); }
+.board-upsert__submit:hover { border-color: #3d5bd1; background: #3d5bd1; box-shadow: 0 7px 16px rgb(79 110 232 / 28%); }
+@media (max-width: 600px) {
+  .board-upsert-page { padding: 24px 16px; }
+  .board-upsert { border-radius: 14px; }
+  .board-upsert__header { padding: 24px 20px 20px; }
+  .board-upsert__description { font-size: .88rem; }
+  .board-upsert__form { padding: 24px 20px; }
+  .board-upsert__field + .board-upsert__field { margin-top: 22px; }
+  .board-upsert__field input { height: 48px; }
+  .board-upsert__field textarea { min-height: 240px; }
+  .board-upsert__actions { margin-top: 28px; }
+  .board-upsert__actions button { flex: 1; min-width: 0; }
+}
