@@ -94,11 +94,15 @@ def get_a_product(id:str="0"):
     return result
 
 @router.post("/upsert_product")
-def upsert_product(name=Form("")
-                   ,price=Form("0")
-                   ,category_id=Form("0")
-                   ,product_id=Form("0")
-                   ,images: list[UploadFile] | None = File(None)
+def upsert_product(name: str = Form("")
+                   ,price: str = Form("0")
+                   ,category_id: str = Form("0")
+                   ,product_id: str = Form("0")
+                   # 빈 목록이면 이미지 미첨부. binary 명세로 Swagger 파일 선택 버튼을 표시합니다.
+                   ,images: list[UploadFile] = File(
+                       default=[],
+                       json_schema_extra={"items": {"type": "string", "format": "binary"}}
+                   )
                    ,credentials: HTTPAuthorizationCredentials 
                               | None = Security(bearer_scheme)):
     result={"success":True,
