@@ -28,6 +28,7 @@ def productlist():
                     ,u.id as "user_id"
                     ,u.username
                     ,c.name as "category_name"
+                    ,(SELECT filepath FROM t_product_img as pi WHERE pi.product_id = p.id) as "img"
                     FROM t_product as p
                     JOIN t_user as u ON p.user_id = u.id
                     JOIN t_category as c ON c.id = p.category_id
@@ -61,19 +62,50 @@ def get_a_product(id:str="0"):
         with get_db() as conn:
             with conn.cursor() as cursor:
                 cursor.execute("""
-                    SELECT
-                    p.id as "product_id"
-                    ,p.name
-                    ,p.price
-                    ,p.category_id
-                    ,p.created_dt
-                    ,u.id as "user_id"
-                    ,u.username
-                    ,c.name as "category_name"
-                    FROM t_product as p
-                    JOIN t_user as u ON p.user_id = u.id
-                    JOIN t_category as c ON c.id = p.category_id
-                    WHERE p.id = %s
+            SELECT
+            p.id AS "product_id",
+            p.name,
+            p.price,
+            p.category_id,
+            p.created_dt,
+
+            u.id AS "user_id",
+            u.username,
+
+            c.name AS "category_name",
+
+            COALESCE(
+                json_agg(
+                    json_build_object(
+                        'id', pi.id,
+                        'filepath', pi.filepath
+                    )
+                ) FILTER (WHERE pi.id IS NOT NULL),
+                '[]'::json
+            ) AS images
+
+            FROM t_product AS p
+
+            JOIN t_user AS u
+                ON p.user_id = u.id
+
+            JOIN t_category AS c
+                ON c.id = p.category_id
+
+            LEFT JOIN t_product_img AS pi
+                ON pi.product_id = p.id
+
+            WHERE p.id = %s
+
+            GROUP BY
+                p.id,
+                p.name,
+                p.price,
+                p.category_id,
+                p.created_dt,
+                u.id,
+                u.username,
+                c.name
                 """
                     ,(id,)
                 )
