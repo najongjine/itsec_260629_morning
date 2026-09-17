@@ -67,7 +67,18 @@ function ProductList() {
       {productList.length > 0 && (
         <section className="product-grid" aria-label="상품 목록">
           {productList.map((product) => (
-            <article className="product-card" key={product.product_id}>
+            <article
+              className="product-card"
+              key={product.product_id}
+              onClick={() => navigate(`/detail?id=${product.product_id}`)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  navigate(`/detail?id=${product.product_id}`);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+            >
               <div className="product-card__image-wrap">
                 <div className="product-card__placeholder" aria-hidden="true">
                   <svg viewBox="0 0 24 24" focusable="false">

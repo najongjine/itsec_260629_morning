@@ -1,116 +1,142 @@
 .detail-page {
   min-height: 100%;
-  padding: clamp(24px, 5vw, 72px) clamp(16px, 4vw, 48px);
-  background: #f6f8fb;
-  color: #172033;
-  box-sizing: border-box;
+  padding: 56px 24px 80px;
+  background: #f7f8fb;
 }
 
 .detail-card {
-  width: min(100%, 920px);
+  width: min(100%, 900px);
   margin: 0 auto;
   overflow: hidden;
-  border: 1px solid #e5e9f1;
+  border: 1px solid #e5e7eb;
   border-radius: 18px;
   background: #fff;
-  box-shadow: 0 12px 32px rgb(20 38 74 / 7%);
+  box-shadow: 0 12px 32px rgb(15 23 42 / 6%);
 }
 
-.detail-card__header {
-  padding: clamp(24px, 4vw, 44px);
+.detail-card__images {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 20px;
+  background: #f1f5f9;
+}
+
+.detail-card__images img,
+.detail-card__no-image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.detail-card__no-image {
+  display: grid;
+  min-height: 220px;
+  place-items: center;
+  grid-column: 1 / -1;
+  color: #94a3b8;
+  background: #e2e8f0;
+}
+
+.detail-card__body {
+  padding: 36px;
 }
 
 .detail-card__eyebrow {
   margin: 0 0 10px;
-  color: #4f6ee8;
-  font-size: .75rem;
+  color: #2563eb;
+  font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: .12em;
+  letter-spacing: 0.12em;
 }
 
 .detail-card__title {
   margin: 0;
-  color: #1e293b;
-  font-size: clamp(1.55rem, 3.5vw, 2.35rem);
-  font-weight: 750;
-  line-height: 1.32;
-  letter-spacing: -.035em;
-  overflow-wrap: anywhere;
+  color: #111827;
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  letter-spacing: -0.04em;
 }
 
-.detail-card__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 28px;
-  margin: 28px 0 0;
-  color: #65738b;
-  font-size: .9rem;
-}
-
-.detail-card__meta div {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.detail-card__meta dt {
-  color: #94a0b4;
-  font-weight: 600;
-}
-
-.detail-card__meta dd {
-  margin: 0;
-  color: #53617a;
-}
-
-.detail-card__divider {
-  height: 1px;
-  margin: 0 clamp(24px, 4vw, 44px);
-  background: #e9edf3;
+.detail-card__price {
+  margin: 18px 0 0;
+  color: #111827;
+  font-size: 1.4rem;
+  font-weight: 800;
 }
 
 .detail-card__content {
-  min-height: 220px;
-  padding: clamp(24px, 4vw, 44px);
-  color: #344158;
-  font-size: 1rem;
-  line-height: 1.85;
-  text-align: left;
+  min-height: 120px;
+  margin: 28px 0 0;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+  color: #374151;
+  line-height: 1.8;
   white-space: pre-wrap;
-  overflow-wrap: anywhere;
+}
+
+.detail-card__meta {
+  margin-top: 22px;
+  color: #94a3b8;
+  font-size: 0.82rem;
+}
+
+.detail-card__buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+.detail-card__buttons button {
+  padding: 10px 17px;
+  border: 0;
+  border-radius: 7px;
+  color: #fff;
+  background: #2563eb;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.detail-card__buttons .detail-card__delete {
+  background: #dc2626;
+}
+
+.detail-card__buttons .detail-card__back {
+  color: #475569;
+  background: #e2e8f0;
+}
+
+.detail-empty {
+  width: min(100%, 900px);
+  margin: 0 auto;
+  padding: 80px 20px;
+  color: #64748b;
+  text-align: center;
 }
 
 @media (max-width: 600px) {
   .detail-page {
-    padding: 24px 16px;
+    padding: 24px 14px 48px;
   }
 
-  .detail-card {
-    border-radius: 14px;
+  .detail-card__images {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 12px;
   }
 
-  .detail-card__header {
-    padding: 24px 20px 20px;
+  .detail-card__body {
+    padding: 26px 20px;
   }
 
-  .detail-card__meta {
-    gap: 7px 16px;
-    margin-top: 20px;
-    font-size: .82rem;
+  .detail-card__buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .detail-card__meta div {
-    width: 100%;
-  }
-
-  .detail-card__divider {
-    margin: 0 20px;
-  }
-
-  .detail-card__content {
-    min-height: 180px;
-    padding: 24px 20px 32px;
-    font-size: .95rem;
-    line-height: 1.75;
+  .detail-card__buttons .detail-card__back {
+    grid-column: 1 / -1;
   }
 }

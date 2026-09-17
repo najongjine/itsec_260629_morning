@@ -279,3 +279,40 @@ def upsert_product(name: str = Form("")
                 print(f"기존 이미지 삭제 실패: {path.name}: {e}")
         
     return result
+
+@router.delete("/delete_product")
+def delete_product(id: str = "0",
+                   credentials: HTTPAuthorizationCredentials | None = Security(bearer_scheme)):
+    result = {"success": True, "data": None, "msg": ""}
+    old_files = []
+    try:
+        if not credentials:
+            raise Exception("토큰이 없습니다.")
+
+        user_info = decode_access_token(credentials.credentials)
+        if not user_info:
+            raise Exception("유효하지 않은 토큰입니다.")
+
+        product_id = int(id)
+        with get_db() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT filepath FROM t_product_img WHERE product_id=%s",
+                    (product_id,),
+                )
+                old_files = [row[0] for row in cursor.fetchall()]
+                cursor.execute(
+                    "DELETE FROM t_product WHERE id=%s AND user_id=%s RETURNING id",
+                    (product_id, user_info["id"]),
+                )
+                if cursor.fetchone() is None:
+                    raise Exception("삭제할 상품이 없거나 삭제 권한이 없습니다.")
+
+        for filepath in old_files:
+            if filepath and filepath.startswith("/public/products/"):
+                (PRODUCT_IMAGE_DIR / Path(filepath).name).unlink(missing_ok=True)
+    except Exception as e:
+        result["success"] = False
+        result["msg"] = str(e)
+
+    return result

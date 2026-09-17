@@ -51,6 +51,7 @@ function ProductUpsert() {
     if (!result.success || !product) return;
 
     setName(product.name || '');
+    setDescription(product.content || '');
     setPrice(String(product.price || 0));
     setCategoryId(String(product.category_id || ''));
     setImages(
@@ -103,6 +104,7 @@ function ProductUpsert() {
 
     const formData = new FormData();
     formData.append('name', name);
+    formData.append('content', description);
     formData.append('price', price || '0');
     formData.append('category_id', categoryId);
     formData.append('product_id', productId);
@@ -183,7 +185,6 @@ function ProductUpsert() {
               placeholder="상품 설명을 입력하세요"
               rows={5}
             />
-            <small>현재 서버에는 설명을 저장할 수 있는 컬럼이 없습니다.</small>
           </label>
         </div>
 
