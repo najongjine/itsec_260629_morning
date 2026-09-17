@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './ProductList.css';
+import { useNavigate, useSearchParams } from 'react-router';
 
 interface ProductType {
   product_id: number;
@@ -14,6 +15,7 @@ interface ProductType {
 }
 
 function ProductList() {
+  const navigate=useNavigate();
   const [productList, setProductList] = useState<ProductType[]>([]);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ function ProductList() {
         return;
       }
 
-      setProductList(response.data || []);
+      setProductList(response?.data || []);
     } catch (error: any) {
       alert(`오류: ${error.message || ''}`);
     }
@@ -54,7 +56,7 @@ function ProductList() {
         </span>
       </header>
 
-      {productList.length === 0 && (
+      {productList.length <= 0 && (
         <div className="product-state">
           <span className="product-state__icon" aria-hidden="true">·</span>
           <p>등록된 상품이 없습니다.</p>
@@ -104,6 +106,11 @@ function ProductList() {
           ))}
         </section>
       )}
+      <div>
+        <button onClick={(e)=>{
+          navigate("/productupsert");
+        }}>상품등록</button>
+      </div>
     </main>
   );
 }
