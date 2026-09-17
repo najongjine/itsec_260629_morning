@@ -34,7 +34,7 @@ function Login() {
       token:response?.token||""
       ,userinfo:response?.userinfo||{}
     })
-    navigate("/boardlist")
+    navigate("/")
   }
 
   return (

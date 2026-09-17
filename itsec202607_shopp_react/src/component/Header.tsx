@@ -11,7 +11,6 @@ function Header() {
     <div>
       <div> 
         <Link to="/"> 홈 </Link>
-        <Link to="/boardlist"> 게시판 </Link>
         {!isLoggedIn && (
           <div>
             <Link to="/login"> 로그인 </Link>

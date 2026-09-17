@@ -1,59 +1,109 @@
 import { useEffect, useState } from 'react';
 import './ProductList.css';
-import { useNavigate } from 'react-router';
 
-interface BoardType {
-  board_id: number;
-  title: string;
+interface ProductType {
+  product_id: number;
+  name: string;
+  price: number;
+  category_id: number;
   created_dt: string;
   user_id: number;
   username: string;
+  category_name: string;
+  img: string | null;
 }
 
 function ProductList() {
-  const navigate=useNavigate();
-  const [boardlist, setBoardlist] = useState<BoardType[]>([]);
+  const [productList, setProductList] = useState<ProductType[]>([]);
 
   useEffect(() => {
     init();
   }, []);
 
   async function init() {
-    let response: any = await fetch('http://localhost:8000/boardlist', { method: 'GET' });
-    response = await response?.json() || {};
-    console.log('#response: ', response);
-    setBoardlist(response?.data || []);
+    try {
+      let response: any = await fetch('http://localhost:8000/productlist', {
+        method: 'GET',
+      });
+      response = await response.json();
+
+      if (!response.success) {
+        alert(`상품 목록 조회 실패: ${response.msg || ''}`);
+        return;
+      }
+
+      setProductList(response.data || []);
+    } catch (error: any) {
+      alert(`오류: ${error.message || ''}`);
+    }
   }
 
   return (
-    <main className="board-list-page">
-      <section className="board-list" aria-labelledby="board-list-title">
-        <div className="board-list__heading">
-          <p className="board-list__eyebrow">COMMUNITY</p>
-          <h1 id="board-list-title">게시글 리스트</h1>
+    <main className="product-page">
+      <header className="product-page__header">
+        <div>
+          <p className="product-page__eyebrow">SHOP</p>
+          <h1 className="product-page__title">상품 목록</h1>
+          <p className="product-page__description">
+            지금 준비된 상품을 한눈에 둘러보세요.
+          </p>
         </div>
 
-        <div className="board-list__table" role="list">
-          <div className="board-list__row board-list__row--header" aria-hidden="true">
-            <span>번호</span><span>제목</span><span>작성자</span><span>작성일</span>
-          </div>
-          {boardlist.map((board) => (
-            <div className="board-list__row" key={board.board_id} role="listitem">
-              <div className="board-list__id" data-label="번호">{board.board_id}</div>
-              <div className="board-list__title" data-label="제목" 
-              onClick={(e)=>{navigate(`/detail?id=${board?.board_id||0}`)}}>{board.title}</div>
-              <div className="board-list__author" data-label="작성자">{board.username}</div>
-              <div className="board-list__date" data-label="작성일">{board.created_dt}</div>
-            </div>
+        <span className="product-page__count">
+          총 <strong>{productList.length}</strong>개
+        </span>
+      </header>
+
+      {productList.length === 0 && (
+        <div className="product-state">
+          <span className="product-state__icon" aria-hidden="true">·</span>
+          <p>등록된 상품이 없습니다.</p>
+          <small>새로운 상품이 등록되면 이곳에 표시됩니다.</small>
+        </div>
+      )}
+
+      {productList.length > 0 && (
+        <section className="product-grid" aria-label="상품 목록">
+          {productList.map((product) => (
+            <article className="product-card" key={product.product_id}>
+              <div className="product-card__image-wrap">
+                <div className="product-card__placeholder" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5v-13Zm1.5 0v9.77l3.02-3.02a1.5 1.5 0 0 1 2.12 0l1.36 1.36 2.86-2.86a1.5 1.5 0 0 1 2.12 0l1.52 1.52V5.5h-13Zm13 8.89-2.58-2.58L13.06 14.67l3.83 3.83h1.61v-4.11Zm-3.73 4.11-5.19-5.19-4.08 4.08v1.11h9.27ZM8.25 7a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z" />
+                  </svg>
+                </div>
+
+                {product.img && (
+                  <img
+                    className="product-card__image"
+                    src={`http://localhost:8000${product.img}`}
+                    alt={product.name}
+                    loading="lazy"
+                    onError={(event) => {
+                      event.currentTarget.style.display = 'none';
+                    }}
+                  />
+                )}
+
+                <span className="product-card__category">
+                  {product.category_name || '기타'}
+                </span>
+              </div>
+
+              <div className="product-card__content">
+                <h2 className="product-card__name">{product.name}</h2>
+                <p className="product-card__price">
+                  {Number(product.price).toLocaleString()}원
+                </p>
+                <div className="product-card__meta">
+                  <span>판매자</span>
+                  <strong>{product.username || '알 수 없음'}</strong>
+                </div>
+              </div>
+            </article>
           ))}
-          {boardlist.length === 0 && <p className="board-list__empty">등록된 게시글이 없습니다.</p>}
-        </div>
-        <div>
-          <button onClick={(e)=>{
-            navigate("/boardupsert")
-          }}>글 작성</button>
-        </div>
-      </section>
+        </section>
+      )}
     </main>
   );
 }

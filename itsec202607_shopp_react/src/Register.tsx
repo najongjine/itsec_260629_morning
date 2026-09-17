@@ -45,7 +45,7 @@ function Register() {
       token:response?.token||""
       ,userinfo:response?.userinfo||{}
     })
-    navigate("/boardlist")
+    navigate("/")
   }
 
   return (
