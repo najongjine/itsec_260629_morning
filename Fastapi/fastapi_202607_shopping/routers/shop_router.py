@@ -28,11 +28,42 @@ def productlist():
                     ,u.id as "user_id"
                     ,u.username
                     ,c.name as "category_name"
-                    ,(SELECT filepath FROM t_product_img as pi WHERE pi.product_id = p.id) as "img"
+                    ,(SELECT filepath FROM t_product_img as pi WHERE pi.product_id = p.id LIMIT 1) as "img"
                     FROM t_product as p
                     JOIN t_user as u ON p.user_id = u.id
                     JOIN t_category as c ON c.id = p.category_id
                     ORDER BY p.created_dt DESC
+                """
+                    ,()
+                )
+                rows=cursor.fetchall()
+                columns = [
+                    desc[0]
+                    for desc in cursor.description
+                ]
+                data = [
+                    dict(zip(columns, row))
+                    for row in rows
+                ]
+        result["data"]=data
+    except Exception as e:
+        result["success"]=False
+        result["msg"]=str(e)
+    
+    return result
+
+@router.get("/categorylist")
+def categorylist():
+    result={"success":True,
+            "data":None,
+            "msg":""}
+    try:
+        with get_db() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    SELECT
+                    *
+                    FROM t_category
                 """
                     ,()
                 )
