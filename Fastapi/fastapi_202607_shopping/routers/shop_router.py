@@ -65,6 +65,7 @@ def get_a_product(id:str="0"):
             SELECT
             p.id AS "product_id",
             p.name,
+            p.content,
             p.price,
             p.category_id,
             p.created_dt,
@@ -129,6 +130,7 @@ def get_a_product(id:str="0"):
 
 @router.post("/upsert_product")
 def upsert_product(name: str = Form("")
+                   ,content: str = Form("")
                    ,price: str = Form("0")
                    ,category_id: str = Form("0")
                    ,product_id: str = Form("0")
@@ -171,23 +173,24 @@ def upsert_product(name: str = Form("")
                 if product_id <= 0:
                     cursor.execute("""
                         INSERT INTO t_product
-                        (name,price,user_id,category_id)
+                        (name,price,user_id,category_id,content)
                         VALUES
-                        (%s,%s,%s,%s)
-                        RETURNING id, name, price,category_id, created_dt
+                        (%s,%s,%s,%s,%s)
+                        RETURNING id, name, price,category_id, created_dt, content
                     """
-                        ,(name,price,user_id,category_id)
+                        ,(name,price,user_id,category_id, content)
                     )
                 else:
                     cursor.execute("""
                         UPDATE t_product
                         SET name=%s
+                        ,content=%s
                         ,price=%s
                         ,category_id=%s
                         WHERE id=%s AND user_id=%s
-                        RETURNING id, name, price, category_id, user_id,created_dt
+                        RETURNING id, name, price, category_id, user_id,created_dt, content
                     """
-                        ,(name,price,category_id,product_id,user_id)
+                        ,(name,content,price,category_id,product_id,user_id)
                     )
                 row=cursor.fetchone()
                 if row is None:
