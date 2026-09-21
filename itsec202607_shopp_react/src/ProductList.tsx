@@ -89,7 +89,7 @@ function ProductList() {
                 {product.img && (
                   <img
                     className="product-card__image"
-                    src={`http://localhost:8000${product.img}`}
+                    src={product.img}
                     alt={product.name}
                     loading="lazy"
                     onError={(event) => {

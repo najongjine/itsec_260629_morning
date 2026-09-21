@@ -3,6 +3,7 @@ uvicorn
 psycopg[binary,pool]
 python-dotenv
 python-multipart
+httpx
 pwdlib[argon2]
 cryptography
 pycryptodome

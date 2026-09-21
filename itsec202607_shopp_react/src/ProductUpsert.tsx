@@ -57,7 +57,7 @@ function ProductUpsert() {
     setImages(
       (product.images || []).map((image: { filepath: string }) => ({
         name: image.filepath.split('/').pop() || '기존 이미지',
-        url: `http://localhost:8000${image.filepath}`,
+        url: image.filepath,
       })),
     );
   }

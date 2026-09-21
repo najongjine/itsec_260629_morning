@@ -75,7 +75,7 @@ function Detail() {
             product.images.map((image) => (
               <img
                 key={image.id}
-                src={`http://localhost:8000${image.filepath}`}
+                src={image.filepath}
                 alt={product.name}
               />
             ))

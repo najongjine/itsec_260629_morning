@@ -1,10 +1,9 @@
 from fastapi import APIRouter, File, Form, Header, Security, UploadFile
 from pathlib import Path
-from shutil import copyfileobj
-from uuid import uuid4
 from utils.static import PRODUCT_IMAGE_DIR
 from utils.db import get_db
 from utils.enc_dec import hash_password,verify_password
+from utils.imgbb import upload_image
 from utils.jwtutil import create_access_token, decode_access_token
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 router=APIRouter()
@@ -175,7 +174,6 @@ def upsert_product(name: str = Form("")
     result={"success":True,
                 "data":None,
                 "msg":""}
-    new_files = []
     old_files = []
     try:
         if not credentials:
@@ -244,13 +242,11 @@ def upsert_product(name: str = Form("")
 
                     data["images"] = []
                     for img in images:
-                        filename = f"{uuid4().hex}{Path(img.filename).suffix.lower()}"
-                        save_path = PRODUCT_IMAGE_DIR / filename
-                        new_files.append(save_path)
-                        with save_path.open("wb") as file:
-                            copyfileobj(img.file, file)
-
-                        filepath = f"/public/products/{filename}"
+                        filepath = upload_image(
+                            file_name=img.filename,
+                            content=img.file.read(),
+                            content_type=img.content_type or "application/octet-stream",
+                        )
                         cursor.execute("""
                             INSERT INTO t_product_img (product_id, filepath)
                             VALUES (%s, %s)
@@ -259,12 +255,7 @@ def upsert_product(name: str = Form("")
 
         result["data"]=data
     except Exception as e:
-        # DB 저장에 실패하면 이번에 만든 파일도 삭제합니다.
-        for path in new_files:
-            try:
-                path.unlink(missing_ok=True)
-            except OSError:
-                pass
+        # 오류가 발생하면 연결 컨텍스트가 DB 트랜잭션을 롤백합니다.
         result["success"]=False
         result["msg"]=str(e)
         return result
