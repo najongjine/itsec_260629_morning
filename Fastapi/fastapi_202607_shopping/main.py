@@ -4,9 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from utils.db import close_db_pool
-from utils.static import PUBLIC_DIR
 
 #from routers.router_example import router as example_router
 from routers.user_router import router as user_router
@@ -20,7 +18,6 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
-app.mount("/public", StaticFiles(directory=PUBLIC_DIR), name="public")
 app.add_middleware(
     CORSMiddleware
     ,allow_origins=["*"]
