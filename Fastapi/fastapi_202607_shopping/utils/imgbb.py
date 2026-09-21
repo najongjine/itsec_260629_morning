@@ -15,7 +15,7 @@ IMGBB_MAX_FILE_SIZE = 32 * 1024 * 1024
 def upload_image(file_name: str, content: bytes, content_type: str) -> str:
     api_key = os.getenv("IMGBB_API_KEY")
     if not api_key:
-        raise RuntimeError(".env 파일에 IMGBB_API_KEY를 설정해 주세요.")
+        raise RuntimeError("IMGBB_API_KEY environment variable is not configured.")
 
     if not content:
         raise ValueError("빈 이미지 파일은 업로드할 수 없습니다.")

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './ProductList.css';
 import { useNavigate, useSearchParams } from 'react-router';
+import { apiUrl } from './api';
 
 interface ProductType {
   product_id: number;
@@ -24,7 +25,7 @@ function ProductList() {
 
   async function init() {
     try {
-      let response: any = await fetch('http://localhost:8000/productlist', {
+      let response: any = await fetch(apiUrl('/productlist'), {
         method: 'GET',
       });
       response = await response.json();

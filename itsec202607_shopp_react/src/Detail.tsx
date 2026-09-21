@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from './auth';
 import { useNavigate, useSearchParams } from 'react-router';
+import { apiUrl } from './api';
 import './Detail.css';
 
 interface ProductImage {
@@ -32,7 +33,7 @@ function Detail() {
   }, [id]);
 
   async function getProduct() {
-    const response = await fetch(`http://localhost:8000/get_a_product?id=${id}`);
+    const response = await fetch(apiUrl(`/get_a_product?id=${id}`));
     const result = await response.json();
     if (result.success) setProduct(result.data);
   }
@@ -46,7 +47,7 @@ function Detail() {
 
     if (!confirm('상품을 삭제하시겠습니까?')) return;
 
-    const response = await fetch(`http://localhost:8000/delete_product?id=${id}`, {
+    const response = await fetch(apiUrl(`/delete_product?id=${id}`), {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` },
     });

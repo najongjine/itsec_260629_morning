@@ -1,9 +1,11 @@
-from pwdlib import PasswordHash
-from cryptography.fernet import Fernet
-import hashlib
-import hmac
+import os
 import base64
+
 from Crypto.Cipher import AES
+from dotenv import load_dotenv
+from pwdlib import PasswordHash
+
+load_dotenv()
 """
 단반향 암호화 (비밀번호용)
 """
@@ -43,10 +45,14 @@ def verify_password(plain_password:str
 """
 양방향 암호화
 """
-AES_KEY = b"12345678901234567890123456789012"
+def _get_aes_key() -> bytes:
+    key = os.getenv("AES_KEY", "").encode("utf-8")
+    if len(key) not in (16, 24, 32):
+        raise RuntimeError("AES_KEY must be 16, 24, or 32 UTF-8 bytes.")
+    return key
 
 def encrypt(text:str) -> str:
-    cipher=AES.new(AES_KEY,AES.MODE_SIV)
+    cipher=AES.new(_get_aes_key(),AES.MODE_SIV)
     encrypted,tag=cipher.encrypt_and_digest(
         text.encode("utf-8")
     )
@@ -57,6 +63,6 @@ def decrypt(encrypted_text:str)->str:
     data=base64.urlsafe_b64decode(encrypted_text.encode())
     tag=data[:16]
     encrypted=data[16:]
-    cipher=AES.new(AES_KEY,AES.MODE_SIV)
+    cipher=AES.new(_get_aes_key(),AES.MODE_SIV)
     decrypted=cipher.decrypt_and_verify(encrypted,tag)
     return decrypted.decode("utf-8")

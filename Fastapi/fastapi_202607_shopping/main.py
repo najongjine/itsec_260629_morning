@@ -1,7 +1,11 @@
-from fastapi import FastAPI, Form
+import os
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from utils.db import close_db_pool
 from utils.static import PUBLIC_DIR
 
 #from routers.router_example import router as example_router
@@ -9,7 +13,13 @@ from routers.user_router import router as user_router
 from routers.shop_router import router as shop_router
 
 # 서버 뿅 하고 완성 됨
-app=FastAPI()
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    yield
+    close_db_pool()
+
+
+app = FastAPI(lifespan=lifespan)
 app.mount("/public", StaticFiles(directory=PUBLIC_DIR), name="public")
 app.add_middleware(
     CORSMiddleware
@@ -26,13 +36,18 @@ app.include_router(shop_router,tags=["shop"])
 # api endpoint, router, controller
 @app.get("/")
 def healthcheck():
-    return {"success":True,"msg":"서버 건강함"}
+    return {"success": True, "msg": "server is healthy"}
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 if __name__=="__main__":
     uvicorn.run(
         "main:app",
-        host="127.0.0.1",
-        port=8000, # 3000~65000 중 맘대로 정함
-        reload=True # ctrl + s 했을때 서버 자동으로 재시작
+        host=os.getenv("HOST", "0.0.0.0"),
+        port=int(os.getenv("PORT", "7860")),
+        reload=os.getenv("RELOAD", "false").lower() == "true",
     )
 

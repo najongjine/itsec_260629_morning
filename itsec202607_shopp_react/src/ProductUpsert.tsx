@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useAuth } from './auth';
 import { useNavigate, useSearchParams } from 'react-router';
+import { apiUrl } from './api';
 import './ProductUpsert.css';
 
 interface Category {
@@ -36,14 +37,14 @@ function ProductUpsert() {
   }, [productId]);
 
   async function getCategories() {
-    const response = await fetch('http://localhost:8000/categorylist');
+    const response = await fetch(apiUrl('/categorylist'));
     const result = await response.json();
     if (result.success) setCategories(result.data || []);
   }
 
   async function getProduct() {
     const response = await fetch(
-      `http://localhost:8000/get_a_product?id=${productId}`,
+      apiUrl(`/get_a_product?id=${productId}`),
     );
     const result = await response.json();
     const product = result.data;
@@ -113,7 +114,7 @@ function ProductUpsert() {
       if (image.file) formData.append('images', image.file);
     });
 
-    const response = await fetch('http://localhost:8000/upsert_product', {
+    const response = await fetch(apiUrl('/upsert_product'), {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
       body: formData,

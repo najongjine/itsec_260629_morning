@@ -7,6 +7,7 @@ import { AuthContext } from './AuthProvider'
  * 
  * import { useEffect } from 'react'
 import { useAuth } from './auth'
+import { apiUrl } from '../api'
 
 function BoardList() {
   const { isLoggedIn, user, token, logout } = useAuth()
@@ -14,7 +15,7 @@ function BoardList() {
   useEffect(() => {
     if (!isLoggedIn) return
 
-    fetch('http://localhost:8000/boardlist', {
+    fetch(apiUrl('/boardlist'), {
       headers: {
         Authorization: `Bearer ${token}`,
       },

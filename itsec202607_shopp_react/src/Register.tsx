@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useAuth } from './auth';
+import { apiUrl } from './api';
 import './Auth.css';
 
 function Register() {
@@ -29,7 +30,7 @@ function Register() {
     formdata.append('address', address);
     formdata.append('gender', gender);
 
-    let response: any = await fetch('http://localhost:8000/register', {
+    let response: any = await fetch(apiUrl('/register'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
